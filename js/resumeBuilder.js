@@ -1,4 +1,5 @@
 // dom ids
+var main = '#main';
 var header = '#header';
 var skills = '#skills';
 var top_contact = '#topContacts';
@@ -6,8 +7,11 @@ var footer_contact = '#footerContacts';
 var work_exp = '#workExperience';
 var last_work = '.work-entry:last';
 var education_section = '#education';
+var projects_section = '#projects';
+var project_entry = '.project-entry:last';
+var map_section = '#mapDiv';
 
-// data
+// data objects
 var bio = {
   "name" : "Sunny Mui",
   "role" : "Web Developer",
@@ -156,6 +160,55 @@ var formatted_skills ;
 // ADD HTML elements to the page
 //
 
+// internationalize Button
+$(main).append(internationalizeButton);
+
+function capitalize(word) {
+  /*
+  Capitalizes the first letter of a word string. String should be one word only.
+  Also will trim spaces on each end of the string.
+  ex: "john" becomes "John" and " max " would become "Max"
+  In: one word string
+  Out: Capitalized one word string at the first letter of the word
+  */
+
+  // trim out spaces so we start at the first letter
+  var trimmed_word = word.trim();
+  console.log(trimmed_word);
+
+  // take & make the first character uppercase then add to the rest of the word
+  return trimmed_word.charAt(0).toUpperCase() + trimmed_word.slice(1);
+}
+
+function inName(names) {
+  /*
+  Converts a string of first and last name into an internationalized version.
+  Internationalized version has first name capitalized and the last name all uppercase.
+  ex: John DOE
+  In: names - string containing the first and last name to transform
+  Out: a string with first name capitalized and last name uppercased
+  */
+
+  // split the name into an array of strings of each word
+  var name_array = names.split(' ');
+
+  // loop through each name word in case people have weird multipart names
+  // like joe jacobs jackson
+  for (var i = 0; i < name_array.length; i++) {
+    name_array[i] = capitalize(name_array[i]);
+  }
+
+  // make the last word all uppercase letters
+  // get the last word in the names array
+  var last_name = name_array.length - 1;
+  name_array[last_name] = name_array[last_name].toUpperCase();
+
+  // concatenate the names array back into a single string
+  // then return the value
+  return name_array.join(' ');
+
+}
+
 // header
 // add skills to page header if the skills array isn't empty
 if (bio.skills.length !== 0 ) {
@@ -178,13 +231,17 @@ $(top_contact).append(formatted_email,
 
 
 // work experience
-// add the info to the experience section for each job in the work object
-for (var i in work.jobs) {
-  $(work_exp).append(HTMLworkStart);
-  // format the infowith the helper functions
-  // note that i in a for-in loop returns the index, not the value
-  // use forEach if your array is just values and not key-value pairs
-  if (work.jobs.hasOwnProperty(i)) {
+
+function displayWork() {
+  // adds the info to the experience section for each job in the work object
+  for (var i=0; i < work.jobs.length; i++) {
+    $(work_exp).append(HTMLworkStart);
+    // format the info with the helper functions
+
+    // note that i in a for-in loop returns the index, not the value
+    // use forEach if your array is just values and not key-value pairs
+    // regular for loops are cool in most situations
+
     formatted_employer = HTMLworkEmployer.replace('%data%', work.jobs[i].employer);
     formatted_title = HTMLworkTitle.replace('%data%', work.jobs[i].title);
     formatted_dates = HTMLworkDates.replace('%data%', work.jobs[i].dates);
@@ -199,9 +256,53 @@ for (var i in work.jobs) {
                         formatted_description);
   }
 }
+displayWork();
+
+// projects
+
+// encapsulate display function in the projects object
+projects.display = function() {
+  // loop through each project in the projects array of objects
+  for (var i = 0; i < projects.projects.length; i++) {
+
+    var current_project = projects.projects[i];
+
+    // create formatted html elements for project data
+    // then add the formatted data to the formatted project array
+    var formatted_project_array = [];
+    formatted_project_array.push(HTMLprojectTitle.replace('%data%', current_project.title),
+                                 HTMLprojectDates.replace('%data%', current_project.dates),
+                                 HTMLprojectDescription.replace('%data%', current_project.description)
+    );
+
+    // loop through images array and add each image to the formatted data
+    for (var j = 0; j < current_project.images.length; j++) {
+      // replace placeholder with image data then add it to the formatted project array
+      formatted_project_array.push(HTMLprojectImage.replace('%data%' , current_project.images[j]));
+    }
+
+    // concatenate all the formatted html elements
+    var formatted_project = formatted_project_array.join(' ');
+
+    // append all the formatted html elements to the appropiate section of the page
+    $(projects_section).append(HTMLprojectStart);
+    $(project_entry).append(formatted_project);
+  }
+};
+
+projects.display();
+
+// interactive map
+$(map_section).append(googleMap);
 
 // footer
 $(footer_contact).append(formatted_email,
                         formatted_github,
                         formatted_mobile,
                         formatted_location);
+
+$(document).click(function(loc) {
+  var x = loc.pageX;
+  var y = loc.pageY;
+  logClicks(x,y);
+});
