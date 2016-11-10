@@ -1,17 +1,4 @@
-// dom ids
-var main = '#main';
-var header = '#header';
-var skills = '#skills';
-var top_contact = '#topContacts';
-var footer_contact = '#footerContacts';
-var work_exp = '#workExperience';
-var last_work = '.work-entry:last';
-var education_section = '#education';
-var projects_section = '#projects';
-var project_entry = '.project-entry:last';
-var map_section = '#mapDiv';
-
-// data objects
+// JSON ready data objects
 var bio = {
   "name" : "Sunny Mui",
   "role" : "Web Developer",
@@ -127,6 +114,20 @@ var education = {
   ]
 };
 
+// DOM selectors
+var main = '#main';
+var header = '#header';
+var skills = '#skills';
+var top_contact = '#topContacts';
+var footer_contact = '#footerContacts';
+var work_exp = '#workExperience';
+var last_work = '.work-entry:last';
+var education_section = '#education';
+var projects_section = '#projects';
+var project_entry = '.project-entry:last';
+var map_section = '#mapDiv';
+
+
 //
 // FORMAT AND INSERT RAW DATA INTO HTML ELEMENTS
 //
@@ -203,28 +204,45 @@ function inName(names) {
   // concatenate the names array back into a single string
   // then return the value
   return name_array.join(' ');
+}
 
+function format(formatted_html, raw_data) {
+  /*
+  Takes raw data and inserts that data into a preformatted html string,
+   replacing a placeholder with the actual data.
+   Placeholder string that the function looks for is set in the var.
+   ex. <p>%data%</p> => <p>Hello</p>
+   In: the formatted html (string), the raw data to insert into that html (string/numbers)
+   Out: the formatted html string with placeholder replaced by that data (string)
+  */
+  var placeholder = '%data%';
+  return formatted_html.replace(placeholder,raw_data);
 }
 
 // header
-// add skills to page header if the skills array isn't empty
-if (bio.skills.length !== 0 ) {
-  $(header).append(HTMLskillsStart);
-  // loop through skills array to add each one as a list item
-  for (var i=0; i < bio.skills.length; i++) {
-    // format each skill then append it
-    formatted_skills = HTMLskills.replace('%data%',bio.skills[i]);
-    $(skills).append(formatted_skills);
+
+bio.display = function () {
+
+  // add skills to page header if the skills array isn't empty
+  if (bio.skills.length !== 0 ) {
+    $(header).append(HTMLskillsStart);
+    // loop through skills array to add each one as a list item
+    for (var i=0; i < bio.skills.length; i++) {
+      // format each skill then append it
+      formatted_skills = format(HTMLskills, bio.skills[i]); 
+      $(skills).append(formatted_skills);
+    }
   }
-}
-$(header).prepend(formatted_pic,
-                  formatted_name,
-                  formatted_role);
-$(header).append(formatted_welcome_msg);
-$(top_contact).append(formatted_email,
-                      formatted_github,
-                      formatted_mobile,
-                      formatted_location);
+  $(header).prepend(formatted_pic,
+                    formatted_name,
+                    formatted_role);
+  $(header).append(formatted_welcome_msg);
+  $(top_contact).append(formatted_email,
+                        formatted_github,
+                        formatted_mobile,
+                        formatted_location);
+
+};
 
 
 // work experience
@@ -254,7 +272,7 @@ work.display = function() {
   }
 };
 
-work.display();
+
 
 // projects
 
@@ -288,6 +306,8 @@ projects.display = function() {
   }
 };
 
+bio.display();
+work.display();
 projects.display();
 
 // interactive map
@@ -298,31 +318,3 @@ $(footer_contact).append(formatted_email,
                         formatted_github,
                         formatted_mobile,
                         formatted_location);
-
-$(document).click(function(loc) {
-  var x = loc.pageX;
-  var y = loc.pageY;
-  logClicks(x,y);
-});
-
-$(document).on('keyup', function(e){
-  console.log(e);
-  var key = e.keyCode;
-  console.log(key);
-  if (key === 70) {
-    window.alert('you pressed f');
-  }
-  console.log(e.type);
-});
-
-
-  $('#skills-h3').click(function() {
-  console.log('clicked');
-  $(skills).append('<li class="flex-item"><span class="white-text">New Skill</span></li>');
-});
-
-
-// event delegation practice
-$(skills).on('click', '.white-text', function() {
-  $(this).css('background', 'red');
-});
