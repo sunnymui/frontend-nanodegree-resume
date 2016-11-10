@@ -15,7 +15,7 @@ var map_section = '#mapDiv';
 var bio = {
   "name" : "Sunny Mui",
   "role" : "Web Developer",
-  "contact" : {
+  "contacts" : {
     "email" : "sunnycmui@gmail.com",
     "github" : "https://github.com/sunnymui/",
     "mobile" : "510-266-2888",
@@ -136,10 +136,10 @@ var formatted_role = HTMLheaderRole.replace('%data%', bio.role);
 var formatted_pic = HTMLbioPic.replace('%data%',bio.biopic);
 
 // contact
-var formatted_email = HTMLemail.replace('%data%',bio.contact.email);
-var formatted_github = HTMLgithub.replace('%data%',bio.contact.github);
-var formatted_mobile = HTMLmobile.replace('%data%',bio.contact.mobile);
-var formatted_location = HTMLlocation.replace('%data%',bio.contact.location);
+var formatted_email = HTMLemail.replace('%data%',bio.contacts.email);
+var formatted_github = HTMLgithub.replace('%data%',bio.contacts.github);
+var formatted_mobile = HTMLmobile.replace('%data%',bio.contacts.mobile);
+var formatted_location = HTMLlocation.replace('%data%',bio.contacts.location);
 
 // work experience
 var formatted_employer;
@@ -160,16 +160,13 @@ var formatted_skills ;
 // ADD HTML elements to the page
 //
 
-// internationalize Button
-$(main).append(internationalizeButton);
-
 function capitalize(word) {
   /*
   Capitalizes the first letter of a word string. String should be one word only.
   Also will trim spaces on each end of the string.
   ex: "john" becomes "John" and " max " would become "Max"
-  In: one word string
-  Out: Capitalized one word string at the first letter of the word
+  In: (string) one word
+  Out: (string) Capitalized one word string at the first letter of the word
   */
 
   // trim out spaces so we start at the first letter
@@ -232,7 +229,7 @@ $(top_contact).append(formatted_email,
 
 // work experience
 
-function displayWork() {
+work.display = function() {
   // adds the info to the experience section for each job in the work object
   for (var i=0; i < work.jobs.length; i++) {
     $(work_exp).append(HTMLworkStart);
@@ -255,8 +252,9 @@ function displayWork() {
                         formatted_location,
                         formatted_description);
   }
-}
-displayWork();
+};
+
+work.display();
 
 // projects
 
@@ -305,4 +303,26 @@ $(document).click(function(loc) {
   var x = loc.pageX;
   var y = loc.pageY;
   logClicks(x,y);
+});
+
+$(document).on('keyup', function(e){
+  console.log(e);
+  var key = e.keyCode;
+  console.log(key);
+  if (key === 70) {
+    window.alert('you pressed f');
+  }
+  console.log(e.type);
+});
+
+
+  $('#skills-h3').click(function() {
+  console.log('clicked');
+  $(skills).append('<li class="flex-item"><span class="white-text">New Skill</span></li>');
+});
+
+
+// event delegation practice
+$(skills).on('click', '.white-text', function() {
+  $(this).css('background', 'red');
 });
