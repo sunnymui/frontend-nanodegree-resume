@@ -76,10 +76,8 @@ var education = {
     "schools": [{
         "name": "San Francisco State University",
         "location": "San Francisco, CA",
-        "majors": [
-            "English Literature",
-            "Business Admnistration: Marketing"
-        ],
+        "majors": ["English Literature",
+        "Business Admnistration: Marketing"],
         "dates": "2006 - 2010",
         "degree": "Bachelors"
     }],
@@ -94,14 +92,16 @@ var education = {
         "dates": "2015",
         "url": "http://www.udemy.com"
     }, {
-        "name": "Front End Nanodegree",
-        "provider": "Udacity",
+        "title": "Front End Nanodegree",
+        "school": "Udacity",
         "dates": "2016",
         "url": "http://www.udacity.com"
     }]
 };
 
-// VARIABLES
+///////////////
+// CONSTANTS //
+///////////////
 
 // DOM selectors
 var main = '#main';
@@ -110,15 +110,16 @@ var skills = '#skills';
 var header_contact = '#topContacts';
 var footer_contact = '#footerContacts';
 var work_exp = '#workExperience';
-var last_work = '.work-entry:last';
+var work_entry = '.work-entry:last';
 var education_section = '#education';
+var education_entry = '.education-entry:last';
 var projects_section = '#projects';
 var project_entry = '.project-entry:last';
 var map_section = '#mapDiv';
 
-//
-// FUNCTIONS
-//
+///////////////
+// FUNCTIONS //
+///////////////
 
 function format(formatted_html, raw_data) {
     /*
@@ -126,8 +127,8 @@ function format(formatted_html, raw_data) {
      replacing a placeholder with the actual data.
      Placeholder string that the function looks for is set in the var.
      ex. <p>%data%</p> => <p>Hello</p>
-     In: the formatted html (string), the raw data to insert into that html (string/numbers)
-     Out: the formatted html string with placeholder replaced by that data (string)
+     Args: the formatted html (string), the raw data to insert into that html (string/numbers)
+     Return: the formatted html string with placeholder replaced by that data (string)
     */
     // the placeholder string to look for in the html
     var placeholder = '%data%';
@@ -138,100 +139,121 @@ function format(formatted_html, raw_data) {
 // header
 
 bio.display = function() {
+    /*
+    Displays the info from the bio data object in the html page.
+    Takes the raw data, formats using helpers containing the html template,
+    then appends that into places in the dom.
+    Args: none as passed parameters, but does get data from the object
+    Returns: no returns, but does append formatted html to the page
+    */
 
     // header
-    var formatted_name = format(HTMLheaderName, bio.name);
-    var formatted_role = format(HTMLheaderRole, bio.role);
-    var formatted_pic = format(HTMLbioPic, bio.biopic);
-    var formatted_welcome_msg = format(HTMLwelcomeMsg, bio.welcomeMessage);
-    var formatted_skills ;
+    var formatted_bio = format(HTMLheaderName, bio.name) +
+                        format(HTMLheaderRole, bio.role) +
+                        format(HTMLbioPic, bio.biopic) +
+                        format(HTMLwelcomeMsg, bio.welcomeMessage);
+
     // add skills to page header if the skills array isn't empty
     if (bio.skills.length !== 0) {
         $(header).append(HTMLskillsStart);
         // loop through skills array to add each one as a list item
         for (var i = 0; i < bio.skills.length; i++) {
             // format each skill then append it
-            formatted_skills = format(HTMLskills, bio.skills[i]);
+            var formatted_skills = format(HTMLskills, bio.skills[i]);
             $(skills).append(formatted_skills);
         }
     }
 
-    // add formatted html to the dom
-    $(header).prepend(formatted_pic,
-        formatted_name,
-        formatted_role);
-    $(header).append(formatted_welcome_msg);
+    // add formatted html to beginning of header
+    $(header).prepend(formatted_bio);
 
 };
 
 // contacts
 
-bio.displayContact = function(dom_location) {
+bio.displayContact = function(/* DOM location(s) as arguments */) {
+  /*
+  Displays the contact info from the bio in specified locations on the page.
+  Takes raw data from the bio data object, formats it using the appropriate helper
+  html template, and puts it in dom location(s) passed as arguments.
+  Args: dom locations (string) for each argument
+  Return: none, but does append the contact info to the page
+  */
+
   // contact
+  // store formatted as vars so we don't format stuff again for every dom location
   var formatted_email = format(HTMLemail, bio.contacts.email);
   var formatted_github = format(HTMLgithub, bio.contacts.github);
   var formatted_mobile = format(HTMLmobile, bio.contacts.mobile);
   var formatted_location = format(HTMLlocation, bio.contacts.location);
 
   // append the formatted contact info to the specified location
-  $(dom_location).append(formatted_email,
-                         formatted_github,
-                         formatted_mobile,
-                         formatted_location);
+  // loop through arguments object to allow multiple dom locations to be passed
+  for (var i = 0; i < arguments.length; i+=1) {
+    var dom_location = arguments[i];
+    $(dom_location).append(formatted_email,
+                           formatted_github,
+                           formatted_mobile,
+                           formatted_location);
+  }
+
 };
 
 // work experience
 
 work.display = function() {
-    // work experience
-    var formatted_employer;
-    var formatted_title;
-    var employer_and_title;
-    var formatted_dates;
-    var formatted_location;
-    var formatted_description;
+  /*
+  Displays the info from the work data object in the html page.
+  Takes the raw data, formats using helpers containing the html template,
+  then appends that into places in the dom.
+  Args: none as passed parameters, but does get data from the object
+  Returns: no returns, but does append formatted html to the page
+  */
 
-    // adds the info to the experience section for each job in the work object
-    for (var i = 0; i < work.jobs.length; i++) {
-        $(work_exp).append(HTMLworkStart);
-        // format the info with the helper functions
+  // work experience
+  // adds the info to the experience section for each job in the work object
+  for (var i = 0; i < work.jobs.length; i++) {
+    $(work_exp).append(HTMLworkStart);
+    // format the info with the helper functions
 
-        // note that i in a for-in loop returns the index, not the value
-        // use forEach if your array is just values and not key-value pairs
-        // regular for loops are cool in most situations
+    // note that i in a for-in loop returns the index, not the value
+    // use forEach if your array is just values and not key-value pairs
+    // regular for loops are cool in most situations
 
-        formatted_employer = HTMLworkEmployer.replace('%data%', work.jobs[i].employer);
-        formatted_title = HTMLworkTitle.replace('%data%', work.jobs[i].title);
-        formatted_dates = HTMLworkDates.replace('%data%', work.jobs[i].dates);
-        formatted_location = HTMLworkLocation.replace('%data%', work.jobs[i].location);
-        formatted_description = HTMLworkDescription.replace('%data%', work.jobs[i].description);
-        // concatenate employer and title into one text string
-        employer_and_title = formatted_employer + formatted_title;
-        // append to the work entry
-        $(last_work).append(employer_and_title,
-            formatted_dates,
-            formatted_location,
-            formatted_description);
-    }
+    var formatted_work = format(HTMLworkEmployer, work.jobs[i].employer) +
+                         format(HTMLworkTitle, work.jobs[i].title) +
+                         format(HTMLworkDates, work.jobs[i].dates) +
+                         format(HTMLworkLocation, work.jobs[i].location) +
+                         format(HTMLworkDescription, work.jobs[i].description);
+
+    // add formatted html to the work section of the page
+    $(work_entry).append(formatted_work);
+  }
 };
 
 // projects
 
 // encapsulate display function in the projects object
 projects.display = function() {
+  /*
+  Displays the info from the projects data object in the html page.
+  Takes the raw data, formats using helpers containing the html template,
+  then appends that into places in the dom.
+  Args: none as passed parameters, but does get data from the object
+  Returns: no returns, but does append formatted html to the page
+  */
+
     // loop through each project in the projects array of objects
     for (var i = 0; i < projects.projects.length; i++) {
 
         // current project in the array
         var current_project = projects.projects[i];
-        // string to store all the formatted html
-        var formatted_project = '';
 
         // create formatted html elements for project data
         // then add the formatted data to the formatted project string
-        formatted_project += (format(HTMLprojectTitle, current_project.title) +
-                              format(HTMLprojectDates, current_project.dates) +
-                              format(HTMLprojectDescription, current_project.description));
+        var formatted_project = format(HTMLprojectTitle, current_project.title) +
+                                format(HTMLprojectDates, current_project.dates) +
+                                format(HTMLprojectDescription, current_project.description);
 
         // loop through images array and add each image to the formatted project html
         for (var j = 0; j < current_project.images.length; j++) {
@@ -246,16 +268,65 @@ projects.display = function() {
 
 // education
 education.display = function() {
+  /*
+  Displays the info from the education data object in the html page.
+  Takes the raw data, formats using helpers containing the html template,
+  then appends that into places in the dom.
+  Args: none as passed parameters, but does get data from the object
+  Returns: no returns, but does append formatted html to the page
+  */
+
     // education
-    var formatted_edu_name = HTMLschoolName.replace('%data%', education.schools[0].name);
+    for (var i = 0; i < education.schools.length; i+=1) {
+      // the current school in the schools array
+      var current_school = education.schools[i];
+
+      // put data into formatted html for this education entry
+      var formatted_education = format(HTMLschoolName, current_school.name) +
+                                format(HTMLschoolDegree, current_school.degree) +
+                                format(HTMLschoolDates, current_school.dates) +
+                                format(HTMLschoolLocation, current_school.location);
+
+       // loop through the array of majors in the current schools and append
+       // each to the formatted html string
+       for (var j = 0; j < current_school.majors.length; j+=1) {
+         formatted_education += format(HTMLschoolMajor, current_school.majors[j]);
+       }
+
+      // append the education entry div to the education section
+      $(education_section).append(HTMLschoolStart);
+      // append the formatted html to the education entry
+      $(education_entry).append(formatted_education);
+    }
+
+    // online courses
+    $(education_section).append(HTMLonlineClasses);
+
+    // loop through each online course to format and display it
+    for (i=0; i < education.onlineCourses.length; i+=1 ) {
+      var current_course = education.onlineCourses[i];
+
+      // online course formatted html
+      var formatted_online_courses = format(HTMLonlineTitle, current_course.title) +
+      format(HTMLonlineSchool, current_course.school) +
+      format(HTMLonlineDates, current_course.dates) +
+      format(HTMLonlineURL, current_course.url);
+
+      // append the education entry div to the education section
+      $(education_section).append(HTMLschoolStart);
+      // append the formatted html to the education entry
+      $(education_entry).append(formatted_online_courses);
+    }
+
 };
 
-//bio.display();
+// Add all the formatted html to the page;
+
+bio.display();
+bio.displayContact(header_contact, footer_contact);
 work.display();
 projects.display();
-bio.display();
-bio.displayContact(header_contact);
-bio.displayContact(footer_contact);
+education.display();
 
 // interactive map
 $(map_section).append(googleMap);
