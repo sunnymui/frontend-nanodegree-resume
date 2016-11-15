@@ -1,221 +1,639 @@
-body,
-div,
-ul,
-li,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  padding:0;
-  margin:0;
-  font-family: "Roboto", sans-serif;
+/* ==========================================================================
+   Table of Contents
+   ==========================================================================
+
+Built mobile first so check media queries first if you're looking
+for a desktop specific style.
+
+sm, md, and lg prefixes mean they will apply to small (mobile), medium (tablet),
+or large (desktop) screen sizes.
+
+1. Layout & General
+2. Typography & Headings
+3. Header
+4. Nav
+5. Content/Media
+6. Footer
+7. Other
+8. Media Queries
+
+Flex Grid System
+----------------
+
+My flex grid system is simple and based on Chris Coyier's: https://css-tricks.com/dont-overthink-flexbox-grids/
+
+Just add .grid to a containing element to make it a flex grid.
+
+Use .col to make a child of a .grid a dynamically sized column.
+
+.sm, .md, .lg, and .xl correspond to screen sizes from mobile to tablet, desktop, and large desktop.
+
+*/
+
+
+/*=======================
+1. Layout & General
+========================*/
+
+* {
+    box-sizing: border-box;
 }
 
-.clear-fix {
-  overflow: auto;
-}
-
-.education-entry,
-.work-entry,
-.project-entry {
-  padding: 0 5%;
-}
-
-h1 {
-  font-size: 40px;
-  color: #f5a623;
-  line-height: 48px;
-  display: inline;
-}
-
-h2 {
-  font-weight: bold;
-  font-size: 24px;
-  color: #999;
-  line-height: 29px;
-  padding: 10px;
-}
-
-h3 {
-  font-style: italic;
-  font-size: 20px;
-  color: #000;
-  line-height: 22px;
-}
-
-h4 {
-  font-weight: bold;
-  font-size: 14px;
-  color: #4a4a4a;
-  line-height: 17px;
-}
-
-h2,
-h3,
-h4,
-h5 {
-  padding:10px 5%;
-
-}
-
-
-.date-text {
-  font-style: italic;
-  font-size: 14px;
-  color: #999;
-  line-height: 16px;
-  float: left;
-}
-
-.location-text {
-  font-style: italic;
-  font-size: 14px;
-  color: #999;
-  line-height: 16px;
-  float: right;
-
-}
-
-p {
-  font-size: 14px;
-  color: #333;
-  line-height: 21px;
-}
-
-a {
-  color: #1199c3;
-  text-decoration: none;
-  margin-top: 10px;
-  display: block;
-}
-
-.welcome-message {
-  font-style: italic;
-  font-size: 18px;
-  color: #f3f3f3;
-  line-height: 28px;
-}
-
-#skills-h3 {
-  color: #f5ae23;
-  display: none;
-}
-
-.orange {
-  background-color: #f5ae23;
-}
-
-.orange-text {
-  color: #f5ae23;
-}
-
-.white-text {
-  font-weight: bold;
-  color: #fff;
-}
-
-.gray {
-  background-color: #f3f3f3;
-  padding-bottom: 10px;
-  clear:both;
-}
-
-.dark-gray {
-  background-color: #4a4a4a;
-}
-
-/* TODO: Replace with image later */
-#header {
-  background-color: #484848;
-}
-
-.flex-box {
-  display: -webkit-flex;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  padding: 10px;
-}
-
-.center-content {
-  padding: 2.5% 5%;
-}
-
-ul {
-  list-style-type: none;
-}
-
-.biopic {
-  float: left;
-  padding: 10px;
-  width: 200px;
-  display: none;
+body {
+    background: #ddd;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 18px;
 }
 
 img {
-  padding: 10px;
+    max-width: 100%;
+    /* general responsive img style */
 }
 
-span {
-  padding: 5px;
+hr {
+    border-top: 1px solid #7e8aa2;
+    /* override default color */
 }
 
-#lets-connect {
-  text-align: center;
+
+/* Flex Grid*/
+
+.flex {
+    display: -ms-flexbox;
+    display: flex;
 }
 
-/* Media queries to handle various device widths */
-
-@media only screen and (max-width: 1024px) {
-  #lets-connect {
-    margin-top: 5%;
-  }
-}
-
-@media only screen and (max-width:900px) {
-  .biopic {
-    width: 175px;
-  }
-}
-
-@media only screen and (max-width: 750px) {
-  #lets-connect {
-    margin-top: 10%;
-  }
-  .biopic {
-    width: 150px;
-  }
-  .welcome-message {
-    display: none;
-  }
-}
-
-#map {
-  display: block;
-  height: 100%;
-  margin: 0 5%;
-}
-
-#mapDiv {
-  height: 400px;
-  width: 100%;
-  padding-bottom: 5%;
-}
-
-@media only screen and (min-width: 750px) {
-  #skills-h3,
-  .biopic {
+.grid {
     display: block;
+}
+
+.col {
+    -ms-flex: 1;
+    flex: 1;
+}
+
+.sm-whole {
+    width: 100%;
+}
+
+.gutters {
+    padding: 0.5em;
+}
+
+.flex-v-center {
+    -ms-flex-align: center;
+    -ms-grid-row-align: center;
+    align-items: center;
+    /* vertically center align the flex items to the container*/
+}
+
+.flex-justify {
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    /* creates max space in between each of the flex items until items fill container */
+}
+
+/* Alignment & Spacing */
+
+.center-text {
+    text-align: center;
+}
+
+.center {
+    margin: auto;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.margin-1 {
+    margin: 1em;
+}
+
+
+/* Buttons/Links */
+
+.link {
+    text-decoration: none;
+    color: #184394;
+}
+
+.link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+.btn {
+    display: inline-block;
+    min-width: 7em;
+    margin: 1em auto;
+    padding: 0.2em 1em;
+    transition: 0.3s all;
+    text-align: center;
+    text-decoration: none;
+    color: #c3944e;
+    outline: 1px solid #c3944e;
+    /* outline instead of border so it doesn't shift content a pixel */
+    font-weight: 400;
+}
+
+.btn:hover {
+    background: #FF9800;
+    color: #fff;
+}
+
+.btn:active {
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.6);
+}
+
+/* Lists */
+
+.list-no-style {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Sizing */
+
+.inherit-height {
+    height: inherit;
+}
+
+/*=======================
+2. Typography & Headings
+========================*/
+
+
+/* Headings */
+
+h1 {
+    font-size: 2.7em;
+}
+
+
+/* Text Styling */
+
+.unbold {
+    font-weight: 300;
+}
+
+.small-text {
+    font-size: 0.8em;
+}
+
+.all-caps {
+    text-transform: uppercase;
+}
+
+.big-text {
+    font-size: 1.3em;
+}
+
+.light-text {
+  font-weight: 100;
+}
+
+.spaced-text {
+  letter-spacing: 0.2em;
+}
+
+/* Text Colors */
+
+.white {
+    color: #fff;
+}
+
+.dark-gray {
+    color: #333;
+}
+
+.sm-black {
+    color: #000;
+}
+
+
+/* Effects */
+
+.ghost-shadow {
+    letter-spacing: .05em;
+    text-shadow: 2px 2px 0 #ddd, 4px 4px 0 rgba(0, 0, 0, 0.1);
+    /* first shadow must be same as bg color */
+}
+
+.deep-shadow {
+  letter-spacing: .1em;
+  text-shadow: 0 -1px 0 #ffffff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
+}
+
+
+/*=======================
+3. Header
+========================*/
+
+header {
+    /*declared height needed since fixed header is out of doc flow, header height pushes elements down */
+    height: 5em;
+    /* height should be same as (height+paddings) for the fixed wrapper */
+}
+
+.fixed-wrapper {
+    position: fixed;
+    /* sticky top bar */
+    z-index: 999;
+    /* Keep it visible on top of content */
+    width: 100%;
+    /* maintain height of header */
+    background: #263248;
+    background-image: linear-gradient(160deg, #263248 0%, #828ea6 100%);
+}
+
+.logo {
+    display: block;
+    max-height: 2em;
+    /* Keep it in the header */
+    margin: auto;
+    transition: 0.3s all;
+}
+
+.logo:hover {
+    opacity: 0.7;
+}
+
+
+/*=======================
+4. Nav
+========================*/
+
+nav {
+    width: 100%;
+}
+
+nav a {
+    display: inline-block;
+    margin: 0.2em;
+    padding: 0.5em;
+    color: #fff;
+    text-decoration: none;
+}
+
+
+/*=======================
+5. Content/Media
+========================*/
+
+section {
+    max-width: 50em;
+    margin: 1em auto;
+    padding: 1em;
+}
+
+
+/* Hero Text/Image*/
+
+.hero {
+    max-width: 100%;
+    /* stretch to fit screen */
+    min-height: 35em;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-bottom: 0.5em solid #1b242f;
+    background: #006e87; /* fallback */
+    background: linear-gradient(232deg, #006e87, #c35050);
+    background-size: 400% 400%;
+    animation: AnimatedBG 8s ease infinite;
+}
+
+@keyframes AnimatedBG {
+  0% {background-position: 0 47%;}
+  50% {background-position: 100% 54%;}
+  100% {background-position: 0 47%;}
+}
+
+.main-text {
+    padding: 1.5em;
+    background: #fff;
+}
+
+/* Featured Content */
+
+.featured {
+    max-width: 60em;
+    /* since it's not one long sentence but divided content it can be wider*/
+    margin: -3em auto 0 auto;
+    /* slightly overlay top of featured over the hero */
+    padding: 0;
+}
+
+article {
+    width: 100%;
+    transition: 0.3s all;
+    border-top: 0.5em solid #263248;
+    border-image: linear-gradient(95deg, #263248 0%, #828ea6 100%);
+    border-image-slice: 1;
+    background: #fff;
+}
+
+article:hover {
+    transition: all 0.3s;
+    border-color: #FF9800;
+    border-image: linear-gradient(95deg, #263248 0%, #FF9800 100%);
+    border-image-slice: 1;
+}
+
+article:hover
+    .btn {
+    /* style the button when pointer enters the article */
+    background: #c3944e;
+    outline: 0;
+    color: #fff;
+}
+
+article:hover
+    .btn:hover {
+    /* set a hover bg since the specificity of the bg overrides the default button hover effect */
+    background: #FF9800;
+}
+
+.feature-img {
+    transition: 0.5s all;
+    border: 1px solid #ccc;
+    border-width: 1px 0;
+}
+
+.feature-img:hover {
+    opacity: 0.9;
+}
+
+
+/* Contact */
+
+.contact li {
+    display: inline-block;
+    margin: 0 1.8em 0.5em 0;
+}
+
+
+/* About */
+
+.headshot {
+    margin: 0 1em 1em 0;
+    border-radius: 99%;
+}
+
+
+/*=======================
+6. Footer
+========================*/
+
+footer {
+    width: 100%;
+    padding: 1em 0;
+    border-top: 0.3em solid #7e8aa2;
+    background: #263248;
+    background-image: linear-gradient(160deg, #263248 0%, #828ea6 100%);
+}
+
+footer a {
+    display: inline-block;
+    /* so the footer expands with their height/padding */
+    padding: 1em;
+}
+
+
+/*=======================
+7. Other
+========================*/
+
+
+/* Animations */
+
+.fade-in {
+    animation: fadein 0.5s;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Fontello Icon Font Plugin */
+
+@font-face {
+    font-family: "fontello";
+    font-weight: normal;
+    font-style: normal;
+    src: url("../font/fontello.eot");
+    src: url("../font/fontello.eot?#iefix") format("embedded-opentype"), url("../font/fontello.woff2") format("woff2"), url("../font/fontello.woff") format("woff"), url("../font/fontello.ttf") format("truetype"), url("../font/fontello.svg#fontello") format("svg");
+}
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    display: inline-block;
+    width: 1em;
+    margin: 0 0.5em 0 0;
+    text-align: center;
+    text-decoration: inherit;
+    text-transform: none;
+    font-family: "fontello";
+    font-size: 1.2em;
+    font-weight: normal;
+    font-style: normal;
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    speak: none;
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-github:before {
+    content: '\e800';/* '' */
+}
+
+.icon-linkedin:before {
+    content: '\e801';/* '' */
+}
+
+.icon-gmail:before {
+    content: '\e802';/* '' */
+}
+
+.icon-upwork:before {
+    content: '\e803';/* '' */
+}
+
+
+/*=======================
+8. Media Queries
+========================*/
+
+
+/* Microscopic screens, probably unnecessary but just in case */
+
+@media only screen and (max-width:300px) {
+    body {
+        font-size: 16px;
+    }
+
+    header {
+        height: 7em;
+        /* increase space so the header bar doesnt cover the hero on tiny screens */
+    }
+}
+
+
+/* For tablets */
+
+@media only screen and (min-width: 480px) {
+
+    /* Flex Grid */
+
+    .grid {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        /* so it can break to the next line */
+    }
+
+    .md-whole {
+        min-width: 100%;
+    }
+
+    .md-halves {
+        min-width: 50%;
+    }
+
+    .md-natural {
+        min-width: 0;
+    }
+
+    /* Animate the breakpoint transitions */
+
+    .grid, .md-whole, .md-halves, .lg-thirds {
+        transition: 0.3s all;
+    }
+
+    /* About */
+
+    .headshot {
+        float: left;
+    }
+}
+
+
+/* For Desktop */
+
+@media only screen and (min-width: 1000px) {
+
+    /* Flex Grid */
+
+    .lg-flex {
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .lg-thirds {
+        min-width: 33.33%;
+    }
+
+    /*Typography*/
+
+    .lg-white {
+        color: #fff;
+    }
+
+    .lg-outline {
+        text-shadow: -1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222, 1px 1px 0 #222;
+        /* 1px shadows on all 4 sides to outline the letters */
+    }
+
+    .lg-size-5 {
+      font-size: 5em;
+    }
+
+    .lg-size-3 {
+      font-size: 3em;
+    }
+
+    /* Header/Nav */
+
+    .logo-link {
+        display: block;
+        /* allows margins in ie10 */
+        margin: 0 0 0 5%;
+        /* keep the logo from getting too close to the edges */
+    }
+
+    .logo {
+        width: 10em;
+        max-height: 3em;
+        /* bigger screens mean bigger logos :p */
+    }
+
+    nav {
+
+    }
+
+    /* Hero */
+
+    .hero {
+    }
+
+    /* Featured */
+
+    .featured {
+        margin: -2em auto 1em auto;
+    }
+
+    .featured .lg-thirds:nth-child(2) {
+        margin: -1em 0 0 0;
+        /* offset the middle featured item for visual interest */
+    }
+}
+
+
+/* For Large Desktop Screens */
+
+@media only screen and (min-width: 1200px) {
+
+    /* Layout & General */
+
+    .xl-80-max-width {
+        max-width: 80em;
+    }
+
+    .xl-80-width {
+        width: 80em;
+    }
+
+    /* Typography & Headings */
+
+    h1 {
+        font-size: 3.2em;
+    }
+
+    h2 {
+        font-size: 1.8em;
+    }
+}
+
+/* For Gigantic Screens, Like TV Size */
+
+@media only screen and (min-width: 2500px) {
+
+  body {
+    font-size: 30px;
+    /* Scale everything up so it's not so tiny on a huge screen */
   }
+
 }

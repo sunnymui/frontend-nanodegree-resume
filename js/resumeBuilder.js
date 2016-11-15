@@ -167,35 +167,36 @@ bio.display = function() {
     // add formatted html to beginning of header
     $(header).prepend(formatted_bio);
 
-};
+    // contacts
 
-// contacts
+    var displayContact = function(/* DOM location(s) as arguments */) {
+      /*
+      Displays the contact info from the bio in specified locations on the page.
+      Takes raw data from the bio data object, formats it using the appropriate helper
+      html template, and puts it in dom location(s) passed as arguments.
+      Args: dom locations (string) for each argument
+      Return: none, but does append the contact info to the page
+      */
 
-bio.displayContact = function(/* DOM location(s) as arguments */) {
-  /*
-  Displays the contact info from the bio in specified locations on the page.
-  Takes raw data from the bio data object, formats it using the appropriate helper
-  html template, and puts it in dom location(s) passed as arguments.
-  Args: dom locations (string) for each argument
-  Return: none, but does append the contact info to the page
-  */
+      // contact
+      // store formatted as vars so we don't format stuff again for every dom location
+      var formatted_email = format(HTMLemail, bio.contacts.email);
+      var formatted_github = format(HTMLgithub, bio.contacts.github);
+      var formatted_mobile = format(HTMLmobile, bio.contacts.mobile);
+      var formatted_location = format(HTMLlocation, bio.contacts.location);
 
-  // contact
-  // store formatted as vars so we don't format stuff again for every dom location
-  var formatted_email = format(HTMLemail, bio.contacts.email);
-  var formatted_github = format(HTMLgithub, bio.contacts.github);
-  var formatted_mobile = format(HTMLmobile, bio.contacts.mobile);
-  var formatted_location = format(HTMLlocation, bio.contacts.location);
+      // append the formatted contact info to the specified location
+      // loop through arguments object to allow multiple dom locations to be passed
+      for (var i = 0; i < arguments.length; i+=1) {
+        var dom_location = arguments[i];
+        $(dom_location).append(formatted_email,
+                               formatted_github,
+                               formatted_mobile,
+                               formatted_location);
+      }
+    };
 
-  // append the formatted contact info to the specified location
-  // loop through arguments object to allow multiple dom locations to be passed
-  for (var i = 0; i < arguments.length; i+=1) {
-    var dom_location = arguments[i];
-    $(dom_location).append(formatted_email,
-                           formatted_github,
-                           formatted_mobile,
-                           formatted_location);
-  }
+    displayContact(header_contact, footer_contact);
 
 };
 
@@ -308,9 +309,9 @@ education.display = function() {
 
       // online course formatted html
       var formatted_online_courses = format(HTMLonlineTitle, current_course.title) +
-      format(HTMLonlineSchool, current_course.school) +
-      format(HTMLonlineDates, current_course.dates) +
-      format(HTMLonlineURL, current_course.url);
+                                     format(HTMLonlineSchool, current_course.school) +
+                                     format(HTMLonlineDates, current_course.dates) +
+                                     format(HTMLonlineURL, current_course.url);
 
       // append the education entry div to the education section
       $(education_section).append(HTMLschoolStart);
@@ -323,7 +324,6 @@ education.display = function() {
 // Add all the formatted html to the page;
 
 bio.display();
-bio.displayContact(header_contact, footer_contact);
 work.display();
 projects.display();
 education.display();
