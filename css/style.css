@@ -111,6 +111,10 @@ section:nth-child(even) {
     margin: 0;
 }
 
+.no-margin-top {
+  margin-top: 0;
+}
+
 .margin-1 {
     margin: 1em;
 }
@@ -479,7 +483,6 @@ article:hover
 /* Summary */
 
 .summary {
-
 }
 
 .tile-item {
@@ -496,9 +499,20 @@ article:hover
     padding: 0.3em 1em;
     margin: 0.3em;
     border: 1px solid #ccc;
-    border-left: 3px solid #ac6d6d;
+    border-left: 3px solid;
     font-weight: 100;
     transform: skewX(-15deg);
+}
+
+/* Colors each group of tags differently */
+.col:nth-child(1) .tag {
+  border-left: 3px solid #a55757;
+}
+.col:nth-child(2) .tag {
+  border-left: 3px solid #66a456;
+}
+.col:nth-child(3) .tag {
+  border-left: 3px solid #568ba4;
 }
 
 .work {
