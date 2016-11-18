@@ -55,6 +55,10 @@ hr {
     /* override default color */
 }
 
+section:nth-child(even) {
+  background: #fff;
+}
+
 
 /* Flex Grid*/
 
@@ -111,6 +115,15 @@ hr {
     margin: 1em;
 }
 
+/* Border Shape */
+
+.round {
+  border-radius: 99%;
+}
+
+.border {
+  border: 1px solid #fff;
+}
 
 /* Buttons/Links */
 
@@ -147,12 +160,66 @@ hr {
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
+/* Background Colors */
+
+.bg-blue {
+  background: #707f94;
+}
+.bg-red {
+  background: #ac6d6d;
+}
+.bg-green {
+  background: #73a16a;
+}
+.bg-yellow {
+  background: #b9965a;
+}
+.bg-purple {
+  background: #a18999;
+}
+
+/* Slide in border animated transition for links/btns*/
+
+.slide{
+  /* so the border pseudoelements are positioned within this element */
+  position: relative;
+}
+.slide:before,
+.slide:after {
+  content: '';
+  /* allows direction of sliding to be adjusted,
+  also lets borders conform to element's shape, including padding */
+  position: absolute;
+  display: block;
+  border-top: 2px solid #fff;
+  width: 0;
+  transition: width .5s ease;
+}
+.slide:before {
+  /*slides in pseudoelement from the left*/
+  top: 0;
+  left: 0;
+}
+.slide:after {
+  /*slides in pseudoelement from the right*/
+  right: 0;
+  bottom: 0;
+}
+.slide:hover:before,
+.slide:hover:after {
+  width: 100%;
+}
+
 /* Lists */
 
 .list-no-style {
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.list-inline-block li{
+  display: inline-block;
 }
 
 /* Sizing */
@@ -169,7 +236,7 @@ hr {
 /* Headings */
 
 h1 {
-    font-size: 2.7em;
+    font-size: 3em;
 }
 
 
@@ -179,20 +246,29 @@ h1 {
     font-weight: 300;
 }
 
-.small-text {
-    font-size: 0.8em;
+.bold {
+  font-weight: 800;
 }
 
-.all-caps {
+.italic {
+  font-style: italic;
+}
+
+.all-caps,
+.uppercase {
     text-transform: uppercase;
+}
+
+.small-text {
+    font-size: 0.8em;
 }
 
 .big-text {
     font-size: 1.3em;
 }
 
-.light-text {
-  font-weight: 100;
+.big-5-text {
+  font-size: 5em;
 }
 
 .spaced-text {
@@ -205,6 +281,10 @@ h1 {
     color: #fff;
 }
 
+.mid-gray {
+  color: #555;
+}
+
 .dark-gray {
     color: #333;
 }
@@ -212,7 +292,6 @@ h1 {
 .sm-black {
     color: #000;
 }
-
 
 /* Effects */
 
@@ -223,8 +302,20 @@ h1 {
 }
 
 .deep-shadow {
-  letter-spacing: .1em;
+  letter-spacing: .15em;
   text-shadow: 0 -1px 0 #ffffff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
+}
+
+.divider {
+  display: inline-block;
+}
+
+.divider:after {
+  content: '';
+  display: block;
+  width: 80%;
+  margin: 0.5em auto 0 auto;
+  border-top: 3px solid #82b8b5;
 }
 
 
@@ -268,6 +359,7 @@ header {
 
 nav {
     width: 100%;
+    margin: 0.5em 0;
 }
 
 nav a {
@@ -275,46 +367,63 @@ nav a {
     margin: 0.2em;
     padding: 0.5em;
     color: #fff;
+    background: #444;
+    background: rgba(51, 51, 51, 0.25);
+    opacity: 0.6;
     text-decoration: none;
+    transition: 0.5s;
 }
 
+nav a:hover {
+  background: transparent;
+  opacity: 1;
+}
 
 /*=======================
 5. Content/Media
 ========================*/
 
 section {
-    max-width: 50em;
-    margin: 1em auto;
     padding: 1em;
 }
 
+.container {
+  max-width: 50em;
+  margin: auto;
+}
+
+blockquote {
+  display: block;
+  padding: 0 1.5em;
+  font-size: 1.4em;
+  font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
+  border: 3px solid #800000;
+  border-width: 0 3px;
+}
 
 /* Hero Text/Image*/
 
 .hero {
     max-width: 100%;
-    /* stretch to fit screen */
-    min-height: 35em;
+    /* Fallback if vh unsupported */
+    height: 30em;
+    /* Fill the screen */
     height: 100vh;
     margin: 0;
     padding: 0;
     border-bottom: 0.5em solid #1b242f;
-    background: #006e87; /* fallback */
+    /* fallback for linear gradient bg*/
+    background: #006e87;
     background: linear-gradient(232deg, #006e87, #c35050);
+    /* prep for animation of bg position */
     background-size: 400% 400%;
     animation: AnimatedBG 8s ease infinite;
 }
 
 @keyframes AnimatedBG {
   0% {background-position: 0 47%;}
-  50% {background-position: 100% 54%;}
+  50% {background-position: 100% 60%;}
   100% {background-position: 0 47%;}
-}
-
-.main-text {
-    padding: 1.5em;
-    background: #fff;
 }
 
 /* Featured Content */
@@ -367,6 +476,58 @@ article:hover
     opacity: 0.9;
 }
 
+/* Summary */
+
+.summary {
+
+}
+
+.tile-item {
+  padding: 1em;
+  transition: all 0.3s;
+}
+
+.tile-item:hover {
+  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.46);
+  transform: scale(1.1);
+}
+
+.tag {
+    padding: 0.3em 1em;
+    margin: 0.3em;
+    border: 1px solid #ccc;
+    border-left: 3px solid #ac6d6d;
+    font-weight: 100;
+    transform: skewX(-15deg);
+}
+
+.work {
+
+}
+
+.projects {
+
+}
+
+.education {
+
+}
+
+.map {
+  height: 20em;
+}
+
+/*temp styles from old page, integrate these into new page asap*/
+#mapDiv {
+  height: inherit;
+    width: 100%;
+    padding-bottom: 5%;
+}
+#map {
+  display: block;
+    height: 100%;
+    margin: 0 5%;
+}
 
 /* Contact */
 
@@ -523,6 +684,16 @@ footer a {
         transition: 0.3s all;
     }
 
+    /* Typography */
+
+    .md-text-size-4 {
+      font-size: 4em;
+    }
+
+    .md-text-size-2 {
+      font-size: 2em;
+    }
+
     /* About */
 
     .headshot {
@@ -557,11 +728,11 @@ footer a {
         /* 1px shadows on all 4 sides to outline the letters */
     }
 
-    .lg-size-5 {
+    .lg-text-size-5 {
       font-size: 5em;
     }
 
-    .lg-size-3 {
+    .lg-text-size-3 {
       font-size: 3em;
     }
 

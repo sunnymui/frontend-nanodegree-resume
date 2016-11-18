@@ -15,7 +15,14 @@ var bio = {
         "Design",
         "Web Development",
         "Conversion Optimization"
-    ]
+    ],
+    "qualifications" : [{
+        "name" : "Writer",
+        "description" : "Wrote articles for online audiences of 1000+/day, wrote hundreds of marketing pieces, and I write short fiction for fun."
+      }, {
+        "name" : "Creative",
+        "description" : "Designed dozens of brand identity pieces, led redesign of a 50,000 user website, and I work in print, web, Adobe, code, and beyond."
+      }]
 };
 
 var work = {
@@ -134,6 +141,20 @@ function format(formatted_html, raw_data) {
     var placeholder = '%data%';
     // check the html for the placeholder and replace with provided data
     return formatted_html.replace(placeholder, raw_data);
+}
+
+function first_letters(string) {
+  /*
+  Takes in a string and returns the first 2 letters of that string.
+  Cuts out any white space before or after the string, so only gets actual letters.
+  ex. for the string 'hello', the return will be 'he'
+  Args: the word you want the first 2 letters of (string)
+  Return: the first 2 letters (string)
+  */
+  // trim out white space from beginning and end
+  var trimmed = string.trim();
+  // get a slice of the string form beginning to 2nd character
+  return trimmed.slice(0, 2);
 }
 
 // header
