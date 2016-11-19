@@ -10,12 +10,28 @@ var bio = {
     },
     "biopic": "https://sunnymui.github.io/one-page-portfolio/img/bw.png",
     "welcomeMessage": "I'm a San Jose, CA based designer, developer, and marketer who's worked in startups and in digital marketing.",
-    "skills": [
+    "skills": [{
+      "Business" : [
         "Digital Marketing",
         "Design",
         "Web Development",
         "Conversion Optimization"
-    ],
+      ]
+    }, {
+      "Design" : [
+        "Digital Marketing",
+        "Design",
+        "Web Development",
+        "Conversion Optimization"
+      ]
+    }, {
+      "Code" : [
+        "Digital Marketing",
+        "Design",
+        "Web Development",
+        "Conversion Optimization"
+      ]
+    }],
     "qualifications" : [{
         "name" : "Writer",
         "description" : "Wrote articles for online audiences of 1000+/day, wrote hundreds of marketing pieces, and I write short fiction for fun."
@@ -128,7 +144,7 @@ var map_section = '#mapDiv';
 // FUNCTIONS //
 ///////////////
 
-function format(formatted_html, raw_data) {
+function format(formatted_html, raw_data, placeholder) {
     /*
     Takes raw data and inserts that data into a preformatted html string,
      replacing a placeholder with the actual data.
@@ -137,8 +153,8 @@ function format(formatted_html, raw_data) {
      Args: the formatted html (string), the raw data to insert into that html (string/numbers)
      Return: the formatted html string with placeholder replaced by that data (string)
     */
-    // the placeholder string to look for in the html
-    var placeholder = '%data%';
+    // the default placeholder string to look for in the html
+    placeholder = default_for(placeholder, '%data%');
     // check the html for the placeholder and replace with provided data
     return formatted_html.replace(placeholder, raw_data);
 }
@@ -155,6 +171,18 @@ function first_letters(string) {
   var trimmed = string.trim();
   // get a slice of the string form beginning to 2nd character
   return trimmed.slice(0, 2);
+}
+
+function default_for(argument, value) {
+  /*
+  Sets a default argument for a function if specified argument is undefined.
+  Args: argument in the function you're checking/setting default for, value of the default argument
+  Return: undefined argument - default value, otherwise the user defined argument value
+  */
+  // checks if argument is undefined
+  // ? : are conditional ternary operators meaning:
+  // condition ?  value if true : value if false
+   return typeof argument !== 'undefined' ? argument : value;
 }
 
 // header
@@ -177,11 +205,34 @@ bio.display = function() {
     // add skills to page header if the skills array isn't empty
     if (bio.skills.length !== 0) {
         $(header).append(HTMLskillsStart);
-        // loop through skills array to add each one as a list item
+
+        // loop through skills array to add each skill group and their respective skills
         for (var i = 0; i < bio.skills.length; i++) {
+            // skills object is essentially a multidimensional array of objects so access is like:
+            // object[object array index][key for inner object array][key of value in innermost array]
+            // bio.skills[i]['Business'][j]
+
+            // object array containing the skill group name as key and array of skills as the value
+            var skill_group = bio.skills[i];
+            // get the current key for the inner object array (group) containing each skill
+            var current_group_key = Object.keys(skill_group);
+            // get the array of skills for the current group key index
+            var current_skills_array = skill_group[current_group_key];
+            // initialize formatted skills to store html in and start with the group title
+            var formatted_skills = format(HTMLskillsGroup, current_group_key);
+
+            // loop through the current group's skills and format/add each one
+            for (var j = 0; j < current_skills_array.length; j++) {
+              // add current skill to formatted skills string and continue doing it
+              formatted_skills += format(HTMLskill, current_skills_array[j]);
+            }
+            // close up the html
+            formatted_skills += HTMLskillEnd;
+            console.log(formatted_skills);
+            // format the current group name and add to page
+            //$(skills).append(current_group_key);
             // format each skill then append it
-            var formatted_skills = format(HTMLskills, bio.skills[i]);
-            $(skills).append(formatted_skills);
+            //$(skills).append(formatted_skills);
         }
     }
 

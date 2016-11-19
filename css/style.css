@@ -164,24 +164,6 @@ section:nth-child(even) {
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
-/* Background Colors */
-
-.bg-blue {
-  background: #707f94;
-}
-.bg-red {
-  background: #ac6d6d;
-}
-.bg-green {
-  background: #73a16a;
-}
-.bg-yellow {
-  background: #b9965a;
-}
-.bg-purple {
-  background: #a18999;
-}
-
 /* Slide in border animated transition for links/btns*/
 
 .slide{
@@ -488,12 +470,36 @@ article:hover
 .tile-item {
   padding: 1em;
   transition: all 0.3s;
+  background: #333;
 }
 
 .tile-item:hover {
   box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.46);
   transform: scale(1.1);
 }
+
+/* Color BG of each Tile Item differently */
+
+li:nth-child(1n)
+  .tile-item {
+    background: #707f94;
+  }
+li:nth-child(2n)
+  .tile-item {
+    background: #ac6d6d;
+  }
+li:nth-child(3n)
+  .tile-item {
+    background: #73a16a;
+  }
+li:nth-child(4n)
+  .tile-item {
+    background: #b9965a;
+  }
+li:nth-child(5n)
+  .tile-item {
+    background: #a18999;
+  }
 
 .tag {
     padding: 0.3em 1em;
@@ -504,16 +510,19 @@ article:hover
     transform: skewX(-15deg);
 }
 
-/* Colors each group of tags differently */
-.col:nth-child(1) .tag {
-  border-left: 3px solid #a55757;
-}
-.col:nth-child(2) .tag {
-  border-left: 3px solid #66a456;
-}
-.col:nth-child(3) .tag {
-  border-left: 3px solid #568ba4;
-}
+/* Color each group of tags differently */
+.col:nth-child(1n)
+  .tag {
+    border-left: 3px solid #707f94;
+  }
+.col:nth-child(2n)
+  .tag {
+    border-left: 3px solid #ac6d6d;
+  }
+.col:nth-child(3n)
+  .tag {
+    border-left: 3px solid #73a16a;
+  }
 
 .work {
 

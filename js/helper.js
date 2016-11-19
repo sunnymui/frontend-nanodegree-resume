@@ -12,8 +12,61 @@ Cameron Pittman
 These are HTML strings. As part of the course, you'll be using JavaScript functions
 replace the %data% placeholder text you see in them.
 */
-var HTMLheaderName = '<h1 id="name">%data%</h1>';
-var HTMLheaderRole = '<span>%data%</span><hr>';
+
+// Hero Section
+var HTMLhero = '<section class="hero flex flex-v-center">'+
+                  '<div class="center center-text all-caps white">'+
+                    '%data%'+
+                    '<nav>'+
+                      '<a class="slide" href="#">Summary</a>'+
+                      '<a class="slide "href="#">Work</a>'+
+                      '<a class="slide" href="#">Projects</a>'+
+                      '<a class="slide" href="#">School</a>'+
+                      '<a class="slide" href="#">Contact</a>'+
+                    '</nav>'+
+                  '</div>'+
+                '</section>';
+
+var HTMLbioPic = '<img src="%data%" class="round border">';
+var HTMLheaderName = '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 ">%data%</h1>';
+var HTMLheaderRole = '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">%data%</h2>';
+var HTMLnav = '<a class="slide" href="#">%data%</a>';
+
+// Summary Section
+
+var HTMLsummaryStart = '<section class="summary">'+
+                          '%contact%'+
+                          '<div class="container center-text">'+
+                            '%data%'+
+                          '</div>'+
+                        '</section';
+
+var HTMLcontactLink = '<li><a class="link" href="%data%"';
+var HTMLcontactLinkTitle = ' title="%data%">';
+var HTMLcontactIcon = '<span class="icon-%data%"></span>';
+var HTMLcontactName ='%name%</a></li>';
+
+var HTMLwelcomeMsg = '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">Summary</h2>'+
+                        '<blockquote class="mid-gray italic">%data%</blockquote>';
+
+var HTMLqualificationStart = '<h3 class="unbold divider">Key Qualifications</h3>'+
+                                '<ul class="qualifications grid list-no-style white">';
+var HTMLqualificationSymbol = '<li class="col md-halves lg-thirds flex gutters">'+
+                                '<div class="tile-item">'+
+                                  '<h4 class="big-5-text no-margin">%data%</h4>';
+var HTMLqualificationName = '<h4 class="uppercase unbold no-margin spaced-text">Writer</h4>';
+var HTMLqualificationDescription = '<p>%data%</p></div></li>';
+var HTMLqualificationEnd = '</ul>';
+
+var HTMLskillsStart = '<h3 class="unbold divider">Skills</h3>'+
+                      '<div class="skills grid"></div>';
+var HTMLskillsGroup = '<div class="col lg-thirds gutters">'+
+                        '<h4 class="no-margin-top">%data%</h4>'+
+                        '<ul class="list-no-style list-inline-block">';
+var HTMLskill = '<li class="tag">%data%</li>';
+var HTMLskillEnd = '</ul></div>';
+
+// Work Experience Section
 
 var HTMLcontactGeneric = '<li class="flex-item"><span class="orange-text">%contact%</span><span class="white-text">%data%</span></li>';
 var HTMLmobile = '<li class="flex-item"><span class="orange-text">mobile</span><span class="white-text">%data%</span></li>';
@@ -23,11 +76,9 @@ var HTMLgithub = '<li class="flex-item"><span class="orange-text">github</span><
 var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span class="white-text">%data%</span></li>';
 var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
 
-var HTMLbioPic = '<img src="%data%" class="biopic">';
-var HTMLwelcomeMsg = '<span class="welcome-message">%data%</span>';
 
-var HTMLskillsStart = '<h3 id="skills-h3">Skills at a Glance:</h3><ul id="skills" class="flex-column"></ul>';
-var HTMLskills = '<li class="flex-item"><span class="white-text">%data%</span></li>';
+
+
 
 var HTMLworkStart = '<div class="work-entry"></div>';
 var HTMLworkEmployer = '<a href="#">%data%';
@@ -84,10 +135,6 @@ function logClicks(x,y) {
   );
   console.log('x location: ' + x + '; y location: ' + y);
 }
-
-$(document).click(function(loc) {
-  // your code goes here!
-});
 
 
 
