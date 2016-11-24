@@ -16,23 +16,34 @@ replace the %data% placeholder text you see in them.
 // Hero Section
 var HTMLhero = '<section class="hero flex flex-v-center">'+
                   '<div class="center center-text all-caps white">'+
-                    '%data%'+
+                    '<img src="%biopic%" class="round border">'+
+                    '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 ">%name%</h1>'+
+                    '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">%role%</h2>'+
                     '<nav>'+
-                      '<a class="slide" href="#">Summary</a>'+
-                      '<a class="slide "href="#">Work</a>'+
-                      '<a class="slide" href="#">Projects</a>'+
-                      '<a class="slide" href="#">School</a>'+
-                      '<a class="slide" href="#">Contact</a>'+
+                      '%nav%'+
                     '</nav>'+
                   '</div>'+
                 '</section>';
 
-var HTMLbioPic = '<img src="%data%" class="round border">';
-var HTMLheaderName = '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 ">%data%</h1>';
-var HTMLheaderRole = '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">%data%</h2>';
-var HTMLnav = '<a class="slide" href="#">%data%</a>';
+var HTMLnav = '<a class="slide" href="#%data%">%data%</a>';
 
 // Summary Section
+
+var HTMLsummary = '<section class="summary">'+
+                      '%contact%'+
+                      '<div class="container center-text">'+
+                        '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">Summary</h2>'+
+                        '<blockquote class="mid-gray italic">%welcomemsg%</blockquote>'+
+                        '<h3 class="unbold divider">Key Qualifications</h3>'+
+                        '<ul class="qualifications grid list-no-style white">'+
+                          '%qualifications%'+
+                        '</ul>'+
+                        '<h3 class="unbold divider">Skills</h3>'+
+                        '<div class="skills grid">'+
+                          '%skillsgroup%'+
+                        '</div>'+
+                      '</div>'+
+                   '</section';
 
 var HTMLsummaryStart = '<section class="summary">'+
                           '%contact%'+
@@ -41,10 +52,17 @@ var HTMLsummaryStart = '<section class="summary">'+
                           '</div>'+
                         '</section';
 
+var HTMLcontact = '<li>'+
+                    '<a class="link" href="%link%" title="%tooltip%">'+
+                      '<span class="icon-%icon%"></span>'+
+                      '%name%'+
+                    '</a>'+
+                  '</li>';
+
 var HTMLcontactLink = '<li><a class="link" href="%data%"';
 var HTMLcontactLinkTitle = ' title="%data%">';
 var HTMLcontactIcon = '<span class="icon-%data%"></span>';
-var HTMLcontactName ='%name%</a></li>';
+var HTMLcontactName ='%data%</a></li>';
 
 var HTMLwelcomeMsg = '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">Summary</h2>'+
                         '<blockquote class="mid-gray italic">%data%</blockquote>';

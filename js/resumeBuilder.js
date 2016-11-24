@@ -2,12 +2,38 @@
 var bio = {
     "name": "Sunny Mui",
     "role": "Web Developer",
-    "contacts": {
-        "email": "sunnycmui@gmail.com",
-        "github": "https://github.com/sunnymui/",
-        "mobile": "510-266-2888",
-        "location": "San Jose, CA"
-    },
+    "contacts": [
+      {
+        "name" : "sunnycmui@gmail.com",
+        "link" : "",
+        "tooltip" : "",
+        "icon" : "email"
+      },{
+        "name" : "562-478-6694",
+        "link" : "",
+        "tooltip" : "",
+        "icon" : "phone"
+      },{
+        "name" : "linkedin.com/in/sunnymui",
+        "link" : "",
+        "tooltip" : "",
+        "icon" : "linkedin"        
+      },{
+        "name" : "github.com/sunnymui",
+        "link" : "",
+        "tooltip" : "",
+        "icon" : "github"
+      },{
+        "name" : "San Jose, CA",
+        "link" : "",
+        "tooltip" : "",
+        "icon" : "location"
+      }
+        // "email": "sunnycmui@gmail.com",
+        // "github": "https://github.com/sunnymui/",
+        // "mobile": "510-266-2888",
+        // "location": "San Jose, CA"
+    ],
     "biopic": "https://sunnymui.github.io/one-page-portfolio/img/bw.png",
     "welcomeMessage": "I'm a San Jose, CA based designer, developer, and marketer who's worked in startups and in digital marketing.",
     "skills": [{
@@ -127,7 +153,7 @@ var education = {
 ///////////////
 
 // DOM selectors
-var main = '#main';
+var main = 'main';
 var header = '#header';
 var skills = '#skills';
 var header_contact = '#topContacts';
@@ -140,24 +166,66 @@ var projects_section = '#projects';
 var project_entry = '.project-entry:last';
 var map_section = '#mapDiv';
 
+// Navigation Sections
+var nav_links = ['summary', 'work', 'projects', 'education', 'contact'];
+
 ///////////////
 // FUNCTIONS //
 ///////////////
 
-function format(formatted_html, raw_data, placeholder) {
-    /*
-    Takes raw data and inserts that data into a preformatted html string,
-     replacing a placeholder with the actual data.
-     Placeholder string that the function looks for is set in the var.
-     ex. <p>%data%</p> => <p>Hello</p>
-     Args: the formatted html (string), the raw data to insert into that html (string/numbers)
-     Return: the formatted html string with placeholder replaced by that data (string)
-    */
-    // the default placeholder string to look for in the html
-    placeholder = default_for(placeholder, '%data%');
-    // check the html for the placeholder and replace with provided data
-    return formatted_html.replace(placeholder, raw_data);
+// Utility Functions
+
+String.prototype.replaceAll = function(search, replace) {
+  /*
+  Extends the builtin string replace method with a replace all method.
+  This will replace every occurence of a matched string.
+  Args: search(string) is what youre looking for, replace(string) is
+  what to replace it with
+  return: string with the matched words replaced
+  */
+    if (replace === undefined) {
+        return this.toString();
+    }
+    return this.split(search).join(replace);
+};
+
+function html(target) {
+/*
+Wrapper function object for allowing some chainable functions on passed in html.
+Args: target of the function, which typically would be an html string
+Returns: this, which would be the returned modified html in and object from the subfunctions
+*/
+  if (!(this instanceof html)) {
+  return new html(target);
+  }
+
+  // initialize an html key with the value of the passed in target html
+  this.html = target;
+
+  // return itself as an object to allow chaining
+  return this;
 }
+
+  html.prototype.format = function(raw_data, placeholder) {
+      /*
+      Takes raw data and inserts that data into a preformatted html string,
+       replacing a placeholder with the actual data.
+       Chainable function within the html function made by returning this.
+       Placeholder string that the function looks for is set in the var.
+       ex. <p>%data%</p> => <p>Hello</p>
+       Args: the formatted html (string), the raw data to insert into that html (string/numbers)
+       Return: the formatted html string with placeholder replaced by that data (string)
+      */
+      // the default placeholder string to look for in the html
+      placeholder = default_for(placeholder,'%data%');
+      // check the html for occurences of the placeholder and replace with provided data
+      // set this.html to the result of the function so it can be returned
+      this.html =  this.html.replaceAll(placeholder, raw_data);
+
+      // return the results as an object to allow chaining
+      // when using this function, put .html at the end to get the value of the html
+      return this;
+  };
 
 function first_letters(string) {
   /*
@@ -196,11 +264,35 @@ bio.display = function() {
     Returns: no returns, but does append formatted html to the page
     */
 
-    // header
-    var formatted_bio = format(HTMLheaderName, bio.name) +
+    // Hero
+
+    // create the nav bar html
+    var formatted_nav = '';
+    // loop through the nav links array and format them to add to the hero
+    for (var i=0; i < nav_links.length; i+=1) {
+      formatted_nav += html(HTMLnav).format(nav_links[i]).html;
+    }
+
+    // create the hero area html
+    var formatted_hero = html(HTMLhero).format(bio.biopic,'%biopic%')
+                                       .format(bio.name,'%name%')
+                                       .format(bio.role,'%role%')
+                                       .format(formatted_nav,'%nav%')
+                                       .html; // returns the html value from the html object
+    // add the hero html to the page
+    $('main').prepend(formatted_hero);
+
+    // Summary
+
+    var formatted_contact = '';
+
+
+    var formatted_summary = html(HTMLsummary).format(bio.name)
+
+    /*var formatted_bio = format(HTMLheaderName, bio.name) +
                         format(HTMLheaderRole, bio.role) +
                         format(HTMLbioPic, bio.biopic) +
-                        format(HTMLwelcomeMsg, bio.welcomeMessage);
+                        format(HTMLwelcomeMsg, bio.welcomeMessage);*/
 
     // add skills to page header if the skills array isn't empty
     if (bio.skills.length !== 0) {
@@ -252,6 +344,7 @@ bio.display = function() {
 
       // contact
       // store formatted as vars so we don't format stuff again for every dom location
+      var formatted_contacts = html(HTMLcontact).format()
       var formatted_email = format(HTMLemail, bio.contacts.email);
       var formatted_github = format(HTMLgithub, bio.contacts.github);
       var formatted_mobile = format(HTMLmobile, bio.contacts.mobile);

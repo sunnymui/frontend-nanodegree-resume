@@ -245,6 +245,10 @@ h1 {
     text-transform: uppercase;
 }
 
+.capitalize {
+  text-transform: capitalize;
+}
+
 .small-text {
     font-size: 0.8em;
 }
@@ -395,8 +399,6 @@ blockquote {
     height: 30em;
     /* Fill the screen */
     height: 100vh;
-    margin: 0;
-    padding: 0;
     border-bottom: 0.5em solid #1b242f;
     /* fallback for linear gradient bg*/
     background: #006e87;
@@ -404,6 +406,10 @@ blockquote {
     /* prep for animation of bg position */
     background-size: 400% 400%;
     animation: AnimatedBG 8s ease infinite;
+}
+
+.hero img {
+  width: 9em;
 }
 
 @keyframes AnimatedBG {
