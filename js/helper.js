@@ -30,27 +30,25 @@ var HTMLnav = '<a class="slide" href="#%data%">%data%</a>';
 // Summary Section
 
 var HTMLsummary = '<section class="summary">'+
-                      '%contact%'+
+                      '<ul class="contact list-no-style all-caps center-text">'+
+                      '</ul>'+
                       '<div class="container center-text">'+
-                        '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">Summary</h2>'+
-                        '<blockquote class="mid-gray italic">%welcomemsg%</blockquote>'+
+                        '<h2 class="unbold divider">Summary</h2>'+
+                        '<blockquote class="mid-gray italic">'+
+                          '%welcomemsg%'+
+                        '</blockquote>'+
                         '<h3 class="unbold divider">Key Qualifications</h3>'+
                         '<ul class="qualifications grid list-no-style white">'+
                           '%qualifications%'+
                         '</ul>'+
                         '<h3 class="unbold divider">Skills</h3>'+
                         '<div class="skills grid">'+
-                          '%skillsgroup%'+
+                          '%skillsgroups%'+
                         '</div>'+
                       '</div>'+
                    '</section';
 
-var HTMLsummaryStart = '<section class="summary">'+
-                          '%contact%'+
-                          '<div class="container center-text">'+
-                            '%data%'+
-                          '</div>'+
-                        '</section';
+// contacts
 
 var HTMLcontact = '<li>'+
                     '<a class="link" href="%link%" title="%tooltip%">'+
@@ -59,30 +57,25 @@ var HTMLcontact = '<li>'+
                     '</a>'+
                   '</li>';
 
-var HTMLcontactLink = '<li><a class="link" href="%data%"';
-var HTMLcontactLinkTitle = ' title="%data%">';
-var HTMLcontactIcon = '<span class="icon-%data%"></span>';
-var HTMLcontactName ='%data%</a></li>';
+// qualifications
 
-var HTMLwelcomeMsg = '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">Summary</h2>'+
-                        '<blockquote class="mid-gray italic">%data%</blockquote>';
+var HTMLqualification = '<li class="col md-halves lg-thirds flex gutters">'+
+                          '<div class="tile-item">'+
+                            '<h4 class="big-5-text no-margin">%symbol%</h4>'+
+                            '<h4 class="uppercase unbold no-margin spaced-text">%name%</h4>'+
+                            '<p>%description%</p>'+
+                          '</div>'+
+                        '</li>';
 
-var HTMLqualificationStart = '<h3 class="unbold divider">Key Qualifications</h3>'+
-                                '<ul class="qualifications grid list-no-style white">';
-var HTMLqualificationSymbol = '<li class="col md-halves lg-thirds flex gutters">'+
-                                '<div class="tile-item">'+
-                                  '<h4 class="big-5-text no-margin">%data%</h4>';
-var HTMLqualificationName = '<h4 class="uppercase unbold no-margin spaced-text">Writer</h4>';
-var HTMLqualificationDescription = '<p>%data%</p></div></li>';
-var HTMLqualificationEnd = '</ul>';
+// skills
 
-var HTMLskillsStart = '<h3 class="unbold divider">Skills</h3>'+
-                      '<div class="skills grid"></div>';
 var HTMLskillsGroup = '<div class="col lg-thirds gutters">'+
                         '<h4 class="no-margin-top">%data%</h4>'+
-                        '<ul class="list-no-style list-inline-block">';
+                        '<ul class="list-no-style list-inline-block">'+
+                          '%skills%'+
+                        '</ul>'+
+                      '</div>';
 var HTMLskill = '<li class="tag">%data%</li>';
-var HTMLskillEnd = '</ul></div>';
 
 // Work Experience Section
 

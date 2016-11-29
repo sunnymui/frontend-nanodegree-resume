@@ -2,60 +2,84 @@
 var bio = {
     "name": "Sunny Mui",
     "role": "Web Developer",
-    "contacts": [
-      {
+    "contacts": [{
         "name" : "sunnycmui@gmail.com",
-        "link" : "",
-        "tooltip" : "",
+        "link" : "mailto:sunnycmui@gmail.com",
+        "tooltip" : "Email me",
         "icon" : "email"
       },{
         "name" : "562-478-6694",
-        "link" : "",
-        "tooltip" : "",
+        "link" : "tel:+1-562-478-6694",
+        "tooltip" : "Call or text me",
         "icon" : "phone"
       },{
         "name" : "linkedin.com/in/sunnymui",
-        "link" : "",
-        "tooltip" : "",
-        "icon" : "linkedin"        
+        "link" : "https://www.linkedin.com/in/sunnymui",
+        "tooltip" : "Check my professional profile on LinkedIn",
+        "icon" : "linkedin"
       },{
         "name" : "github.com/sunnymui",
-        "link" : "",
-        "tooltip" : "",
+        "link" : "https://github.com/sunnymui/",
+        "tooltip" : "View some of my work/code on GitHub",
         "icon" : "github"
       },{
         "name" : "San Jose, CA",
-        "link" : "",
-        "tooltip" : "",
+        "link" : "https://goo.gl/maps/namUDrRMPt42",
+        "tooltip" : "Locate me on Google Maps",
         "icon" : "location"
       }
-        // "email": "sunnycmui@gmail.com",
-        // "github": "https://github.com/sunnymui/",
-        // "mobile": "510-266-2888",
-        // "location": "San Jose, CA"
     ],
     "biopic": "https://sunnymui.github.io/one-page-portfolio/img/bw.png",
-    "welcomeMessage": "I'm a San Jose, CA based designer, developer, and marketer who's worked in startups and in digital marketing.",
+    "welcomeMessage": "Designer and web developer in San Jose, California who's worked several years in startups and freelance doing design, UX, UI, front end development, copywriting, and digital marketing. I've also done brochures, logos, branding, posters, pitch decks, and more. Committed to learning and continuous improvement.",
     "skills": [{
       "Business" : [
         "Digital Marketing",
-        "Design",
-        "Web Development",
-        "Conversion Optimization"
+        "Social Media Marketing",
+        "Content Marketing",
+        "Email Marketing",
+        "Writing",
+        "Presentations",
+        "Infusionsoft",
+        "Excel",
+        "SEO",
+        "Conversion Optimization",
+        "A/B Testing",
+        "Project Management",
+        "Analytics"
       ]
     }, {
       "Design" : [
-        "Digital Marketing",
-        "Design",
-        "Web Development",
-        "Conversion Optimization"
+        "Photoshop",
+        "Illustrator",
+        "InDesign",
+        "Logo",
+        "Identity",
+        "Branding Materials",
+        "Brochures",
+        "Websites",
+        "Responsive Design",
+        "User Interface",
+        "Photography",
+        "Prototyping/Mockups"
       ]
     }, {
       "Code" : [
-        "Digital Marketing",
-        "Design",
+        "HTML",
+        "CSS",
+        "jQuery",
+        "Javascript",
+        "PHP",
+        "Python",
+        "MySQL",
+        "Grunt",
+        "Wordpress",
+        "HTML5 Boilerplate",
+        "Atom",
+        "Notepad++",
         "Web Development",
-        "Conversion Optimization"
+        "Front End Development",
+        "Git",
+        "FTP"
       ]
     }],
     "qualifications" : [{
@@ -64,6 +88,15 @@ var bio = {
       }, {
         "name" : "Creative",
         "description" : "Designed dozens of brand identity pieces, led redesign of a 50,000 user website, and I work in print, web, Adobe, code, and beyond."
+      }, {
+        "name" : "Analytical",
+        "description" : "Dug for analytics insights, optimized conversion with a/b tests/heat maps/data tools, and methodically tackled technical problems."
+      }, {
+        "name" : "Usability",
+        "description" : "Tested usability in 1-on-1 sessions and implemented best practice usability heuristics in the real world."
+      }, {
+        "name" : "Adaptable",
+        "description" : "Led marketing, design, and front end development in a start-up environment where learning skills everyday was essential."
       }]
 };
 
@@ -156,7 +189,7 @@ var education = {
 var main = 'main';
 var header = '#header';
 var skills = '#skills';
-var header_contact = '#topContacts';
+var header_contact = '.contact';
 var footer_contact = '#footerContacts';
 var work_exp = '#workExperience';
 var work_entry = '.work-entry:last';
@@ -253,8 +286,6 @@ function default_for(argument, value) {
    return typeof argument !== 'undefined' ? argument : value;
 }
 
-// header
-
 bio.display = function() {
     /*
     Displays the info from the bio data object in the html page.
@@ -264,76 +295,10 @@ bio.display = function() {
     Returns: no returns, but does append formatted html to the page
     */
 
-    // Hero
+    // CONTACTS
+    // Function useful so we don't format the contact data again for every section.
 
-    // create the nav bar html
-    var formatted_nav = '';
-    // loop through the nav links array and format them to add to the hero
-    for (var i=0; i < nav_links.length; i+=1) {
-      formatted_nav += html(HTMLnav).format(nav_links[i]).html;
-    }
-
-    // create the hero area html
-    var formatted_hero = html(HTMLhero).format(bio.biopic,'%biopic%')
-                                       .format(bio.name,'%name%')
-                                       .format(bio.role,'%role%')
-                                       .format(formatted_nav,'%nav%')
-                                       .html; // returns the html value from the html object
-    // add the hero html to the page
-    $('main').prepend(formatted_hero);
-
-    // Summary
-
-    var formatted_contact = '';
-
-
-    var formatted_summary = html(HTMLsummary).format(bio.name)
-
-    /*var formatted_bio = format(HTMLheaderName, bio.name) +
-                        format(HTMLheaderRole, bio.role) +
-                        format(HTMLbioPic, bio.biopic) +
-                        format(HTMLwelcomeMsg, bio.welcomeMessage);*/
-
-    // add skills to page header if the skills array isn't empty
-    if (bio.skills.length !== 0) {
-        $(header).append(HTMLskillsStart);
-
-        // loop through skills array to add each skill group and their respective skills
-        for (var i = 0; i < bio.skills.length; i++) {
-            // skills object is essentially a multidimensional array of objects so access is like:
-            // object[object array index][key for inner object array][key of value in innermost array]
-            // bio.skills[i]['Business'][j]
-
-            // object array containing the skill group name as key and array of skills as the value
-            var skill_group = bio.skills[i];
-            // get the current key for the inner object array (group) containing each skill
-            var current_group_key = Object.keys(skill_group);
-            // get the array of skills for the current group key index
-            var current_skills_array = skill_group[current_group_key];
-            // initialize formatted skills to store html in and start with the group title
-            var formatted_skills = format(HTMLskillsGroup, current_group_key);
-
-            // loop through the current group's skills and format/add each one
-            for (var j = 0; j < current_skills_array.length; j++) {
-              // add current skill to formatted skills string and continue doing it
-              formatted_skills += format(HTMLskill, current_skills_array[j]);
-            }
-            // close up the html
-            formatted_skills += HTMLskillEnd;
-            console.log(formatted_skills);
-            // format the current group name and add to page
-            //$(skills).append(current_group_key);
-            // format each skill then append it
-            //$(skills).append(formatted_skills);
-        }
-    }
-
-    // add formatted html to beginning of header
-    $(header).prepend(formatted_bio);
-
-    // contacts
-
-    var displayContact = function(/* DOM location(s) as arguments */) {
+    function displayContact(/* DOM location(s) as arguments */) {
       /*
       Displays the contact info from the bio in specified locations on the page.
       Takes raw data from the bio data object, formats it using the appropriate helper
@@ -342,26 +307,131 @@ bio.display = function() {
       Return: none, but does append the contact info to the page
       */
 
-      // contact
-      // store formatted as vars so we don't format stuff again for every dom location
-      var formatted_contacts = html(HTMLcontact).format()
-      var formatted_email = format(HTMLemail, bio.contacts.email);
-      var formatted_github = format(HTMLgithub, bio.contacts.github);
-      var formatted_mobile = format(HTMLmobile, bio.contacts.mobile);
-      var formatted_location = format(HTMLlocation, bio.contacts.location);
+      // initialize var to store formatted contact html string
+      // cached so we don't redo the format functions for every dom location
+      var formatted_contacts = '';
 
-      // append the formatted contact info to the specified location
-      // loop through arguments object to allow multiple dom locations to be passed
-      for (var i = 0; i < arguments.length; i+=1) {
-        var dom_location = arguments[i];
-        $(dom_location).append(formatted_email,
-                               formatted_github,
-                               formatted_mobile,
-                               formatted_location);
+      // format and show contacts if the array is not empty
+      if (bio.contacts.length !==0) {
+
+        // loop through each contact and format the html with the data for each contact
+        for (var i = 0; i < bio.contacts.length; i+=1) {
+          // current contact in the contacts array
+          var current_contact = bio.contacts[i];
+          // add each contact's data to the formatted html
+          formatted_contacts += html(HTMLcontact).format(current_contact.name, '%name%')
+                                                 .format(current_contact.link, '%link%')
+                                                 .format(current_contact.tooltip, '%tooltip%')
+                                                 .format(current_contact.icon, '%icon%')
+                                                 .html;
+        }
+
+        // append the formatted contact info to the specified location(s)
+        // loop through arguments object to allow multiple dom locations to be passed
+        for (i = 0; i < arguments.length; i+=1) {
+          var dom_location = arguments[i];
+          $(dom_location).append(formatted_contacts);
+        }
+
       }
-    };
 
+
+    }
+
+    //
+    // HERO SECTION
+    //
+
+    // create the nav bar html
+    var formatted_nav = '';
+    // loop through the nav links array and format them to add to the hero
+    for (var i = 0; i < nav_links.length; i+=1) {
+      formatted_nav += html(HTMLnav).format(nav_links[i]).html;
+    }
+
+    // create the hero area html with the data added to the hero template
+    var formatted_hero = html(HTMLhero).format(bio.biopic,'%biopic%')
+                                       .format(bio.name,'%name%')
+                                       .format(bio.role,'%role%')
+                                       .format(formatted_nav,'%nav%')
+                                       .html; // returns the html value from the html object
+
+
+    //
+    // SUMMARY SECTION
+    //
+
+    // SKILLS
+    // create skills section html for insertion into the summary html template
+
+    // initialize var to store the formatted skills groups html in
+    var formatted_skills_groups = '';
+    // add skills if the skills array isn't empty
+    if (bio.skills.length !== 0) {
+
+        // loop through skills array to add each skill group and their respective skills
+        for (i = 0; i < bio.skills.length; i+=1) {
+            // skills object is essentially a multidimensional array of objects so access is like:
+            // object[object array index][key for inner object array][key of value in innermost array]
+            // bio.skills[i]['Business'][j]
+
+            // the current skills group in the array
+            var current_group = bio.skills[i];
+            // get the current key for the current skill group's array of skills
+            var current_group_key = Object.keys(current_group);
+            // get the array of skills for the current skill group
+            var current_skills_array = current_group[current_group_key];
+
+            // initialize var to store the formatted individual skills in
+            var formatted_skills = '';
+            // loop through the current group's skills and format/add each one
+            for (var j = 0; j < current_skills_array.length; j+=1) {
+              // format current skill data into html for every skill in the array and put it all together
+              formatted_skills += html(HTMLskill).format(current_skills_array[j]).html;
+            }
+
+            // format the current skills group with the title and the respective skills
+            // put all the groups together in a single string to insert in the template
+            formatted_skills_groups += html(HTMLskillsGroup).format(current_group_key)
+                                                            .format(formatted_skills, '%skills%')
+                                                            .html;
+        }
+
+    }
+
+    // QUALIFICATIONS
+    // create qualifications section html for later insertion into summary html template
+
+    // initialize var to store the formatted qualifications html
+    var formatted_qualifications = '';
+    // add qualifications section if it's not empty
+    if (bio.qualifications.length !==0) {
+
+      // loop through the qualifications array
+      for (i = 0; i < bio.qualifications.length; i+=1) {
+        var current_qual = bio.qualifications[i];
+        // add each qualification's data to the html qualifications template
+        formatted_qualifications += html(HTMLqualification).format(first_letters(current_qual.name), '%symbol%')
+                                                           .format(current_qual.name, '%name%')
+                                                           .format(current_qual.description, '%description%')
+                                                           .html;
+      }
+
+    }
+
+    // now that all the html is ready for insertion, add everything to the summary html template
+    var formatted_summary = html(HTMLsummary).format(bio.welcomeMessage, '%welcomemsg%')
+                                             .format(formatted_qualifications, '%qualifications%')
+                                             .format(formatted_skills_groups, '%skillsgroups%')
+                                             .html;
+
+    // add the hero html to the page
+    $(main).prepend(formatted_hero);
+    // add summary section html to the page
+    $(main).append(formatted_summary);
+    // add contacts html to the page
     displayContact(header_contact, footer_contact);
+
 
 };
 
