@@ -1,22 +1,7 @@
-/*
-
-This file contains all of the code running in the background that makes resumeBuilder.js possible. We call these helper functions because they support your code in this course.
-
-Don't worry, you'll learn what's going on in this file throughout the course. You won't need to make any changes to it until you start experimenting with inserting a Google Map in Problem Set 3.
-
-Cameron Pittman
-*/
-
-
-/*
-These are HTML strings. As part of the course, you'll be using JavaScript functions
-replace the %data% placeholder text you see in them.
-*/
-
 // Hero Section
 var HTMLhero = '<section class="hero flex flex-v-center">'+
                   '<div class="center center-text all-caps white">'+
-                    '<img src="%biopic%" class="round border">'+
+                    '<img src="%pic%" class="round border" alt="">'+
                     '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 ">%name%</h1>'+
                     '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">%role%</h2>'+
                     '<nav>'+
@@ -34,9 +19,9 @@ var HTMLsummary = '<section class="summary">'+
                       '</ul>'+
                       '<div class="container center-text">'+
                         '<h2 class="unbold divider">Summary</h2>'+
-                        '<blockquote class="mid-gray italic">'+
+                        '<p class="mid-gray italic intro">'+
                           '%welcomemsg%'+
-                        '</blockquote>'+
+                        '</p>'+
                         '<h3 class="unbold divider">Key Qualifications</h3>'+
                         '<ul class="qualifications grid list-no-style white">'+
                           '%qualifications%'+
@@ -79,6 +64,41 @@ var HTMLskill = '<li class="tag">%data%</li>';
 
 // Work Experience Section
 
+var HTMLwork = '<section class="work">'+
+                 '<div class="container center-text">'+
+                   '<h2 class="unbold divider">Work and Experience</h2>'+
+                   '<ul class="list-no-style">'+
+                    '%entries%'+
+                   '</ul>'+
+                 '</div>'+
+              '</section>';
+var HTMLworkEntry = '<li class="v-margin-1">'+
+                      '<img class="inline-top round border" src="%logo% alt="%company% Logo" />'+
+                      '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
+                        '<h3 class="unbold no-margin">%role%</h3>'+
+                        '<h4 class="no-margin">%company% <span class="light-gray italic small-text unbold">◉ %location%</span></h4>'+
+                        '<h5 class="unbold v-margin-1 light-gray">'+
+                          '<time>%start%</time>'+
+                          '<span class="linker"></span>'+
+                          '<time>%end%</time>'+
+                        '</h5>'+
+                        '<p>'+
+                          '%description'+
+                        '</p>'+
+                        '<ul>'+
+                          '%list%'+
+                        '</ul>'+
+                      '</div>'+
+                    '</li>';
+var HTMLworkEntryList = '<li>%point%</li>';
+var HTMLworkTestimonial = '<blockquote>'+
+                            '%testimonial%'+
+                            '<p>'+
+                              '<img src="%photo%" alt="Pic of %person%" />'+
+                              '%person%'+
+                            '</p>'+
+                          '</blockquote>';
+
 var HTMLcontactGeneric = '<li class="flex-item"><span class="orange-text">%contact%</span><span class="white-text">%data%</span></li>';
 var HTMLmobile = '<li class="flex-item"><span class="orange-text">mobile</span><span class="white-text">%data%</span></li>';
 var HTMLemail = '<li class="flex-item"><span class="orange-text">email</span><span class="white-text">%data%</span></li>';
@@ -86,10 +106,6 @@ var HTMLtwitter = '<li class="flex-item"><span class="orange-text">twitter</span
 var HTMLgithub = '<li class="flex-item"><span class="orange-text">github</span><span class="white-text">%data%</span></li>';
 var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span class="white-text">%data%</span></li>';
 var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
-
-
-
-
 
 var HTMLworkStart = '<div class="work-entry"></div>';
 var HTMLworkEmployer = '<a href="#">%data%';

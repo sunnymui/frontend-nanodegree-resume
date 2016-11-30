@@ -99,10 +99,6 @@ section:nth-child(even) {
 
 /* Alignment & Spacing */
 
-.center-text {
-    text-align: center;
-}
-
 .center {
     margin: auto;
 }
@@ -115,8 +111,26 @@ section:nth-child(even) {
   margin-top: 0;
 }
 
+.margin-05 {
+    margin: 0.5em;
+}
+
 .margin-1 {
     margin: 1em;
+}
+
+.v-margin-1 {
+    margin: 1em auto;
+}
+
+.inline-middle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.inline-top {
+    display: inline-block;
+    vertical-align: top;
 }
 
 /* Border Shape */
@@ -225,6 +239,19 @@ h1 {
     font-size: 3em;
 }
 
+/* Text Layout */
+
+.center-text {
+    text-align: center;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+}
 
 /* Text Styling */
 
@@ -269,6 +296,10 @@ h1 {
 
 .white {
     color: #fff;
+}
+
+.light-gray {
+  color: #888;
 }
 
 .mid-gray {
@@ -383,12 +414,38 @@ section {
 }
 
 blockquote {
+  background: #f9f9f9;
+  font-weight: 300;
+  border-width: 0 0 0 1px;
+  padding: 1em;
+  quotes: "\201C""\201D""\2018""\2019";
+}
+
+/* Make the quotation mark accent */
+
+blockquote:before {
+  color: #ccc;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+
+blockquote p {
+  padding: 0.5em;
+  text-align: center;
+  color: #888;
+  font-size: 0.8em;
+  font-style: italic;
+  border-top: 1px solid #eee;
+  margin: 1em 0 0 0;
+}
+blockquote img {
   display: block;
-  padding: 0 1.5em;
-  font-size: 1.4em;
-  font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
-  border: 3px solid #800000;
-  border-width: 0 3px;
+  margin: 0.5em auto;
+  border-radius: 99%;
+  max-width: 3em;
 }
 
 /* Hero Text/Image*/
@@ -470,7 +527,14 @@ article:hover
 
 /* Summary */
 
-.summary {
+.intro {
+  display: block;
+  margin: 1em 1.8em;
+  padding: 0 1.5em;
+  font-size: 1.4em;
+  font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
+  border: 3px solid #800000;
+  border-width: 0 3px;
 }
 
 .tile-item {
@@ -530,9 +594,49 @@ li:nth-child(5n)
     border-left: 3px solid #73a16a;
   }
 
-.work {
+/* Work */
 
+.entry {
+    border-left: 3px solid #800000;
+    padding-left: 1em;
 }
+
+.entry blockquote {
+  /* Remove the extra margin for blockquotes in entries*/
+  margin: 1em 0;
+}
+
+/* Make a timeline like inline hr */
+
+.linker {
+  width: 25%;
+  border-bottom: 1px solid #ccc;
+  margin: 0 0.5em;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Create the dots at each end of the linker*/
+
+  .linker::before,
+  .linker::after {
+      content: '';
+      position: absolute;
+      top: -0.35em;
+      width: 0.7em;
+      height: 0.7em;
+      background: #ccc;
+      border-radius: 99%;
+  }
+
+  .linker::before {
+      left: 0;
+  }
+
+  .linker::after {
+      right: 0;
+  }
 
 .projects {
 
@@ -707,6 +811,12 @@ footer a {
         min-width: 0;
     }
 
+    /* General & Layout */
+
+    .md-75-max-width {
+       max-width: 75%;
+    }
+
     /* Animate the breakpoint transitions */
 
     .grid, .md-whole, .md-halves, .lg-thirds {
@@ -721,6 +831,21 @@ footer a {
 
     .md-text-size-2 {
       font-size: 2em;
+    }
+
+    .md-left-text {
+      text-align: left;
+    }
+
+    /* Entries */
+
+    blockquote p {
+      text-align: right;
+    }
+
+    blockquote img {
+      display: inline-block;
+      margin: 0 0.5em 0 0;
     }
 
     /* About */

@@ -286,6 +286,8 @@ function default_for(argument, value) {
    return typeof argument !== 'undefined' ? argument : value;
 }
 
+// Display functions for json data
+
 bio.display = function() {
     /*
     Displays the info from the bio data object in the html page.
@@ -294,6 +296,31 @@ bio.display = function() {
     Args: none as passed parameters, but does get data from the object
     Returns: no returns, but does append formatted html to the page
     */
+
+    //
+    // HERO SECTION
+    //
+
+    // create the nav bar html
+    var formatted_nav = '';
+    // loop through the nav links array and format them to add to the hero
+    for (var i = 0; i < nav_links.length; i+=1) {
+      formatted_nav += html(HTMLnav).format(nav_links[i]).html;
+    }
+
+    // create the hero area html with the data added to the hero template
+    var formatted_hero = html(HTMLhero).format(bio.biopic,'%pic%')
+                                       .format(bio.name,'%name%')
+                                       .format(bio.role,'%role%')
+                                       .format(formatted_nav,'%nav%')
+                                       .html; // returns the html value from the html object
+
+    // add the hero html to the page
+    $(main).prepend(formatted_hero);
+
+    //
+    // SUMMARY SECTION
+    //
 
     // CONTACTS
     // Function useful so we don't format the contact data again for every section.
@@ -335,31 +362,7 @@ bio.display = function() {
 
       }
 
-
     }
-
-    //
-    // HERO SECTION
-    //
-
-    // create the nav bar html
-    var formatted_nav = '';
-    // loop through the nav links array and format them to add to the hero
-    for (var i = 0; i < nav_links.length; i+=1) {
-      formatted_nav += html(HTMLnav).format(nav_links[i]).html;
-    }
-
-    // create the hero area html with the data added to the hero template
-    var formatted_hero = html(HTMLhero).format(bio.biopic,'%biopic%')
-                                       .format(bio.name,'%name%')
-                                       .format(bio.role,'%role%')
-                                       .format(formatted_nav,'%nav%')
-                                       .html; // returns the html value from the html object
-
-
-    //
-    // SUMMARY SECTION
-    //
 
     // SKILLS
     // create skills section html for insertion into the summary html template
@@ -425,13 +428,12 @@ bio.display = function() {
                                              .format(formatted_skills_groups, '%skillsgroups%')
                                              .html;
 
-    // add the hero html to the page
-    $(main).prepend(formatted_hero);
+    // SUMMARY SECTION APPEND TO PAGE
+
     // add summary section html to the page
     $(main).append(formatted_summary);
     // add contacts html to the page
     displayContact(header_contact, footer_contact);
-
 
 };
 
