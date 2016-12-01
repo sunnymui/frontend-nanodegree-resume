@@ -14,7 +14,8 @@ var HTMLnav = '<a class="slide" href="#%data%">%data%</a>';
 
 // Summary Section
 
-var HTMLsummary = '<section class="summary">'+
+var HTMLsummary = '<a id="summary"></a>'+
+                  '<section class="summary">'+
                       '<ul class="contact list-no-style all-caps center-text">'+
                       '</ul>'+
                       '<div class="container center-text">'+
@@ -64,7 +65,8 @@ var HTMLskill = '<li class="tag">%data%</li>';
 
 // Work Experience Section
 
-var HTMLwork = '<section class="work">'+
+var HTMLwork = '<a id="work"></a>'+
+               '<section class="work">'+
                  '<div class="container center-text">'+
                    '<h2 class="unbold divider">Work and Experience</h2>'+
                    '<ul class="list-no-style">'+

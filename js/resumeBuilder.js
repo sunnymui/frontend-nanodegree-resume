@@ -16,9 +16,6 @@ var projects_section = '#projects';
 var project_entry = '.project-entry:last';
 var map_section = '#mapDiv';
 
-// Navigation Sections
-var nav_links = ['summary', 'work', 'projects', 'education', 'contact'];
-
 ///////////////
 // FUNCTIONS //
 ///////////////
@@ -118,9 +115,12 @@ bio.display = function() {
     // HERO SECTION
     //
 
-    // create the nav bar html
+    // initialize var to store nav bar html
     var formatted_nav = '';
-    // loop through the nav links array and format them to add to the hero
+    // Navigation Sections
+    var nav_links = ['summary', 'work', 'projects', 'education', 'contact'];
+
+    // loop through the nav sections array and format them to add to the hero
     for (var i = 0; i < nav_links.length; i+=1) {
       formatted_nav += html(HTMLnav).format(nav_links[i]).html;
     }
@@ -132,7 +132,9 @@ bio.display = function() {
                                        .format(formatted_nav,'%nav%')
                                        .html; // returns the html value from the html object
 
-    // add the hero html to the page
+    // ADD HERO HTML TO PAGE
+
+    // prepend because we want it at the beginning
     $(main).prepend(formatted_hero);
 
     //
@@ -140,7 +142,8 @@ bio.display = function() {
     //
 
     // CONTACTS
-    // Function useful so we don't format the contact data again for every section.
+    // Function useful so we don't format the same contact data multiple times.
+    // every time we want to append it somewhere on the page
 
     function displayContact(/* DOM location(s) as arguments */) {
       /*
@@ -245,7 +248,7 @@ bio.display = function() {
                                              .format(formatted_skills_groups, '%skillsgroups%')
                                              .html;
 
-    // SUMMARY SECTION APPEND TO PAGE
+    // APPEND SUMMARY HTML TO PAGE
 
     // add summary section html to the page
     $(main).append(formatted_summary);
@@ -254,7 +257,9 @@ bio.display = function() {
 
 };
 
-// work experience
+//
+// WORK SECTION
+//
 
 work.display = function() {
   /*
@@ -266,6 +271,35 @@ work.display = function() {
   */
 
   // work experience
+
+  // TESTIMONIALS / RECOMMENDATIONS
+  // create testimonials section formatted html to add the the work html template later
+
+  // check if there's even any testimonials data
+  if (work.testimonials.length !== 0) {
+
+    var formatted_testimonials = '';
+    // loop through the testimonials data and format each one with the html template
+    for (var i = 0; i < work.testimonials.length; i+=1 ) {
+      // the current testimonial data we're working with in the object array
+      var current_testimonial = work.testimonials[i];
+
+      // format the data with the testimonial html template and store in the formatted string
+      formatted_testimonials += html(HTMLworkTestimonial).format(current_testimonial.text, '%testimonial%')
+                               .format(current_testimonial.link, '%link%')
+                               .format(current_testimonial.pic, '%photo%')
+                               .format(current_testimonial.name, '%person%')
+                               .format(current_testimonial.role, '%role%')
+                               .html;
+    }
+
+  }
+
+  // BULLET POINTS JOB DESCRIPTION
+  // creates the list to summarize job accomplishments and be ready to add it to the work entry html template
+
+
+
   // adds the info to the experience section for each job in the work object
   for (var i = 0; i < work.jobs.length; i++) {
     $(work_exp).append(HTMLworkStart);
@@ -281,7 +315,11 @@ work.display = function() {
                          format(HTMLworkLocation, work.jobs[i].location) +
                          format(HTMLworkDescription, work.jobs[i].description);
 
-    // add formatted html to the work section of the page
+
+    //
+    // APPEND FORMATTED WORK HTML TO THE PAGE
+    //
+
     $(work_entry).append(formatted_work);
   }
 };
