@@ -4,8 +4,6 @@
 
 // DOM selectors
 var main = 'main';
-var header = '#header';
-var skills = '#skills';
 var header_contact = '.contact';
 var footer_contact = '#footerContacts';
 var work_exp = '#workExperience';
@@ -275,6 +273,9 @@ work.display = function() {
   // WORK SECTION
   //
 
+  // initialize var to store all the formatted job work entries
+  var formatted_work_entries = '';
+
   // loop through each job in the work object to format data
   for (var i = 0; i < work.jobs.length; i+=1) {
     // the current job's data we're checking out
@@ -328,40 +329,27 @@ work.display = function() {
 
     // add all formatted work html subsections
     // to the main work entry template for the current job
-    html(HTMLworkEntry).format()
-                       .format()
-                       .html
+    // then add the work entry html to the rest of the entries
+    formatted_work_entries += html(HTMLworkEntry).format(current_job.logo, '%logo%')
+                                                  .format(current_job.employer, '%employer%')
+                                                  .format(current_job.title, '%role%')
+                                                  .format(current_job.location, '%location%')
+                                                  .format(current_job.dates.start, '%start%')
+                                                  .format(current_job.dates.end, '%end%')
+                                                  .format(current_job.description, '%description%')
+                                                  .format(formatted_highlights, '%highlights%')
+                                                  .format(formatted_testimonials, '%testimonials%')
+                                                  .html;
 
   }
 
+  // add the formatted work entries to the work section html template
+  var formatted_work = html(HTMLwork).format(formatted_work_entries ,'%entries%').html;
 
+  // APPEND WORK HTML TO THE PAGE
 
+  $(main).append(formatted_work);
 
-
-
-
-  // adds the info to the experience section for each job in the work object
-  for (var i = 0; i < work.jobs.length; i++) {
-    $(work_exp).append(HTMLworkStart);
-    // format the info with the helper functions
-
-    // note that i in a for-in loop returns the index, not the value
-    // use forEach if your array is just values and not key-value pairs
-    // regular for loops are cool in most situations
-
-    var formatted_work = format(HTMLworkEmployer, work.jobs[i].employer) +
-                         format(HTMLworkTitle, work.jobs[i].title) +
-                         format(HTMLworkDates, work.jobs[i].dates) +
-                         format(HTMLworkLocation, work.jobs[i].location) +
-                         format(HTMLworkDescription, work.jobs[i].description);
-
-
-    //
-    // APPEND FORMATTED WORK HTML TO THE PAGE
-    //
-
-    $(work_entry).append(formatted_work);
-  }
 };
 
 // projects
@@ -461,4 +449,5 @@ projects.display();
 education.display();
 
 // interactive map
-$(map_section).append(googleMap);
+$('#mapDiv').append(googleMap);
+console.log(googleMap);

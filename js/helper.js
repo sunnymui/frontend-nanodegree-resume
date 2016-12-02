@@ -14,8 +14,9 @@ var HTMLnav = '<a class="slide" href="#%data%">%data%</a>';
 
 // Summary Section
 
-var HTMLsummary = '<a id="summary"></a>'+
+var HTMLsummary = ''+
                   '<section class="summary">'+
+                      '<a id="summary"></a>'+
                       '<ul class="contact list-no-style all-caps center-text">'+
                       '</ul>'+
                       '<div class="container center-text">'+
@@ -65,8 +66,9 @@ var HTMLskill = '<li class="tag">%data%</li>';
 
 // Work Experience Section
 
-var HTMLwork = '<a id="work"></a>'+
+var HTMLwork = ''+
                '<section class="work">'+
+                '<a id="work"></a>'+
                  '<div class="container center-text">'+
                    '<h2 class="unbold divider">Work and Experience</h2>'+
                    '<ul class="list-no-style">'+
@@ -75,7 +77,7 @@ var HTMLwork = '<a id="work"></a>'+
                  '</div>'+
               '</section>';
 var HTMLworkEntry = '<li class="v-margin-1">'+
-                      '<img class="inline-top round border" src="%logo% alt="%employer% Logo" />'+
+                      '<img class="inline-top round border" src="%logo% alt="%employer% Company Logo" />'+
                       '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
                         '<h3 class="unbold no-margin">%role%</h3>'+
                         '<h4 class="no-margin">%employer% <span class="light-gray italic small-text unbold">◉ %location%</span></h4>'+
@@ -85,7 +87,7 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                           '<time>%end%</time>'+
                         '</h5>'+
                         '<p>'+
-                          '%description'+
+                          '%description%'+
                         '</p>'+
                         '<ul>'+
                           '%highlights%'+
@@ -103,24 +105,10 @@ var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                                 '<a href="%link%" target="_blank">'+
                                 '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
                                 '<span class="lg-inline-middle left-text">%person%<br>%role%</span>'+
+                                '</a>'+
                               '</p>'+
                             '</blockquote>'+
                           '</div>';
-
-var HTMLcontactGeneric = '<li class="flex-item"><span class="orange-text">%contact%</span><span class="white-text">%data%</span></li>';
-var HTMLmobile = '<li class="flex-item"><span class="orange-text">mobile</span><span class="white-text">%data%</span></li>';
-var HTMLemail = '<li class="flex-item"><span class="orange-text">email</span><span class="white-text">%data%</span></li>';
-var HTMLtwitter = '<li class="flex-item"><span class="orange-text">twitter</span><span class="white-text">%data%</span></li>';
-var HTMLgithub = '<li class="flex-item"><span class="orange-text">github</span><span class="white-text">%data%</span></li>';
-var HTMLblog = '<li class="flex-item"><span class="orange-text">blog</span><span class="white-text">%data%</span></li>';
-var HTMLlocation = '<li class="flex-item"><span class="orange-text">location</span><span class="white-text">%data%</span></li>';
-
-var HTMLworkStart = '<div class="work-entry"></div>';
-var HTMLworkEmployer = '<a href="#">%data%';
-var HTMLworkTitle = ' - %data%</a>';
-var HTMLworkDates = '<div class="date-text">%data%</div>';
-var HTMLworkLocation = '<div class="location-text">%data%</div>';
-var HTMLworkDescription = '<p><br>%data%</p>';
 
 var HTMLprojectStart = '<div class="project-entry"></div>';
 var HTMLprojectTitle = '<a href="#">%data%</a>';

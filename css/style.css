@@ -40,7 +40,7 @@ Use .col to make a child of a .grid a dynamically sized column.
 }
 
 body {
-    background: #ddd;
+    background: #fff;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
     font-size: 18px;
 }
@@ -55,8 +55,12 @@ hr {
     /* override default color */
 }
 
-section:nth-child(even) {
-  background: #fff;
+section {
+  border-top: 1px dashed #ddd;
+}
+
+section:nth-child(2) {
+  border-top: none;
 }
 
 
