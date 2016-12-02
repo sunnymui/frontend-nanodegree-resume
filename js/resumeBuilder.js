@@ -115,6 +115,9 @@ bio.display = function() {
     // HERO SECTION
     //
 
+    // NAV BAR
+    // create nav bar to insert into the hero html tempate
+
     // initialize var to store nav bar html
     var formatted_nav = '';
     // Navigation Sections
@@ -125,7 +128,7 @@ bio.display = function() {
       formatted_nav += html(HTMLnav).format(nav_links[i]).html;
     }
 
-    // create the hero area html with the data added to the hero template
+    // create the hero area html with the data, format with hero template
     var formatted_hero = html(HTMLhero).format(bio.biopic,'%pic%')
                                        .format(bio.name,'%name%')
                                        .format(bio.role,'%role%')
@@ -155,7 +158,7 @@ bio.display = function() {
       */
 
       // initialize var to store formatted contact html string
-      // cached so we don't redo the format functions for every dom location
+      // cache it so we don't redo the format functions for every dom location
       var formatted_contacts = '';
 
       // format and show contacts if the array is not empty
@@ -189,6 +192,7 @@ bio.display = function() {
 
     // initialize var to store the formatted skills groups html in
     var formatted_skills_groups = '';
+
     // add skills if the skills array isn't empty
     if (bio.skills.length !== 0) {
 
@@ -227,6 +231,7 @@ bio.display = function() {
 
     // initialize var to store the formatted qualifications html
     var formatted_qualifications = '';
+
     // add qualifications section if it's not empty
     if (bio.qualifications.length !==0) {
 
@@ -257,10 +262,6 @@ bio.display = function() {
 
 };
 
-//
-// WORK SECTION
-//
-
 work.display = function() {
   /*
   Displays the info from the work data object in the html page.
@@ -270,33 +271,72 @@ work.display = function() {
   Returns: no returns, but does append formatted html to the page
   */
 
-  // work experience
+  //
+  // WORK SECTION
+  //
 
-  // TESTIMONIALS / RECOMMENDATIONS
-  // create testimonials section formatted html to add the the work html template later
+  // loop through each job in the work object to format data
+  for (var i = 0; i < work.jobs.length; i+=1) {
+    // the current job's data we're checking out
+    var current_job = work.jobs[i];
+    // initialize an increment counter var here for use in all the loops
+    var j = 0;
 
-  // check if there's even any testimonials data
-  if (work.testimonials.length !== 0) {
+    // TESTIMONIALS / RECOMMENDATIONS
+    // create testimonials section formatted html to add the the work html template later
 
+    // string var to store the formatted testimonials html
     var formatted_testimonials = '';
-    // loop through the testimonials data and format each one with the html template
-    for (var i = 0; i < work.testimonials.length; i+=1 ) {
-      // the current testimonial data we're working with in the object array
-      var current_testimonial = work.testimonials[i];
 
-      // format the data with the testimonial html template and store in the formatted string
-      formatted_testimonials += html(HTMLworkTestimonial).format(current_testimonial.text, '%testimonial%')
-                               .format(current_testimonial.link, '%link%')
-                               .format(current_testimonial.pic, '%photo%')
-                               .format(current_testimonial.name, '%person%')
-                               .format(current_testimonial.role, '%role%')
-                               .html;
+    // check if there's even any testimonials data
+    if (current_job.testimonials.length !== 0) {
+
+      // loop through the testimonials data and format each one with the html template
+      for (j = 0; j < current_job.testimonials.length; j+=1 ) {
+        // the current testimonial data we're working with in the object array
+        var current_testimonial = current_job.testimonials[j];
+
+        // format the data with the testimonial html template and store in the formatted string
+        formatted_testimonials += html(HTMLworkTestimonial).format(current_testimonial.text, '%testimonial%')
+                                 .format(current_testimonial.link, '%link%')
+                                 .format(current_testimonial.pic, '%photo%')
+                                 .format(current_testimonial.name, '%person%')
+                                 .format(current_testimonial.role, '%role%')
+                                 .html;
+      }
     }
+
+    // HIGHLIGHTS LIST OF JOB DESCRIPTION
+    // create the list summarizing job accomplishments, ready it for insertion in work entry html template
+
+    // initialize var string to store formatted job highlights html
+    var formatted_highlights = '';
+
+    // check if there are any job highlights to list
+    if (current_job.highlights.length !==0) {
+
+      // loop through highlights, format, then add to formatted highlights var
+      // using new var k to increment
+      for (j = 0; j < current_job.highlights.length; j+=1) {
+        // the current highlight we're working with in the array
+        var current_highlight = current_job.highlights[j];
+
+        // add data to the highlight template, then add it to the formatted highlights var
+        formatted_highlights += html(HTMLworkEntryHighlight).format(current_highlight).html;
+      }
+    }
+
+    // add all formatted work html subsections
+    // to the main work entry template for the current job
+    html(HTMLworkEntry).format()
+                       .format()
+                       .html
 
   }
 
-  // BULLET POINTS JOB DESCRIPTION
-  // creates the list to summarize job accomplishments and be ready to add it to the work entry html template
+
+
+
 
 
 

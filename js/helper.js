@@ -88,14 +88,14 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                           '%description'+
                         '</p>'+
                         '<ul>'+
-                          '%list%'+
+                          '%highlights%'+
                         '</ul>'+
                         '<div class="grid">'+
                           '%testimonials%'+
                         '</div>'+
                       '</div>'+
                     '</li>';
-var HTMLworkEntryList = '<li>%point%</li>';
+var HTMLworkEntryHighlight = '<li>%data%</li>';
 var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
