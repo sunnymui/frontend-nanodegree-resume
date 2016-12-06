@@ -77,7 +77,7 @@ var HTMLwork = ''+
                  '</div>'+
               '</section>';
 var HTMLworkEntry = '<li class="v-margin-1">'+
-                      '<img class="inline-top round border" src="%logo% alt="%employer% Company Logo" />'+
+                      '<img class="inline-top round border-light-gray max-width-5" src="%logo%"" alt="%employer% Company Logo" />'+
                       '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
                         '<h3 class="unbold no-margin">%role%</h3>'+
                         '<h4 class="no-margin">%employer% <span class="light-gray italic small-text unbold">◉ %location%</span></h4>'+
@@ -104,7 +104,7 @@ var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                               '<p class="lg-right-text">'+
                                 '<a href="%link%" target="_blank">'+
                                 '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
-                                '<span class="lg-inline-middle left-text">%person%<br>%role%</span>'+
+                                '<span class="lg-inline-middle left-text link">%person%<br>%role%</span>'+
                                 '</a>'+
                               '</p>'+
                             '</blockquote>'+

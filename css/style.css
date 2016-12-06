@@ -59,11 +59,6 @@ section {
   border-top: 1px dashed #ddd;
 }
 
-section:nth-child(2) {
-  border-top: none;
-}
-
-
 /* Flex Grid*/
 
 .flex {
@@ -95,16 +90,48 @@ section:nth-child(2) {
     /* vertically center align the flex items to the container*/
 }
 
+.flex-center {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
 .flex-justify {
     -ms-flex-pack: justify;
     justify-content: space-between;
     /* creates max space in between each of the flex items until items fill container */
 }
 
+/* Positioning */
+
+.relative {
+  position: relative;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.block {
+  display: block;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.none {
+  display: none;
+}
+
 /* Alignment & Spacing */
 
 .center {
     margin: auto;
+}
+
+.padding-05 {
+  padding: 0.5em;
 }
 
 .no-margin {
@@ -137,7 +164,23 @@ section:nth-child(2) {
     vertical-align: top;
 }
 
-/* Border Shape */
+/* Sizing */
+
+.width-100 {
+  width: 100%;
+}
+
+.max-width-5 {
+  max-width: 5em;
+}
+
+/* Overflows */
+
+.no-overflow {
+  overflow: hidden;
+}
+
+/* Borders */
 
 .round {
   border-radius: 99%;
@@ -145,6 +188,10 @@ section:nth-child(2) {
 
 .border {
   border: 1px solid #fff;
+}
+
+.border-light-gray {
+  border: 1px solid #ddd;
 }
 
 /* Buttons/Links */
@@ -157,6 +204,11 @@ section:nth-child(2) {
 .link:hover {
     text-decoration: underline;
     opacity: 0.8;
+}
+
+.no-link,
+.no-link:hover {
+    text-decoration: none;
 }
 
 .btn {
@@ -300,6 +352,10 @@ h1 {
 
 .white {
     color: #fff;
+}
+
+.lighter-gray {
+  color: #999;
 }
 
 .light-gray {
@@ -482,57 +538,13 @@ blockquote img {
   100% {background-position: 0 47%;}
 }
 
-/* Featured Content */
-
-.featured {
-    max-width: 60em;
-    /* since it's not one long sentence but divided content it can be wider*/
-    margin: -3em auto 0 auto;
-    /* slightly overlay top of featured over the hero */
-    padding: 0;
-}
-
-article {
-    width: 100%;
-    transition: 0.3s all;
-    border-top: 0.5em solid #263248;
-    border-image: linear-gradient(95deg, #263248 0%, #828ea6 100%);
-    border-image-slice: 1;
-    background: #fff;
-}
-
-article:hover {
-    transition: all 0.3s;
-    border-color: #FF9800;
-    border-image: linear-gradient(95deg, #263248 0%, #FF9800 100%);
-    border-image-slice: 1;
-}
-
-article:hover
-    .btn {
-    /* style the button when pointer enters the article */
-    background: #c3944e;
-    outline: 0;
-    color: #fff;
-}
-
-article:hover
-    .btn:hover {
-    /* set a hover bg since the specificity of the bg overrides the default button hover effect */
-    background: #FF9800;
-}
-
-.feature-img {
-    transition: 0.5s all;
-    border: 1px solid #ccc;
-    border-width: 1px 0;
-}
-
-.feature-img:hover {
-    opacity: 0.9;
-}
-
 /* Summary */
+
+section:first-child,
+section:nth-child(2) {
+  /* so summary, hero section doesnt have a border on top */
+  border-top: none;
+}
 
 .intro {
   display: block;
@@ -651,8 +663,73 @@ li:nth-child(5n)
       right: 0;
   }
 
-.projects {
 
+/* Projects */
+
+article:hover
+    .btn {
+    /* style the button when pointer enters the article */
+    background: #c3944e;
+    outline: 0;
+    color: #fff;
+}
+
+article:hover
+    .btn:hover {
+    /* set a hover bg since the specificity of the bg overrides the default button hover effect */
+    background: #FF9800;
+}
+
+.project-heading {
+  background: #707f94;
+  padding: 0.5em;
+  z-index: 100;
+}
+
+.project-heading:hover {
+  opacity: 0.8;
+}
+
+.zoom {
+  transition: 0.3s all;
+}
+
+.zoom:hover {
+  transform: scale(1.1);
+}
+
+.description {
+  transition: 0.3s all;
+  max-height: 100%;
+}
+
+.read-more {
+  display: block;
+  margin-bottom: 1em;
+}
+
+/* Truncation effect applies gradient pseudoelement to fade out after a certain height*/
+
+.truncate {
+  /* neccessary for positioning the gradient over text */
+  position: relative;
+  /* The truncated size of the element */
+  max-height: 4em;
+  /* Hide extra text for truncation */
+  overflow: hidden;
+}
+
+.truncate::after {
+  content: '';
+  position: absolute;
+  /* gradient overlay should fade to bg color for fading out text fx */
+  background-image: linear-gradient(to bottom, transparent, #fff 50%, #fff);
+  /* put fade out gradient at the bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* adjust height of gradient for best fade out results */
+  height: 1.8em;
 }
 
 .education {
@@ -884,6 +961,20 @@ footer a {
       vertical-align: middle;
     }
 
+    /* Sizing */
+
+    .lg-min-width-25 {
+      min-width: 25em;
+    }
+
+    .lg-max-width-30 {
+      max-width: 30em;
+    }
+
+    .lg-max-width-50 {
+      max-width: 50em;
+    }
+
     /*Typography*/
 
     .lg-white {
@@ -948,11 +1039,11 @@ footer a {
 
     /* Layout & General */
 
-    .xl-80-max-width {
+    .xl-max-width-80 {
         max-width: 80em;
     }
 
-    .xl-80-width {
+    .xl-width-80 {
         width: 80em;
     }
 

@@ -1,7 +1,7 @@
 // JSON ready data objects
 var bio = {
     "name": "Sunny Mui",
-    "role": "Web Developer",
+    "role": "Designer Developer",
     "contacts": [{
         "name" : "sunnycmui@gmail.com",
         "link" : "mailto:sunnycmui@gmail.com",
@@ -108,7 +108,7 @@ var bio = {
 var work = {
     "jobs": [{
         "employer": "Sunny Mui Design",
-        "logo": "../img/logo-square.png",
+        "logo": "img/logo-square.png",
         "title": "Designer & Web Developer",
         "location": "San Jose, CA",
         "dates": {
@@ -125,7 +125,7 @@ var work = {
         "testimonials": []
       }, {
         "employer": "Globial",
-        "logo": "../img/globial-logo.png",
+        "logo": "img/globial-logo.png",
         "title": "Digital Marketing Manager & Designer",
         "location": "Sunnyvale, CA",
         "dates": {
@@ -144,18 +144,18 @@ var work = {
           "text": "He has a wonderful personality. His intellectual capacity, curiosity and passion to learn will make him one of the best designers as well as writers in the valley area. It is a great pleasure to work with him in the same environment.",
           "name": "Umut Yilidirim",
           "role": "CEO",
-          "pic":"../img/umut.png",
+          "pic":"img/umut.jpg",
           "link": "https://www.linkedin.com/in/umutyildirim"
         } , {
           "text": "I had a pleasure of working with Sunny over a year. He is not only talented and hardworking professional but also spreads positive and exciting energy. He does not hesitate to share his knowledge and guide his colleagues. When his technical expertise meets with his artistic touch, elegant and efficient outcomes are inevitable.",
           "name": "Saim Kemaloğlu",
           "role": "Software Engineer",
-          "pic":"../img/saim.png",
+          "pic":"img/saim.jpg",
           "link": "https://tr.linkedin.com/in/saim-kemaloğlu-57111650/en"
         }]
       }, {
         "employer": "Gate58",
-        "logo": "../img/gate58-logo.png",
+        "logo": "img/gate58-logo.png",
         "title": "SEO & Online Marketing Intern",
         "location": "San Mateo, CA",
         "dates": {
@@ -173,12 +173,12 @@ var work = {
           "text": "Sunny was able to grasp the SEO concepts really quickly and provided quality articles and blog posts during his time here. During the 3 month internship, he helped to publish numerous articles and blog posts, helped update a couple Twitter accounts we operate and helped with other marketing tasks that popped up.",
           "name": "Matt Loewe",
           "role": "Marketing Manager",
-          "pic":"../img/matt.png",
+          "pic":"img/matt.jpg",
           "link": "https://www.linkedin.com/in/matt-loewe-a600525"
         }]
       }, {
         "employer": "Hayward Japan Grill",
-        "logo": "../img/hayward-grill-logo.png",
+        "logo": "img/hayward-grill-logo.png",
         "title": "Customer Service/Marketing & Design Assistant",
         "location": "Hayward, CA",
         "dates": {
@@ -202,7 +202,6 @@ var projects = {
         "dates": "2016",
         "description": "A single page responsive web page portfolio.",
         "images": [
-            "http://placekitten.com/300/300",
             "http://placekitten.com/300/300"
         ]
     }, {
@@ -210,7 +209,6 @@ var projects = {
         "dates": "2016",
         "description": "A one page simple informational website that is responsive.",
         "images": [
-            "http://placekitten.com/300/300",
             "http://placekitten.com/300/300"
         ]
     }]

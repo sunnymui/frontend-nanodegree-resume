@@ -98,6 +98,48 @@ function default_for(argument, value) {
    return typeof argument !== 'undefined' ? argument : value;
 }
 
+function read_more(button, element, truncator_class) {
+  /*
+  Enables show/hide function in conjunction with a css class that shows/hides content.
+  Searches for buttons that trigger show/hide behavior, then finds the content
+  linked to that button and toggles the truncation class to show/hide content when clicked.
+  Also changes the button text to either more or less to reflect the toggle action.
+  Ex: <div class="description truncate">Some content</div>
+      <a class="read-more" href="#">+ More</a>
+      becomes:
+      <div class="description">Some content</div>
+      <a class="read-more" href="#">+ Less</a>
+  Args: the selector for the see more button that will trigger show/hide on click (string),
+  selector for the element that is currently being truncated by a css class (string),
+  the class name to remove or add when the button is clicked, without the '.' (string)
+  Returns: none
+  */
+
+  // the text for the button to switch between
+  var more_text = '+ More';
+  var less_text = '- Less';
+
+  // when the button is clicked find the content, toggle class, and change button text
+  $(button).click(function(e) {
+    // get the content element that's specifically related to the button pressed
+    var current_content = $(this).siblings(element);
+    // toggle the truncation class
+    $(current_content).toggleClass(truncator_class);
+
+    // trim spaces to ensure consistent matches for the button text
+    var button_text = $(this).text().trim();
+    // if button text says more, change to 'less', else change it to 'more'
+    if (button_text == more_text) {
+      $(this).text(less_text);
+    } else {
+      $(this).text(more_text);
+    }
+
+    // prevent default <a> behavior of jumping to top of page when clicking # links
+    e.preventDefault();
+  });
+}
+
 // Display functions for json data
 
 bio.display = function() {
@@ -372,18 +414,18 @@ projects.display = function() {
 
         // create formatted html elements for project data
         // then add the formatted data to the formatted project string
-        var formatted_project = format(HTMLprojectTitle, current_project.title) +
-                                format(HTMLprojectDates, current_project.dates) +
-                                format(HTMLprojectDescription, current_project.description);
+        // var formatted_project = format(HTMLprojectTitle, current_project.title) +
+                                // format(HTMLprojectDates, current_project.dates) +
+                                // format(HTMLprojectDescription, current_project.description);
 
         // loop through images array and add each image to the formatted project html
         for (var j = 0; j < current_project.images.length; j++) {
-            formatted_project += (format(HTMLprojectImage, current_project.images[j]));
+            // formatted_project += (format(HTMLprojectImage, current_project.images[j]));
         }
 
         // append all the formatted html elements to the appropiate section of the page
-        $(projects_section).append(HTMLprojectStart);
-        $(project_entry).append(formatted_project);
+        // $(projects_section).append(HTMLprojectStart);
+        // $(project_entry).append(formatted_project);
     }
 };
 
@@ -403,40 +445,40 @@ education.display = function() {
       var current_school = education.schools[i];
 
       // put data into formatted html for this education entry
-      var formatted_education = format(HTMLschoolName, current_school.name) +
-                                format(HTMLschoolDegree, current_school.degree) +
-                                format(HTMLschoolDates, current_school.dates) +
-                                format(HTMLschoolLocation, current_school.location);
+      // var formatted_education = format(HTMLschoolName, current_school.name) +
+                                // format(HTMLschoolDegree, current_school.degree) +
+                                // format(HTMLschoolDates, current_school.dates) +
+                                // format(HTMLschoolLocation, current_school.location);
 
        // loop through the array of majors in the current schools and append
        // each to the formatted html string
        for (var j = 0; j < current_school.majors.length; j+=1) {
-         formatted_education += format(HTMLschoolMajor, current_school.majors[j]);
+        //  formatted_education += format(HTMLschoolMajor, current_school.majors[j]);
        }
 
       // append the education entry div to the education section
-      $(education_section).append(HTMLschoolStart);
+      // $(education_section).append(HTMLschoolStart);
       // append the formatted html to the education entry
-      $(education_entry).append(formatted_education);
+      // $(education_entry).append(formatted_education);
     }
 
     // online courses
-    $(education_section).append(HTMLonlineClasses);
+    // $(education_section).append(HTMLonlineClasses);
 
     // loop through each online course to format and display it
     for (i=0; i < education.onlineCourses.length; i+=1 ) {
       var current_course = education.onlineCourses[i];
 
       // online course formatted html
-      var formatted_online_courses = format(HTMLonlineTitle, current_course.title) +
-                                     format(HTMLonlineSchool, current_course.school) +
-                                     format(HTMLonlineDates, current_course.dates) +
-                                     format(HTMLonlineURL, current_course.url);
+      // var formatted_online_courses = format(HTMLonlineTitle, current_course.title) +
+                                    //  format(HTMLonlineSchool, current_course.school) +
+                                    //  format(HTMLonlineDates, current_course.dates) +
+                                    //  format(HTMLonlineURL, current_course.url);
 
       // append the education entry div to the education section
-      $(education_section).append(HTMLschoolStart);
+      // $(education_section).append(HTMLschoolStart);
       // append the formatted html to the education entry
-      $(education_entry).append(formatted_online_courses);
+      // $(education_entry).append(formatted_online_courses);
     }
 
 };
@@ -448,6 +490,7 @@ work.display();
 projects.display();
 education.display();
 
+read_more('.read-more','.description','truncate lighter-gray');
+
 // interactive map
-$('#mapDiv').append(googleMap);
-console.log(googleMap);
+//$('#mapDiv').append(googleMap);
