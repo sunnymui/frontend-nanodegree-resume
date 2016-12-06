@@ -394,8 +394,6 @@ work.display = function() {
 
 };
 
-// projects
-
 // encapsulate display function in the projects object
 projects.display = function() {
   /*
@@ -405,6 +403,10 @@ projects.display = function() {
   Args: none as passed parameters, but does get data from the object
   Returns: no returns, but does append formatted html to the page
   */
+
+  //
+  // PROJECTS SECTION
+  //
 
     // loop through each project in the projects array of objects
     for (var i = 0; i < projects.projects.length; i++) {

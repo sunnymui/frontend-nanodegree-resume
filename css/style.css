@@ -412,13 +412,15 @@ header {
 
 .fixed-wrapper {
     position: fixed;
+    top: 0;
+    left: 0;
     /* sticky top bar */
     z-index: 999;
     /* Keep it visible on top of content */
     width: 100%;
     /* maintain height of header */
-    background: #263248;
-    background-image: linear-gradient(160deg, #263248 0%, #828ea6 100%);
+    background: #1b242f;
+    background-image: linear-gradient(160deg, #9d565b 0%, #1b242f 100%);
 }
 
 .logo {
@@ -681,14 +683,21 @@ article:hover
 }
 
 .project-heading {
-  background: #707f94;
-  padding: 0.5em;
+  background: rgba(112, 127, 148, 0.8);
+  padding: 0.35em;
+  /* keep headings overlaid above the img when transformed with fx */
   z-index: 100;
 }
 
 .project-heading:hover {
   opacity: 0.8;
 }
+
+h3.project-heading {
+  bottom: 6%;
+}
+
+/* Zoom effect scales up size of element, use with overflow:hidden on parent */
 
 .zoom {
   transition: 0.3s all;
@@ -700,12 +709,20 @@ article:hover
 
 .description {
   transition: 0.3s all;
-  max-height: 100%;
+  /* to allow css animation of height change when read more button is clicked */
+  /* must declare a value so set value bigger than you expect content will ever be */
+  max-height: 100em;
+}
+
+.description p:first-child {
+  /* Remove extra margin for first paragraph in description so a couple lines show */
+  margin: 0;
 }
 
 .read-more {
+  /* keep it on a line below the descriptive text */
   display: block;
-  margin-bottom: 1em;
+  /*margin-bottom: 1em;*/
 }
 
 /* Truncation effect applies gradient pseudoelement to fade out after a certain height*/
@@ -877,7 +894,7 @@ footer a {
 
 /* For tablets */
 
-@media only screen and (min-width: 480px) {
+@media only screen and (min-width: 600px) {
 
     /* Flex Grid */
 
