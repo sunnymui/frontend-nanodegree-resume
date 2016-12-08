@@ -234,6 +234,12 @@ section {
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
+/* Transition */
+
+.transition {
+  transition: 0.3s all;
+}
+
 /* Slide in border animated transition for links/btns*/
 
 .slide{
@@ -683,7 +689,7 @@ article:hover
 }
 
 .project-heading {
-  background: rgba(112, 127, 148, 0.8);
+  /* fallback */
   padding: 0.35em;
   /* keep headings overlaid above the img when transformed with fx */
   z-index: 100;
@@ -693,7 +699,40 @@ article:hover
   opacity: 0.8;
 }
 
+/* color each project heading background differently */
+
+.col:nth-child(1n)
+    .project-heading{
+        background: rgb(112, 127, 148);
+        background: rgba(42, 54, 70, 0.8);
+}
+
+.col:nth-child(2n)
+    .project-heading{
+        background: rgb(88, 49, 49);
+        background: rgba(88, 49, 49, 0.8);
+}
+
+.col:nth-child(3n)
+    .project-heading{
+        background: rgb(49, 85, 42);
+        background: rgba(49, 85, 42, 0.8);
+}
+
+.col:nth-child(4n)
+    .project-heading{
+        background: rgb(93, 71, 32);
+        background: rgba(93, 71, 32, 0.8);
+}
+
+.col:nth-child(5n)
+    .project-heading{
+        background: rgb(86, 62, 78);
+        background: rgba(86, 62, 78, 0.8);
+}
+
 h3.project-heading {
+  /* offset title a bit from the bottom of the img */
   bottom: 6%;
 }
 

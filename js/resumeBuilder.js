@@ -369,6 +369,7 @@ work.display = function() {
       }
     }
 
+    // FORMAT WORK ENTRY HTML
     // add all formatted work html subsections
     // to the main work entry template for the current job
     // then add the work entry html to the rest of the entries
@@ -386,7 +387,7 @@ work.display = function() {
   }
 
   // add the formatted work entries to the work section html template
-  var formatted_work = html(HTMLwork).format(formatted_work_entries ,'%entries%').html;
+  var formatted_work = html(HTMLwork).format(formatted_work_entries).html;
 
   // APPEND WORK HTML TO THE PAGE
 
@@ -408,27 +409,74 @@ projects.display = function() {
   // PROJECTS SECTION
   //
 
+    // for storing the complete html for the projects entries to add to project section html later
+    var formatted_project_entries = '';
+
     // loop through each project in the projects array of objects
-    for (var i = 0; i < projects.projects.length; i++) {
+    for (var i = 0; i < projects.projects.length; i+=1) {
 
         // current project in the array
         var current_project = projects.projects[i];
 
-        // create formatted html elements for project data
-        // then add the formatted data to the formatted project string
-        // var formatted_project = format(HTMLprojectTitle, current_project.title) +
-                                // format(HTMLprojectDates, current_project.dates) +
-                                // format(HTMLprojectDescription, current_project.description);
+        // DESCRIPTION PARAGRAPHS
+        // format paragraphs as the description to be added to the project entry html template
 
-        // loop through images array and add each image to the formatted project html
-        for (var j = 0; j < current_project.images.length; j++) {
-            // formatted_project += (format(HTMLprojectImage, current_project.images[j]));
+        // var to store the formatted description paragraphs
+        var formatted_description = '';
+
+        // check if there's any description to be formatted
+        if (current_project.description.length !== 0) {
+          // loop through the description array to format each item as a paragraph
+          for (var j = 0; j < current_project.description.length; j+=1) {
+            // format the description paragraph data with the html template
+            formatted_description += html(HTMLprojectDesc).format(current_project.description[j]).html;
+          }
         }
 
-        // append all the formatted html elements to the appropiate section of the page
-        // $(projects_section).append(HTMLprojectStart);
-        // $(project_entry).append(formatted_project);
+
+        // IMAGES
+
+        // the current project's images array for image urls
+        var img_array = current_project.images;
+
+        // default: use a placeholder image for projects without images
+        var project_img = 'http://lorempixel.com/600/450/abstract/';
+
+        // if there's only one image in the array just use that
+        if (img_array.length !== 0) {
+          // use the first image in the array
+          project_img = img_array[0];
+
+          // randomize the used image if there's more than one image in the array
+          if (img_array.length > 1) {
+            // gets a random image from the image array
+            // math.random generates random number between 1 & 0, multiply that by
+            // array length to scale it to a key in the array's range, then round
+            // down to the nearest whole number with math.floor
+            project_img = img_array[Math.floor(Math.random() * img_array.length)];
+          }
+        }
+
+        // FORMAT PROJECT ENTRY HTML
+
+        // insert data into the project entry template then put all the entries together
+        formatted_project_entries += html(HTMLprojectEntry).format(current_project.link, '%link%')
+                                                    .format(current_project.dates, '%date%')
+                                                    .format(project_img, '%image%')
+                                                    .format(current_project.alt, '%alttext%')
+                                                    .format(current_project.title, '%title%')
+                                                    .format(formatted_description, '%description%')
+                                                    .html;
+
     }
+
+    // add all the project entries to the projects section html template
+    var formatted_projects = html(HTMLprojects).format(formatted_project_entries).html;
+
+    // APPEND PROJECT HTML TO PAGE
+
+    $(main).append(formatted_projects);
+
 };
 
 // education

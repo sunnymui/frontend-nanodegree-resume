@@ -2,8 +2,8 @@
 var HTMLhero = '<section class="hero flex flex-v-center">'+
                   '<div class="center center-text all-caps white">'+
                     '<img src="%pic%" class="round border" alt="Picture of %name%">'+
-                    '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 ">%name%</h1>'+
-                    '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3">%role%</h2>'+
+                    '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 transition ">%name%</h1>'+
+                    '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3 transition">%role%</h2>'+
                     '<nav>'+
                       '%nav%'+
                     '</nav>'+
@@ -14,8 +14,7 @@ var HTMLnav = '<a class="slide" href="#%data%">%data%</a>';
 
 // Summary Section
 
-var HTMLsummary = ''+
-                  '<section class="summary">'+
+var HTMLsummary = '<section class="summary">'+
                       '<a id="summary"></a>'+
                       '<ul class="contact list-no-style all-caps center-text">'+
                       '</ul>'+
@@ -66,13 +65,12 @@ var HTMLskill = '<li class="tag">%data%</li>';
 
 // Work Experience Section
 
-var HTMLwork = ''+
-               '<section class="work">'+
-                '<a id="work"></a>'+
+var HTMLwork = '<section class="work">'+
+                 '<a id="work"></a>'+
                  '<div class="container center-text">'+
                    '<h2 class="unbold divider">Work and Experience</h2>'+
                    '<ul class="list-no-style">'+
-                    '%entries%'+
+                    '%data%'+
                    '</ul>'+
                  '</div>'+
               '</section>';
@@ -109,6 +107,32 @@ var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                               '</p>'+
                             '</blockquote>'+
                           '</div>';
+
+// Projects Section
+
+var HTMLprojects = '<section class="projects center-text">'+
+                      '<a id="projects"></a>'+
+                      '<h2 class="unbold divider">Projects</h2>'+
+                      '<div class="grid flex-center">'+
+                        '%data%'+
+                      '</div>'+
+                    '</section>';
+var HTMLprojectEntry = '<div class="col md-halves lg-min-width-25 lg-max-width-50 gutters">'+
+                          '<article class="left-text">'+
+                            '<a class="no-link" href="%link%">'+
+                              '<div class="relative no-overflow">'+
+                                '<h4 class="project-heading absolute no-margin unbold white small-text">%date%</h4>'+
+                                '<img class="width-100 zoom" src="%image%" alt="%alttext%" />'+
+                                '<h3 class="project-heading absolute unbold no-margin white">%title%</h3>'+
+                              '</div>'+
+                            '</a>'+
+                            '<div class="description truncate lighter-gray padding-05">'+
+                              '%description%'+
+                            '</div>'+
+                            '<a class="link small-text all-caps read-more" href="#">+ More</a>'+
+                          '</article>'+
+                        '</div>';
+var HTMLprojectDesc = '<p>%data%</p>';
 
 var HTMLprojectStart = '<div class="project-entry"></div>';
 var HTMLprojectTitle = '<a href="#">%data%</a>';

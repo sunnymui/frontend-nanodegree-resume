@@ -198,19 +198,55 @@ var work = {
 
 var projects = {
     "projects": [{
-        "title": "One Page Responsive Portfolio",
+        "title": "One Page Responsive Personal Portfolio",
         "dates": "2016",
-        "description": "A single page responsive web page portfolio.",
-        "images": [
-            "http://placekitten.com/300/300"
-        ]
+        "description": [
+          "Responsive single page web portfolio created for use as my personal project showcase.",
+          "This project is built on top of HTML5 Boilerplate so it's almost completely customized. I implemented my own lightweight flexbox grid system and responsive features like srcset and a mobile first direction."
+        ],
+        "images": ["img/portfolio.jpg"],
+        "alt" : "Screenshots of portfolio page demonstrating mobile and desktop responsive views",
+        "link" : "https://sunnymui.github.io/one-page-portfolio/"
     }, {
-        "title": "Responsive Simple Single Page Site",
+        "title": "Responsive One Page Simple Site",
         "dates": "2016",
-        "description": "A one page simple informational website that is responsive.",
-        "images": [
-            "http://placekitten.com/300/300"
-        ]
+        "description": [
+          "Completely responsive simple single page website good for sharing a story or some information that wouldn't be changing very often.",
+          "This project features judicious use of srcset and picture elements for art direction and resolution appropriate image loading. Placeholder content and images used as examples for the page."
+        ],
+        "images": ["img/responsive-blog.jpg"],
+        "alt" : "Screenshots of one page simple site demonstrating mobile and desktop responsive views",
+        "link" : "https://sunnymui.github.io/Responsive-One-Page-Static-Site/"
+    }, {
+        "title": "Globial Business Pro Sales Page",
+        "dates": "2014",
+        "description": [
+          "The premium membership sales page for Globial, a B2B ecommerce startup. Exemplifies a long form persuasive sales page.",
+          "I developed the content and design to convince potential customers to upgrade to premium memberships. I helped gather testimonials and implementing copy/information to overcome some of their common sales objections."
+        ],
+        "images": ["img/globial-sales.jpg"],
+        "alt" : "Screenshot of the Globial Business Pro longform sales page on mobile and desktop",
+        "link" : "https://creativeaudacity.com/portfolio/globial/business-pro.html"
+    }, {
+        "title": "KnotSuite Company Homepage",
+        "dates": "2016",
+        "description": [
+          "A corporate homepage prototype for the B2B startup KnotSuite, which focuses on team messaging, productivity, and project management.",
+          "All of the written content, image previews, and mockups of their app had to be created for this project as well. I worked closely with their team to develop the marketing copy, site design, and content."
+        ],
+        "images": ["img/knotsuite.jpg"],
+        "alt" : "Screenshot of KnotSuite homepage on mobile and desktop views",
+        "link" : "https://creativeaudacity.com/portfolio/knotsuite/KnotSuiteWeb/index.html"
+    }, {
+        "title": "KnotSilicon App Homepage",
+        "dates": "2016",
+        "description": [
+          "A web app homepage prototype for the KnotSilicon app, one of the management apps developed by KnotSuite, a B2B startup. The app helps users monitor silicon manufacturing lifecycle progress in real time.",
+          "This page is one of the sub-landing pages under the KnotSuite umbrella. The written content and mockups were developed specifically for this project. The design had to be customized to client specifications."
+        ],
+        "images": ["img/knotsilicon.jpg"],
+        "alt" : "Screenshot of KnotSilicon homepage on mobile and desktop views",
+        "link" : "https://creativeaudacity.com/portfolio/knotsuite/LandingApps/knotsilicon-index.html"
     }]
 };
 
@@ -218,8 +254,10 @@ var education = {
     "schools": [{
         "name": "San Francisco State University",
         "location": "San Francisco, CA",
-        "majors": ["English Literature",
-        "Business Admnistration: Marketing"],
+        "majors": [
+          "English Literature",
+          "Business Admnistration: Marketing"
+        ],
         "dates": "2006 - 2010",
         "degree": "Bachelors"
     }],
@@ -238,5 +276,15 @@ var education = {
         "school": "Udacity",
         "dates": "2016",
         "url": "http://www.udacity.com"
+    }]
+};
+
+var awards = {
+  "awards": [{
+      "name": "deans list",
+      "date": "2016"
+    }, {
+      "name": "deans list",
+      "date": "2016"
     }]
 };
