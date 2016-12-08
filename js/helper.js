@@ -20,7 +20,7 @@ var HTMLsummary = '<section class="summary">'+
                       '</ul>'+
                       '<div class="container center-text">'+
                         '<h2 class="unbold divider">Summary</h2>'+
-                        '<p class="mid-gray italic intro">'+
+                        '<p class="italic intro">'+
                           '%welcomemsg%'+
                         '</p>'+
                         '<h3 class="unbold divider">Key Qualifications</h3>'+
@@ -78,8 +78,8 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                       '<img class="inline-top round border-light-gray max-width-5" src="%logo%"" alt="%employer% Company Logo" />'+
                       '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
                         '<h3 class="unbold no-margin">%role%</h3>'+
-                        '<h4 class="no-margin">%employer% <span class="light-gray italic small-text unbold">◉ %location%</span></h4>'+
-                        '<h5 class="unbold v-margin-1 light-gray">'+
+                        '<h4 class="no-margin">%employer% <span class="mid-gray italic small-text unbold">◉ %location%</span></h4>'+
+                        '<h5 class="unbold v-margin-1 mid-gray">'+
                           '<time>%start%</time>'+
                           '<span class="linker"></span>'+
                           '<time>%end%</time>'+
@@ -134,11 +134,7 @@ var HTMLprojectEntry = '<div class="col md-halves lg-min-width-25 lg-max-width-5
                         '</div>';
 var HTMLprojectDesc = '<p>%data%</p>';
 
-var HTMLprojectStart = '<div class="project-entry"></div>';
-var HTMLprojectTitle = '<a href="#">%data%</a>';
-var HTMLprojectDates = '<div class="date-text">%data%</div>';
-var HTMLprojectDescription = '<p><br>%data%</p>';
-var HTMLprojectImage = '<img src="%data%">';
+// Education Section
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
 var HTMLschoolName = '<a href="#">%data%';

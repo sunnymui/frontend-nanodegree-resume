@@ -812,7 +812,7 @@ h3.project-heading {
 
 .contact li {
     display: inline-block;
-    margin: 0 1.8em 0.5em 0;
+    margin: 0 0.7em 0.5em 0.7em;
 }
 
 
@@ -910,6 +910,11 @@ footer a {
 .icon-upwork:before {
     content: '\e803';/* '' */
 }
+
+.icon-phone:before { content: '\e804'; } /* '' */
+.icon-mail:before { content: '\e805'; } /* '' */
+.icon-location:before { content: '\e806'; } /* '' */
+.icon-mail-alt:before { content: '\f0e0'; } /* '' */
 
 
 /*=======================
