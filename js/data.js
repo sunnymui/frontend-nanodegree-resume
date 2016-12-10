@@ -111,7 +111,7 @@ var work = {
         "logo": "img/logo-square.png",
         "title": "Designer & Web Developer",
         "location": "San Jose, CA",
-        "link" : "https://www.creativeaudacity.com",
+        "link" : "https://sunnymui.github.io/one-page-portfolio/",
         "dates": {
           "start": "2015",
           "end": "Present"
@@ -129,7 +129,7 @@ var work = {
         "logo": "img/globial-logo.png",
         "title": "Digital Marketing Manager & Designer",
         "location": "Sunnyvale, CA",
-        "link" : "",
+        "link" : "https://gust.com/companies/globial",
         "dates": {
           "start": "2011",
           "end": "2015"
@@ -160,7 +160,7 @@ var work = {
         "logo": "img/gate58-logo.png",
         "title": "SEO & Online Marketing Intern",
         "location": "San Mateo, CA",
-        "link" : "",
+        "link" : "http://gate58.com/",
         "dates": {
           "start": "2011",
           "end": "2011"
@@ -184,7 +184,7 @@ var work = {
         "logo": "img/hayward-grill-logo.png",
         "title": "Customer Service/Marketing & Design Assistant",
         "location": "Hayward, CA",
-        "link" : "",
+        "link" : "https://foursquare.com/v/hayward-japan-grill--sushi-bar/4b5fbc90f964a5209fca29e3/menu",
         "dates": {
           "start": "2004",
           "end": "2011"
@@ -291,13 +291,13 @@ var education = {
         "start": "2006",
         "end": "2010"
       },
-      "description": "I graduated Cum Laude, having written multiple research papers, essays, and read extensively in the literary landscape. My writing ability has been honed to a fine degree through a plethora of practice and training. My analytical abilities were tested, developed, and focused. English literature fosters skills in analysis, creative thinking, and looking beyond the obvious to form connections between disparate knowledge from multiple sources.",
+      "description": "I graduated Cum Laude having written multiple research papers, essays, and reading extensively in the literary landscape. My writing ability has been honed to a fine degree through a plethora of practice and training. My analytical abilities were tested, developed, and focused. English literature fosters skills in analysis, creative thinking, and looking beyond the obvious to form connections between disparate knowledge from multiple sources.",
       "testimonials": [{
         "text": "Sunny Mui is a creative and thoughtful student who produced increasingly high quality work over the course of three years. His analytical and writing skills are excellent.",
         "name": "Emily Merriman",
         "role": "Professor",
         "pic": "img/emily.jpg",
-        "link": "https://www.linkedin.com/in/jordan-u-78716a15"
+        "link": "https://www.linkedin.com/in/emily-merriman-149aa3b"
       }]
     }],
     "onlineCourses": [{
@@ -328,26 +328,26 @@ var education = {
         "title": "Project Management",
         "school": "UC Berkeley Extension",
         "logo": "img/ucb.jpg",
-        "instructor" : "Cameron Pittman & Michael Wales",
+        "instructor" : "",
         "dates": "2010",
-        "description": "",
-        "url": "http://www.udacity.com"
+        "description": "An introduction to the project management process, review of theory and practice in the project management body of knowledge, and application of tools and knowledge acquired to create a work breakdown structure, schedule, project plan, and more.",
+        "url": "http://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=40331"
     }, {
         "title": "Quality Management",
         "school": "UC Berkeley Extension",
         "logo": "img/ucb.jpg",
-        "instructor" : "Cameron Pittman & Michael Wales",
+        "instructor" : "",
         "dates": "2010",
-        "description": "",
-        "url": "http://www.udacity.com"
+        "description": "A comprehensive overview of quality management. Illuminates philosophies and strategies of prominent quality authorities and applies the knowledge practically with a quality management improvement project plan for an organization I was employed at.",
+        "url": "http://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=40333"
     }, {
         "title": "Project Procurement Management",
         "school": "UC Berkeley Extension",
         "logo": "img/ucb.jpg",
-        "instructor" : "Cameron Pittman & Michael Wales",
+        "instructor" : "",
         "dates": "2010",
-        "description": "",
-        "url": "http://www.udacity.com"
+        "description": "Teaches fundamentals of the procurement process, from developing procurement documents and specifications to evaluating vendor proposals, crafting appropriate contracts and overseeing successful execution of contracts. Projects include an RFP, Contract Statement of Work, Vendor Evaluation Strategy Document, and more.",
+        "url": "http://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=40339"
     }]
 };
 
