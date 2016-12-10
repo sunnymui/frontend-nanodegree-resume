@@ -376,7 +376,11 @@ h1 {
     color: #333;
 }
 
-.sm-black {
+.darker-gray {
+    color: #222;
+}
+
+.black {
     color: #000;
 }
 

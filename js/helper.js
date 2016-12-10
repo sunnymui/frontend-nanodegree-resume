@@ -75,10 +75,14 @@ var HTMLwork = '<section class="work">'+
                  '</div>'+
               '</section>';
 var HTMLworkEntry = '<li class="v-margin-1">'+
-                      '<img class="inline-top round border-light-gray max-width-5" src="%logo%"" alt="%employer% Company Logo" />'+
+                      '%?imglink%'+
+                      '<img class="inline-top round border-light-gray max-width-5" src="%logo%" alt="%employer% Company Logo" />'+
+                      '%?imglink%'+
                       '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
                         '<h3 class="unbold no-margin">%role%</h3>'+
+                        '%?link%'+
                         '<h4 class="no-margin">%employer% <span class="mid-gray italic small-text unbold">◉ %location%</span></h4>'+
+                        '%?link%'+
                         '<h5 class="unbold v-margin-1 mid-gray">'+
                           '<time>%start%</time>'+
                           '<span class="linker"></span>'+
@@ -96,13 +100,15 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                       '</div>'+
                     '</li>';
 var HTMLworkEntryHighlight = '<li>%data%</li>';
+var HTMLworkLinkWrapper = '<a class="link darker-gray" href="%link%">%data%</a>';
+var HTMLworkImgLinkWrapper = '<a class="inline-top zoom" href="%link%">%data%</a>';
 var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
                               '<p class="lg-right-text">'+
-                                '<a href="%link%" target="_blank">'+
+                                '<a class="link" href="%link%" target="_blank">'+
                                 '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
-                                '<span class="lg-inline-middle left-text link">%person%<br>%role%</span>'+
+                                '<span class="lg-inline-middle left-text">%person%<br>%role%</span>'+
                                 '</a>'+
                               '</p>'+
                             '</blockquote>'+

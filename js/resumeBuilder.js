@@ -51,7 +51,7 @@ Returns: this, which would be the returned modified html in and object from the 
   return this;
 }
 
-  html.prototype.format = function(raw_data, placeholder) {
+  html.prototype.format = function(raw_data, placeholder, optional) {
       /*
       Takes raw data and inserts that data into a preformatted html string,
        replacing a placeholder with the actual data.
@@ -61,8 +61,21 @@ Returns: this, which would be the returned modified html in and object from the 
        Args: the formatted html (string), the raw data to insert into that html (string/numbers)
        Return: the formatted html string with placeholder replaced by that data (string)
       */
+      // default is that this isn't an optional part of the html
+      optional = default_for(optional, false);
       // the default placeholder string to look for in the html
       placeholder = default_for(placeholder,'%data%');
+
+      // check if this is an optional block/this key's value in the data is empty
+      // if so then remove relevant html from the string since it's optional
+      if (optional === true && raw_data.length === 0) {
+          // regular expression to match anything enclosed in the optional tags
+          // and containing the placeholder for the data we're looking at
+          var optional_regex = new RegExp('(%\?optional%.*'+ placeholder +'.*%\?optional%)', 'g');
+          // remove the matched substrings enclosed by optional tags
+          this.html = this.html.replaceAll(optional_regex, '');
+      }
+
       // check the html for occurences of the placeholder and replace with provided data
       // set this.html to the result of the function so it can be returned
       this.html =  this.html.replaceAll(placeholder, raw_data);
@@ -70,6 +83,44 @@ Returns: this, which would be the returned modified html in and object from the 
       // return the results as an object to allow chaining
       // when using this function, put .html at the end to get the value of the html
       return this;
+  };
+
+  html.prototype.wrap = function(data, placeholder, wrapper) {
+    /*
+    Checks the data to see if it has something, if so then it'll add a wrapper
+    to the passed in html template where marked by the placeholders. Useful for links where
+    they something might not have link data, but others items do--like an offline business
+    in a list of work experience.
+    So calling on <div>%?wrap%<p></p>%?wrap%</div>, if the data has something it'll add
+    the wrapping code <div><wrapper><p></p></wrapper></div>
+    otherwise itll just delete the placeholders.
+    Args: data is the data field to check if it contains info(string),
+          placeholder is where the wrapper will be inserted (string),
+          wrapper is the wrapper html which will be split into opening and
+          closing parts at the %data% placeholder
+    Returns: formatted html string with placeholders replaced by wrapper. (string)
+    */
+    // check if data has been entered
+    if (data.length !== 0) {
+      // split html at the wrapper placeholders
+      var split_html = this.html.split(placeholder);
+      // split the wrapper at the %data% placeholder
+      var split_wrapper = wrapper.split('%data%');
+
+      // concatenate back together with the wrapper pieces where the placeholders were
+      this.html = split_html[0]+
+                  split_wrapper[0]+
+                  split_html[1]+
+                  split_wrapper[1]+
+                  split_html[2];
+
+    } else {
+      // if no data just remove the placeholder text
+      this.html = this.html.replaceAll(placeholder, '');
+    }
+
+    // to allow chaining return this object
+    return this;
   };
 
 function first_letters(string) {
@@ -341,11 +392,11 @@ work.display = function() {
 
         // format the data with the testimonial html template and store in the formatted string
         formatted_testimonials += html(HTMLworkTestimonial).format(current_testimonial.text, '%testimonial%')
-                                 .format(current_testimonial.link, '%link%')
-                                 .format(current_testimonial.pic, '%photo%')
-                                 .format(current_testimonial.name, '%person%')
-                                 .format(current_testimonial.role, '%role%')
-                                 .html;
+                                                           .format(current_testimonial.link, '%link%')
+                                                           .format(current_testimonial.pic, '%photo%')
+                                                           .format(current_testimonial.name, '%person%')
+                                                           .format(current_testimonial.role, '%role%')
+                                                           .html;
       }
     }
 
@@ -374,15 +425,18 @@ work.display = function() {
     // to the main work entry template for the current job
     // then add the work entry html to the rest of the entries
     formatted_work_entries += html(HTMLworkEntry).format(current_job.logo, '%logo%')
-                                                  .format(current_job.employer, '%employer%')
-                                                  .format(current_job.title, '%role%')
-                                                  .format(current_job.location, '%location%')
-                                                  .format(current_job.dates.start, '%start%')
-                                                  .format(current_job.dates.end, '%end%')
-                                                  .format(current_job.description, '%description%')
-                                                  .format(formatted_highlights, '%highlights%')
-                                                  .format(formatted_testimonials, '%testimonials%')
-                                                  .html;
+                                                 .wrap(current_job.link, '%?link%', HTMLworkLinkWrapper)
+                                                 .wrap(current_job.link, '%?imglink%', HTMLworkImgLinkWrapper)
+                                                 .format(current_job.link, '%link%')
+                                                 .format(current_job.employer, '%employer%')
+                                                 .format(current_job.title, '%role%')
+                                                 .format(current_job.location, '%location%')
+                                                 .format(current_job.dates.start, '%start%')
+                                                 .format(current_job.dates.end, '%end%')
+                                                 .format(current_job.description, '%description%')
+                                                 .format(formatted_highlights, '%highlights%')
+                                                 .format(formatted_testimonials, '%testimonials%')
+                                                 .html;
 
   }
 
@@ -488,48 +542,86 @@ education.display = function() {
   Args: none as passed parameters, but does get data from the object
   Returns: no returns, but does append formatted html to the page
   */
+      //
+      // EDUCATION SECTION
+      //
 
-    // education
-    for (var i = 0; i < education.schools.length; i+=1) {
-      // the current school in the schools array
-      var current_school = education.schools[i];
+      // initialize var to store all the formatted school entries
+      var formatted_school_entries = '';
 
-      // put data into formatted html for this education entry
-      // var formatted_education = format(HTMLschoolName, current_school.name) +
-                                // format(HTMLschoolDegree, current_school.degree) +
-                                // format(HTMLschoolDates, current_school.dates) +
-                                // format(HTMLschoolLocation, current_school.location);
+      // loop through each job in the work object to format data
+      for (var i = 0; i < education.schools.length; i+=1) {
+        // the current school in the schools array
+        var current_school = education.schools[i];
+        // initialize an increment counter var here for use in all the loops
+        var j = 0;
 
-       // loop through the array of majors in the current schools and append
-       // each to the formatted html string
-       for (var j = 0; j < current_school.majors.length; j+=1) {
-        //  formatted_education += format(HTMLschoolMajor, current_school.majors[j]);
-       }
+        // TESTIMONIALS / RECOMMENDATIONS
+        // create testimonials section formatted html to add the the work html template later
 
-      // append the education entry div to the education section
-      // $(education_section).append(HTMLschoolStart);
-      // append the formatted html to the education entry
-      // $(education_entry).append(formatted_education);
-    }
+        // string var to store the formatted testimonials html
+        var formatted_testimonials = '';
 
-    // online courses
-    // $(education_section).append(HTMLonlineClasses);
+        // check if there's even any testimonials data
+        if (current_school.testimonials.length !== 0) {
 
-    // loop through each online course to format and display it
-    for (i=0; i < education.onlineCourses.length; i+=1 ) {
-      var current_course = education.onlineCourses[i];
+          // loop through the testimonials data and format each one with the html template
+          for (j = 0; j < current_school.testimonials.length; j+=1 ) {
+            // the current testimonial data we're working with in the object array
+            var current_testimonial = current_school.testimonials[j];
 
-      // online course formatted html
-      // var formatted_online_courses = format(HTMLonlineTitle, current_course.title) +
-                                    //  format(HTMLonlineSchool, current_course.school) +
-                                    //  format(HTMLonlineDates, current_course.dates) +
-                                    //  format(HTMLonlineURL, current_course.url);
+            // format the data with the testimonial html template and store in the formatted string
+            formatted_testimonials += html(HTMLschoolTestimonial).format(current_testimonial.text, '%testimonial%')
+                                     .format(current_testimonial.link, '%link%')
+                                     .format(current_testimonial.pic, '%photo%')
+                                     .format(current_testimonial.name, '%person%')
+                                     .format(current_testimonial.role, '%role%')
+                                     .html;
+          }
+        }
 
-      // append the education entry div to the education section
-      // $(education_section).append(HTMLschoolStart);
-      // append the formatted html to the education entry
-      // $(education_entry).append(formatted_online_courses);
-    }
+        // FORMAT SCHOOL ENTRY HTML
+        // add all formatted school html subsections
+        // to the main school entry template for the current school
+        // then add the school entry html to the rest of the entries
+        formatted_school_entries += html(HTMLschoolEntry).format(current_school.logo, '%logo%')
+                                                         .format(current_school.link, '%link%')
+                                                         .format(current_school.employer, '%employer%')
+                                                         .format(current_school.title, '%role%')
+                                                         .format(current_school.location, '%location%')
+                                                         .format(current_school.dates.start, '%start%')
+                                                         .format(current_school.dates.end, '%end%')
+                                                         .format(current_school.description, '%description%')
+                                                         .format(formatted_testimonials, '%testimonials%')
+                                                         .html;
+
+      }
+
+      // FORMAT PROFESSIONAL COURSEWORK ENTRY HTML
+      // format html with raw data for each course using course entry template
+
+      var formatted_course_entries = '';
+      for (i=0; i < education.onlineCourses.length; i+=1 ) {
+        var current_course = education.onlineCourses[i];
+
+        formatted_course_entries += html(HTMLcourseEntry).format(current_course.logo, '%logo%')
+                                                         .format(current_course.link, '%link%')
+                                                         .format(current_course.employer, '%employer%')
+                                                         .format(current_course.title, '%role%')
+                                                         .format(current_course.location, '%location%')
+                                                         .format(current_course.dates, '%start%')
+                                                         .format(current_course.description, '%description%')
+                                                         .html;
+
+      }
+
+
+      // add the formatted work entries to the work section html template
+      var formatted_education = html(HTMLwork).format(formatted_school_entries).html;
+
+      // APPEND EDUCATION HTML TO THE PAGE
+
+      $(main).append(formatted_education);
 
 };
 

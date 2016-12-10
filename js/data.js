@@ -111,6 +111,7 @@ var work = {
         "logo": "img/logo-square.png",
         "title": "Designer & Web Developer",
         "location": "San Jose, CA",
+        "link" : "https://www.creativeaudacity.com",
         "dates": {
           "start": "2015",
           "end": "Present"
@@ -128,6 +129,7 @@ var work = {
         "logo": "img/globial-logo.png",
         "title": "Digital Marketing Manager & Designer",
         "location": "Sunnyvale, CA",
+        "link" : "",
         "dates": {
           "start": "2011",
           "end": "2015"
@@ -158,6 +160,7 @@ var work = {
         "logo": "img/gate58-logo.png",
         "title": "SEO & Online Marketing Intern",
         "location": "San Mateo, CA",
+        "link" : "",
         "dates": {
           "start": "2011",
           "end": "2011"
@@ -181,6 +184,7 @@ var work = {
         "logo": "img/hayward-grill-logo.png",
         "title": "Customer Service/Marketing & Design Assistant",
         "location": "Hayward, CA",
+        "link" : "",
         "dates": {
           "start": "2004",
           "end": "2011"
@@ -252,29 +256,97 @@ var projects = {
 
 var education = {
     "schools": [{
-        "name": "San Francisco State University",
-        "location": "San Francisco, CA",
-        "majors": [
-          "English Literature",
-          "Business Admnistration: Marketing"
-        ],
-        "dates": "2006 - 2010",
-        "degree": "Bachelors"
+      "name": "San Francisco State University",
+      "logo": "img/sfsu-business.png",
+      "majors": ["Business Administration: Marketing"],
+      "degree": "B.S.",
+      "location": "San Francisco, CA",
+      "link" : "http://cob.sfsu.edu/",
+      "dates": {
+        "start": "2006",
+        "end": "2010"
+      },
+      "description": "I graduated Cum Laude, completing many projects such as a marketing plan for a cosmetics department revamp selected for presentation to Target management, a sales promotion plan for a local business, case analyses of Wells Fargo, Method, and Exxon-Mobil, market research on Yelp user satisfaction, including qualitative interview data and survey data with statistical analysis, and a team sales presentation/sales proposal",
+      "testimonials": [{
+        "text": "I worked with Sunny for a group project and presentation during a personal selling class wherein we created a proposal as Springboard Retail Networks. He contributed greatly to the team especially in regards to idea generation and research. Sunny's group-oriented attitude helped result in completing all of our tasks successfully.",
+        "name": "Jordan Uban",
+        "role": "Classmate",
+        "pic": "",
+        "link": "https://www.linkedin.com/in/jordan-u-78716a15"
+      } , {
+        "text": "Sunny is a dedicated student and teammate who consistently produces the highest quality work. Working with him was an honor and he will be a great asset to any company.",
+        "name": "Jason Karbelk",
+        "role": "Classmate",
+        "pic":"img/jason.jpg",
+        "link": "https://www.linkedin.com/in/jason-karbelk-b4a1571b"
+      }]
+    }, {
+      "name": "San Francisco State University",
+      "logo": "img/sfsu.png",
+      "majors": ["English Literature"],
+      "degree": "B.A.",
+      "location": "San Francisco, CA",
+      "link" : "http://english.sfsu.edu/",
+      "dates": {
+        "start": "2006",
+        "end": "2010"
+      },
+      "description": "I graduated Cum Laude, having written multiple research papers, essays, and read extensively in the literary landscape. My writing ability has been honed to a fine degree through a plethora of practice and training. My analytical abilities were tested, developed, and focused. English literature fosters skills in analysis, creative thinking, and looking beyond the obvious to form connections between disparate knowledge from multiple sources.",
+      "testimonials": [{
+        "text": "Sunny Mui is a creative and thoughtful student who produced increasingly high quality work over the course of three years. His analytical and writing skills are excellent.",
+        "name": "Emily Merriman",
+        "role": "Professor",
+        "pic": "img/emily.jpg",
+        "link": "https://www.linkedin.com/in/jordan-u-78716a15"
+      }]
     }],
     "onlineCourses": [{
-        "title": "Complete Web Developer Course",
-        "school": "Udemy",
-        "dates": "2015",
-        "url": "http://www.udemy.com"
-    }, {
-        "title": "Learn Python, It's Cake!",
-        "school": "Udemy",
-        "dates": "2015",
-        "url": "http://www.udemy.com"
-    }, {
-        "title": "Front End Nanodegree",
+        "title": "Front End Web Developer Nanodegree",
         "school": "Udacity",
-        "dates": "2016",
+        "logo": "img/udacity.png",
+        "instructor" : "Cameron Pittman & Michael Wales",
+        "dates": "2016 - In Progress",
+        "description": "Multimonth program teaching skills required for modern front end web development and responsive websites performant for mobile and desktop. The curriculum is co-created by AT&T, Google, GitHub, and Hack Reactor--and is project based: HTML and the Bootstrap CSS framework to create a portfolio, jQuery’s DOM manipulation to dynamically populate a rsume, an arcade game in JavaScript, complex mapping applications using the Knockout framework, and the Jasmine testing framework to develop and maintain applications.",
+        "url": "http://www.udacity.com"
+    }, {
+        "title": "Become a Web Developer from Scratch",
+        "school": "Udemy",
+        "logo": "img/webdevscratch.png",
+        "instructor" : "Cameron Pittman & Michael Wales",
+        "dates": "2015",
+        "description": "A comprehensive web development course covering HTML, CSS, Javascript, PHP, MySQL and popular frameworks/libraries like Bootstrap and jQuery. Projects include creating a website, a basic Javascript application, and a CRUD webapp using PHP and MySQL for the back end.",
+        "url": "https://www.udemy.com/how-to-become-a-web-developer-from-scratch/"
+    }, {
+        "title": "Learn Python, It's Cake",
+        "school": "Udemy",
+        "logo": "img/pythoncake.png",
+        "instructor" : "Jay Elbourne",
+        "dates": "2015",
+        "description": "A course in foundational concepts of computer science and Python programming. Projects include five different programs: a tip calculator, a nugget packing calculator program, a text file reading and frequency statistics program, a word game, and a text file search program based on regular expressions.",
+        "url": "https://www.udemy.com/learning-python-not-the-snake/"
+    }, {
+        "title": "Project Management",
+        "school": "UC Berkeley Extension",
+        "logo": "img/ucb.jpg",
+        "instructor" : "Cameron Pittman & Michael Wales",
+        "dates": "2010",
+        "description": "",
+        "url": "http://www.udacity.com"
+    }, {
+        "title": "Quality Management",
+        "school": "UC Berkeley Extension",
+        "logo": "img/ucb.jpg",
+        "instructor" : "Cameron Pittman & Michael Wales",
+        "dates": "2010",
+        "description": "",
+        "url": "http://www.udacity.com"
+    }, {
+        "title": "Project Procurement Management",
+        "school": "UC Berkeley Extension",
+        "logo": "img/ucb.jpg",
+        "instructor" : "Cameron Pittman & Michael Wales",
+        "dates": "2010",
+        "description": "",
         "url": "http://www.udacity.com"
     }]
 };
@@ -284,7 +356,7 @@ var awards = {
       "name": "deans list",
       "date": "2016"
     }, {
-      "name": "deans list",
+      "name": "Beta Gamma Sigma",
       "date": "2016"
     }]
 };
