@@ -261,7 +261,7 @@ var education = {
       "majors": ["Business Administration: Marketing"],
       "degree": "B.S.",
       "location": "San Francisco, CA",
-      "link" : "http://cob.sfsu.edu/",
+      "url" : "http://cob.sfsu.edu/",
       "dates": {
         "start": "2006",
         "end": "2010"
@@ -286,7 +286,7 @@ var education = {
       "majors": ["English Literature"],
       "degree": "B.A.",
       "location": "San Francisco, CA",
-      "link" : "http://english.sfsu.edu/",
+      "url" : "http://english.sfsu.edu/",
       "dates": {
         "start": "2006",
         "end": "2010"
@@ -333,7 +333,7 @@ var education = {
         "description": "An introduction to the project management process, review of theory and practice in the project management body of knowledge, and application of tools and knowledge acquired to create a work breakdown structure, schedule, project plan, and more.",
         "url": "http://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=40331"
     }, {
-        "title": "Quality Management",
+        "title": "Project Scope and Quality Management",
         "school": "UC Berkeley Extension",
         "logo": "img/ucb.jpg",
         "instructor" : "",
@@ -341,7 +341,7 @@ var education = {
         "description": "A comprehensive overview of quality management. Illuminates philosophies and strategies of prominent quality authorities and applies the knowledge practically with a quality management improvement project plan for an organization I was employed at.",
         "url": "http://extension.berkeley.edu/search/publicCourseSearchDetails.do?method=load&courseId=40333"
     }, {
-        "title": "Project Procurement Management",
+        "title": "Project Cost and Procurement Management",
         "school": "UC Berkeley Extension",
         "logo": "img/ucb.jpg",
         "instructor" : "",

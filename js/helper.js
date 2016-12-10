@@ -100,8 +100,8 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                       '</div>'+
                     '</li>';
 var HTMLworkEntryHighlight = '<li>%data%</li>';
-var HTMLworkLinkWrapper = '<a class="link darker-gray" href="%link%">%data%</a>';
-var HTMLworkImgLinkWrapper = '<a class="inline-top zoom" href="%link%">%data%</a>';
+var HTMLworkLinkWrapper = '<a class="link darker-gray" href="%link%" target="_blank">%data%</a>';
+var HTMLworkImgLinkWrapper = '<a class="inline-top zoom" href="%link%" target="_blank">%data%</a>';
 var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
@@ -141,6 +141,81 @@ var HTMLprojectEntry = '<div class="col md-halves lg-min-width-25 lg-max-width-5
 var HTMLprojectDesc = '<p>%data%</p>';
 
 // Education Section
+
+var HTMLeducation = '<section class="education">'+
+                       '<a id="education"></a>'+
+                       '<div class="container center-text">'+
+                         '<h2 class="unbold divider">Education</h2>'+
+                         '<ul class="list-no-style">'+
+                          '%schools%'+
+                         '</ul>'+
+                         '<h2 class="unbold divider">Professional Coursework</h2>'+
+                         '<ul class="list-no-style">'+
+                          '%courses%'+
+                         '</ul>'+
+                       '</div>'+
+                    '</section>';
+var HTMLschoolEntry = '<li class="v-margin-1">'+
+                        '<a class="inline-top zoom" href="%link%" target="_blank">'+
+                          '<img class="inline-top round border-light-gray max-width-5" src="%logo%" alt="%school% Logo" />'+
+                        '</a>'+
+                        '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
+                          '<h3 class="unbold no-margin">%degree% in %major%</h3>'+
+                          '<a class="link darker-gray" href="%link%" target="_blank">'+
+                            '<h4 class="no-margin">%school% <span class="mid-gray italic small-text unbold">◉ %location%</span></h4>'+
+                          '</a>'+
+                          '<h5 class="unbold v-margin-1 mid-gray">'+
+                            '<time>%start%</time>'+
+                            '<span class="linker"></span>'+
+                            '<time>%end%</time>'+
+                          '</h5>'+
+                          '<p>'+
+                            '%description%'+
+                          '</p>'+
+                          '%?testimonial-wrap%'+
+                            '%testimonials%'+
+                          '%?testimonial-wrap%'+
+                        '</div>'+
+                      '</li>';
+var HTMLschoolTestimonialWrapper = '<div class="grid">%data%</div>';
+var HTMLschoolTestimonial = '<div class="col md-whole lg-halves gutters">'+
+                              '<blockquote>'+
+                                '%testimonial%'+
+                                '<p class="lg-right-text">'+
+                                  '<a class="link" href="%link%" target="_blank">'+
+                                  '%?optional%'+
+                                  '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
+                                  '%?optional%'+
+                                  '<span class="lg-inline-middle left-text">%person%<br>%role%</span>'+
+                                  '</a>'+
+                                '</p>'+
+                              '</blockquote>'+
+                            '</div>';
+
+var HTMLcourseEntry = '<li class="v-margin-1">'+
+                        '<a class="inline-top zoom" href="%link%" target="_blank">'+
+                          '<img class="inline-top round border-light-gray max-width-5" src="%logo%" alt="%title% Course Logo" />'+
+                        '</a>'+
+                        '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
+                          '<h3 class="unbold no-margin">%course%</h3>'+
+                          '<a class="link darker-gray" href="%link%" target="_blank">'+
+                            '<h4 class="no-margin">%school% '+
+                              '%?optional%'+
+                              '<span class="mid-gray italic small-text unbold">Instructor - %instructor%</span>'+
+                              '%?optional%'+
+                            '</h4>'+
+                          '</a>'+
+                          '<h5 class="unbold v-margin-1 mid-gray">'+
+                            '<time>%dates%</time>'+
+                          '</h5>'+
+                          '<p>'+
+                            '%description%'+
+                          '</p>'+
+                        '</div>'+
+                      '</li>';
+
+
+
 
 var HTMLschoolStart = '<div class="education-entry"></div>';
 var HTMLschoolName = '<a href="#">%data%';
