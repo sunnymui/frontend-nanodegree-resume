@@ -156,47 +156,98 @@ function default_for(argument, value) {
    return typeof argument !== 'undefined' ? argument : value;
 }
 
-function read_more(button, element, truncator_class) {
-  /*
-  Enables show/hide function in conjunction with a css class that shows/hides content.
-  Searches for buttons that trigger show/hide behavior, then finds the content
-  linked to that button and toggles the truncation class to show/hide content when clicked.
-  Also changes the button text to either more or less to reflect the toggle action.
-  Ex: <div class="description truncate">Some content</div>
-      <a class="read-more" href="#">+ More</a>
-      becomes:
-      <div class="description">Some content</div>
-      <a class="read-more" href="#">+ Less</a>
-  Args: the selector for the see more button that will trigger show/hide on click (string),
-  selector for the element that is currently being truncated by a css class (string),
-  the class name to remove or add when the button is clicked, without the '.' (string)
-  Returns: none
-  */
+function features() {
+/*
 
-  // the text for the button to switch between
-  var more_text = '+ More';
-  var less_text = '- Less';
+Features functions enable additional functionality of some sort. Encapsulated
+in the features function.
 
-  // when the button is clicked find the content, toggle class, and change button text
-  $(button).click(function(e) {
-    // get the content element that's specifically related to the button pressed
-    var current_content = $(this).siblings(element);
-    // toggle the truncation class
-    $(current_content).toggleClass(truncator_class);
+*/
 
-    // trim spaces to ensure consistent matches for the button text
-    var button_text = $(this).text().trim();
-    // if button text says more, change to 'less', else change it to 'more'
-    if (button_text == more_text) {
-      $(this).text(less_text);
-    } else {
-      $(this).text(more_text);
-    }
+  if (!(this instanceof features)) {
+  return new features();
+  }
 
-    // prevent default <a> behavior of jumping to top of page when clicking # links
-    e.preventDefault();
-  });
+  this.read_more = function(button, element, truncator_class) {
+    /*
+    Enables show/hide function in conjunction with a css class that shows/hides content.
+    Searches for buttons that trigger show/hide behavior, then finds the content
+    linked to that button and toggles the truncation class to show/hide content when clicked.
+    Also changes the button text to either more or less to reflect the toggle action.
+    Ex: <div class="description truncate">Some content</div>
+        <a class="read-more" href="#">+ More</a>
+        becomes:
+        <div class="description">Some content</div>
+        <a class="read-more" href="#">+ Less</a>
+    Args: the selector for the see more button that will trigger show/hide on click (string),
+    selector for the element that is currently being truncated by a css class (string),
+    the class name to remove or add when the button is clicked, without the '.' (string)
+    Returns: none
+    */
+
+    // the text for the button to switch between
+    var more_text = '+ More';
+    var less_text = '- Less';
+
+    // when the button is clicked find the content, toggle class, and change button text
+    $(button).click(function(e) {
+      // get the content element that's specifically related to the button pressed
+      var current_content = $(this).siblings(element);
+      // toggle the truncation class
+      $(current_content).toggleClass(truncator_class);
+
+      // trim spaces to ensure consistent matches for the button text
+      var button_text = $(this).text().trim();
+      // if button text says more, change to 'less', else change it to 'more'
+      if (button_text == more_text) {
+        $(this).text(less_text);
+      } else {
+        $(this).text(more_text);
+      }
+
+      // prevent default <a> behavior of jumping to top of page when clicking # links
+      e.preventDefault();
+    });
+  };
+
+  this.sticky_nav = function() {
+
+    // sticky nav
+
+    var fixed_class = 'fixed-wrapper no-margin';
+    var distance = $(nav).offset().top;
+    var $window = $(window);
+    var $nav = $(nav);
+
+    $window.scroll(function() {
+        if ( $window.scrollTop() >= distance ) {
+            $nav.addClass(fixed_class);
+        } else {
+            $nav.removeClass(fixed_class);
+        }
+    });
+
+  };
+
+  this.to_top = function() {
+
+    // animate scroll when to top button is clicked
+
+    var top_btn = 'a[href="#top"]';
+
+    // when a to-top button is clicked,
+    $(top_btn).click(function(e){
+        $('html,body').animate({ scrollTop: 0 }, 'medium');
+        e.preventDefault();
+    });
+  };
+
+
 }
+
+
+
+// Plugin Functions
 
 (function($) {
 
@@ -710,32 +761,10 @@ maps.display();
 footer.display();
 
 // interactive read more button functionality
-read_more(read_more_btn, description, truncate);
+features().read_more(read_more_btn, description, truncate);
+features().sticky_nav();
+features().to_top();
 
-// sticky header
-
-var fixed_class = 'fixed-wrapper no-margin';
-var distance = $(nav).offset().top;
-var $window = $(window);
-var $nav = $(nav);
-
-$window.scroll(function() {
-    if ( $window.scrollTop() >= distance ) {
-        $nav.addClass(fixed_class);
-    } else {
-        $nav.removeClass(fixed_class);
-    }
-});
-
-// to top button animated scroll
-
-var top_btn = 'a[href="#top"]';
-
-// when a to-top button is clicked,
-$(top_btn).click(function(e){
-    $('html,body').animate({ scrollTop: 0 }, 'medium');
-    e.preventDefault();
-});
 
 // animate element appearance when visible in window
 

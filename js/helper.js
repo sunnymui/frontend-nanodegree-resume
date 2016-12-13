@@ -88,10 +88,10 @@ var HTMLworkEntry = '<li class="v-margin-1">'+
                           '<span class="linker"></span>'+
                           '<time>%end%</time>'+
                         '</h5>'+
-                        '<p>'+
+                        '<p class="left-text">'+
                           '%description%'+
                         '</p>'+
-                        '<ul>'+
+                        '<ul class="left-text">'+
                           '%highlights%'+
                         '</ul>'+
                         '%?testimonial-wrap%'+
@@ -170,7 +170,7 @@ var HTMLschoolEntry = '<li class="v-margin-1">'+
                             '<span class="linker"></span>'+
                             '<time>%end%</time>'+
                           '</h5>'+
-                          '<p>'+
+                          '<p class="left-text">'+
                             '%description%'+
                           '</p>'+
                           '%?testimonial-wrap%'+
@@ -211,7 +211,7 @@ var HTMLcourseEntry = '<li class="v-margin-1">'+
                           '<h5 class="unbold v-margin-1 mid-gray">'+
                             '<time>%dates%</time>'+
                           '</h5>'+
-                          '<p>'+
+                          '<p class="left-text">'+
                             '%description%'+
                           '</p>'+
                         '</div>'+
@@ -234,7 +234,7 @@ var HTMLmap = '<section class="location">'+
 
 var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                    '<a class="col link white md-thirds" href="#top">↑ Back to Top</a>'+
-                   '<a class="col link white md-thirds" href="#about">Portfolio</a>'+
+                   '<a class="col link white md-thirds" href="https://sunnymui.github.io/one-page-portfolio/">Portfolio</a>'+
                    '<p class="col no-margin white small-text md-thirds">© 2016 Sunny Mui</p>'+
                  '</div>';
 
