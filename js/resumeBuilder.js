@@ -246,7 +246,7 @@ Encapsulates features functions.
     // animate scroll when to top button is clicked
 
     // filter and select anchors in document to the ones linking to the top anchor
-    var top_btn = $('a[href="#top"]');
+    var $top_btn = $('a[href="#top"]');
     // cross browser compatible scrolltop selector to animate the movement
     // since some browsers apply scroll to <html> element and some to <body> element
     var page = 'html,body';
@@ -254,7 +254,7 @@ Encapsulates features functions.
     // when a to-top button is clicked,
     $top_btn.click(function(e){
         // scroll the page to the top and animate the movement
-        $(page).animate({ scrollTop: 0 }, 'medium');
+        $('html,body').animate({ scrollTop: 0 }, 'medium');
         // prevent default in page link jump behavior
         e.preventDefault();
     });
