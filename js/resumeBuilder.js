@@ -10,6 +10,7 @@ var footer_section = 'footer';
 var read_more_btn = '.read-more';
 var description = '.description';
 var truncate = 'truncate lighter-gray';
+var $window = $(window);
 
 ///////////////
 // FUNCTIONS //
@@ -159,8 +160,8 @@ function default_for(argument, value) {
 function features() {
 /*
 
-Features functions enable additional functionality of some sort. Encapsulated
-in the features function.
+Features functions enable additional functionality of some sort.
+Encapsulates features functions.
 
 */
 
@@ -211,18 +212,27 @@ in the features function.
   };
 
   this.sticky_nav = function() {
+    /*
+    */
 
     // sticky nav
 
     var fixed_class = 'fixed-wrapper no-margin';
-    var distance = $(nav).offset().top;
-    var $window = $(window);
+    // cache the nav selector
     var $nav = $(nav);
+    // get's the distance of the nav from the top of the window
+    var nav_distance_from_top = $nav.offset().top;
 
+    // every scroll event check if current distance to top of the page is
+    // greater than or equal to distance of the nav to the top
     $window.scroll(function() {
-        if ( $window.scrollTop() >= distance ) {
+        if ( $window.scrollTop() >= nav_distance_from_top ) {
+            // if distance is greater then we're below the nav position and if
+            // equal the nav is right at the top of the page and should be stickied
+            // so add the fixed class
             $nav.addClass(fixed_class);
         } else {
+            // remove the stickying if we're scrolled above the nav's position
             $nav.removeClass(fixed_class);
         }
     });
@@ -230,21 +240,28 @@ in the features function.
   };
 
   this.to_top = function() {
+    /*
+    */
 
     // animate scroll when to top button is clicked
 
-    var top_btn = 'a[href="#top"]';
+    // filter and select anchors in document to the ones linking to the top anchor
+    var top_btn = $('a[href="#top"]');
+    // cross browser compatible scrolltop selector to animate the movement
+    // since some browsers apply scroll to <html> element and some to <body> element
+    var page = 'html,body';
 
     // when a to-top button is clicked,
-    $(top_btn).click(function(e){
-        $('html,body').animate({ scrollTop: 0 }, 'medium');
+    $top_btn.click(function(e){
+        // scroll the page to the top and animate the movement
+        $(page).animate({ scrollTop: 0 }, 'medium');
+        // prevent default in page link jump behavior
         e.preventDefault();
     });
   };
 
 
 }
-
 
 
 // Plugin Functions
