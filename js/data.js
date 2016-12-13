@@ -2,6 +2,8 @@
 var bio = {
     "name": "Sunny Mui",
     "role": "Designer Developer",
+    "location" : "San Jose, CA",
+    "hometown" : "Newark, CA",
     "contacts": [{
         "name" : "sunnycmui@gmail.com",
         "link" : "mailto:sunnycmui@gmail.com",
@@ -360,3 +362,7 @@ var awards = {
       "date": "2016"
     }]
 };
+
+var maps = {};
+
+var footer = {};

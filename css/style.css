@@ -240,38 +240,6 @@ section {
   transition: 0.3s all;
 }
 
-/* Slide in border animated transition for links/btns*/
-
-.slide{
-  /* so the border pseudoelements are positioned within this element */
-  position: relative;
-}
-.slide:before,
-.slide:after {
-  content: '';
-  /* allows direction of sliding to be adjusted,
-  also lets borders conform to element's shape, including padding */
-  position: absolute;
-  display: block;
-  border-top: 2px solid #fff;
-  width: 0;
-  transition: width .5s ease;
-}
-.slide:before {
-  /*slides in pseudoelement from the left*/
-  top: 0;
-  left: 0;
-}
-.slide:after {
-  /*slides in pseudoelement from the right*/
-  right: 0;
-  bottom: 0;
-}
-.slide:hover:before,
-.slide:hover:after {
-  width: 100%;
-}
-
 /* Lists */
 
 .list-no-style {
@@ -415,9 +383,7 @@ h1 {
 ========================*/
 
 header {
-    /*declared height needed since fixed header is out of doc flow, header height pushes elements down */
-    height: 5em;
-    /* height should be same as (height+paddings) for the fixed wrapper */
+  padding: 1em;
 }
 
 .fixed-wrapper {
@@ -467,10 +433,44 @@ nav a {
     transition: 0.5s;
 }
 
-nav a:hover {
+nav a:hover,
+.active {
   background: transparent;
   opacity: 1;
 }
+
+/* Slide in border animated transition for links/btns*/
+
+.slide{
+  /* so the border pseudoelements are positioned within this element */
+  position: relative;
+}
+.slide:before,
+.slide:after {
+  content: '';
+  /* allows direction of sliding to be adjusted,
+  also lets borders conform to element's shape, including padding */
+  position: absolute;
+  display: block;
+  border-top: 2px solid #fff;
+  width: 0;
+  transition: width .5s ease;
+}
+.slide:before {
+  /*slides in pseudoelement from the left*/
+  top: 0;
+  left: 0;
+}
+.slide:after {
+  /*slides in pseudoelement from the right*/
+  right: 0;
+  bottom: 0;
+}
+.slide:hover:before,
+.slide:hover:after {
+  width: 100%;
+}
+
 
 /*=======================
 5. Content/Media
@@ -554,15 +554,15 @@ blockquote img {
 
 section:first-child,
 section:nth-child(2) {
-  /* so summary, hero section doesnt have a border on top */
+  /* so summary + hero section doesnt have a border on top */
   border-top: none;
 }
 
 .intro {
   display: block;
-  margin: 1em 1.8em;
-  padding: 0 1.5em;
-  font-size: 1.4em;
+  margin: 1em auto;
+  padding: 0 0.5em;
+  font-size: 1.1em;
   font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
   border: 3px solid #800000;
   border-width: 0 3px;
@@ -627,11 +627,6 @@ li:nth-child(5n)
   }
 
 /* Work */
-
-.entry {
-    border-left: 3px solid #800000;
-    padding-left: 1em;
-}
 
 .entry blockquote {
   /* Remove the extra margin for blockquotes in entries*/
@@ -792,24 +787,12 @@ h3.project-heading {
   height: 1.8em;
 }
 
-.education {
-
-}
+/* Map */
 
 .map {
-  height: 20em;
-}
-
-/*temp styles from old page, integrate these into new page asap*/
-#mapDiv {
-  height: inherit;
-    width: 100%;
-    padding-bottom: 5%;
-}
-#map {
   display: block;
-    height: 100%;
-    margin: 0 5%;
+  min-height: 20em;
+  margin: 1em;
 }
 
 /* Contact */
@@ -832,18 +815,16 @@ h3.project-heading {
 6. Footer
 ========================*/
 
-footer {
-    width: 100%;
-    padding: 1em 0;
-    border-top: 0.3em solid #7e8aa2;
-    background: #263248;
-    background-image: linear-gradient(160deg, #263248 0%, #828ea6 100%);
+.footer-links a {
+    /* single link on each line for mobile */
+    display: block;
 }
 
-footer a {
-    display: inline-block;
-    /* so the footer expands with their height/padding */
-    padding: 1em;
+.footer-links {
+  width: 100%;
+  background: #1b242f;;
+  background-image: linear-gradient(232deg, #006e87, #000);
+  margin-top: 1em;
 }
 
 
@@ -920,6 +901,47 @@ footer a {
 .icon-location:before { content: '\e806'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 
+/* Animate.css Plugin */
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fadeInDown {
+  -webkit-animation-name: fadeInDown;
+  animation-name: fadeInDown;
+}
+
+@-webkit-keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10%, 0);
+    transform: translate3d(0, -10%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
 
 /*=======================
 8. Media Queries
@@ -971,6 +993,9 @@ footer a {
     .md-75-max-width {
        max-width: 75%;
     }
+    .md-margin-1 {
+      margin: 1em;
+    }
 
     /* Animate the breakpoint transitions */
 
@@ -992,10 +1017,19 @@ footer a {
       text-align: left;
     }
 
-    /* About */
+    /* Summary */
 
-    .headshot {
-        float: left;
+    .intro {
+        padding: 0 1.5em;
+        font-size: 1.4em;
+        margin: 1em 1.8em;
+    }
+
+    /* Work/Education */
+
+    .entry {
+       border-left: 3px solid #800000;
+       padding-left: 1em;
     }
 }
 

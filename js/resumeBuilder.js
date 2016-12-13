@@ -4,15 +4,12 @@
 
 // DOM selectors
 var main = 'main';
-var header_contact = '.contact';
-var footer_contact = '#footerContacts';
-var work_exp = '#workExperience';
-var work_entry = '.work-entry:last';
-var education_section = '#education';
-var education_entry = '.education-entry:last';
-var projects_section = '#projects';
-var project_entry = '.project-entry:last';
-var map_section = '#mapDiv';
+var nav = 'nav';
+var contact = '.contact';
+var footer_section = 'footer';
+var read_more_btn = '.read-more';
+var description = '.description';
+var truncate = 'truncate lighter-gray';
 
 ///////////////
 // FUNCTIONS //
@@ -201,6 +198,36 @@ function read_more(button, element, truncator_class) {
   });
 }
 
+(function($) {
+
+  /**
+   * Copyright 2012, Digital Fusion
+   * Licensed under the MIT license.
+   * http://teamdf.com/jquery-plugins/license/
+   *
+   * @author Sam Sehnert
+   * @desc A small plugin that checks whether elements are within
+   *     the user visible viewport of a web browser.
+   *     only accounts for vertical position, not horizontal.
+   */
+
+  $.fn.visible = function(partial) {
+
+      var $t            = $(this),
+          $w            = $(window),
+          viewTop       = $w.scrollTop(),
+          viewBottom    = viewTop + $w.height(),
+          _top          = $t.offset().top,
+          _bottom       = _top + $t.height(),
+          compareTop    = partial === true ? _bottom : _top,
+          compareBottom = partial === true ? _top : _bottom;
+
+    return ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+
+  };
+
+})(jQuery);
+
 // Display functions for json data
 
 bio.display = function() {
@@ -349,7 +376,8 @@ bio.display = function() {
     }
 
     // now that all the html is ready for insertion, add everything to the summary html template
-    var formatted_summary = html(HTMLsummary).format(bio.welcomeMessage, '%welcomemsg%')
+    var formatted_summary = html(HTMLsummary).format(HTMLcontacts, '%contacts%')
+                                             .format(bio.welcomeMessage, '%welcomemsg%')
                                              .format(formatted_qualifications, '%qualifications%')
                                              .format(formatted_skills_groups, '%skillsgroups%')
                                              .html;
@@ -358,8 +386,10 @@ bio.display = function() {
 
     // add summary section html to the page
     $(main).append(formatted_summary);
+    // add a contacts section to footer so that contacts will be added to both dom locations
+    $(footer_section).append(HTMLcontacts);
     // add contacts html to the page
-    displayContact(header_contact, footer_contact);
+    displayContact(contact);
 
 };
 
@@ -445,6 +475,7 @@ work.display = function() {
                                                  .format(current_job.dates.end, '%end%')
                                                  .format(current_job.description, '%description%')
                                                  .format(formatted_highlights, '%highlights%')
+                                                 .wrap(formatted_testimonials, '%?testimonial-wrap%', HTMLworkTestimonialWrap)
                                                  .format(formatted_testimonials, '%testimonials%')
                                                  .html;
 
@@ -641,15 +672,143 @@ education.display = function() {
 
 };
 
+
+// map
+
+maps.display = function() {
+  /* Formats the html for the footer map. Actual map created in the helper functions js.
+  */
+
+  // create the map section
+  var formatted_map = html(HTMLmap).format(bio.location, '%location%')
+                     .format(bio.hometown, '%hometown%')
+                     .html;
+
+  // append map section to the page
+  $(main).append(formatted_map);
+
+};
+
+// footer
+
+footer.display = function() {
+  /* Formats the html for the footer map. Actual map created in the helper functions js.
+  */
+
+  // append footer section to the page
+  $(footer_section).append(HTMLfooter);
+
+};
+
 // Add all the formatted html to the page;
 
 bio.display();
 work.display();
 projects.display();
 education.display();
+maps.display();
+footer.display();
 
-// neaten this up later
-read_more('.read-more','.description','truncate lighter-gray');
+// interactive read more button functionality
+read_more(read_more_btn, description, truncate);
 
-// interactive map
-//$('#mapDiv').append(googleMap);
+// sticky header
+
+var fixed_class = 'fixed-wrapper no-margin';
+var distance = $(nav).offset().top;
+var $window = $(window);
+var $nav = $(nav);
+
+$window.scroll(function() {
+    if ( $window.scrollTop() >= distance ) {
+        $nav.addClass(fixed_class);
+    } else {
+        $nav.removeClass(fixed_class);
+    }
+});
+
+// to top button animated scroll
+
+var top_btn = 'a[href="#top"]';
+
+// when a to-top button is clicked,
+$(top_btn).click(function(e){
+    $('html,body').animate({ scrollTop: 0 }, 'medium');
+    e.preventDefault();
+});
+
+// animate element appearance when visible in window
+
+var animated_element = '.animated';
+var fade_class = 'fadeInDown';
+
+$window.scroll(function(event) {
+
+  $(animated_element).each(function(i, el) {
+    var el = $(el);
+    if (el.visible(true)) {
+      el.addClass(fade_class);
+    }
+  });
+
+});
+
+// Minimal Scrollspy plugin
+// https://jsfiddle.net/mekwall/up4nu/
+
+// with modified add/hide active class behavior to make it work my dom structure
+
+// the button in the nav to highlight when scrolling in the corresponding section
+var nav_link = 'nav a';
+// class to add when a nav link is highlighted
+var active_class = 'active';
+
+// Cache selectors
+var lastId,
+    topMenu = $(nav),
+    topMenuHeight = topMenu.outerHeight()+15,
+    // All list items
+    menuItems = topMenu.find("a"),
+    // Anchors corresponding to menu items
+    scrollItems = menuItems.map(function(){
+      var item = $($(this).attr("href"));
+      if (item.length) { return item; }
+    });
+
+// Bind click handler to menu items
+// so we can get a fancy scroll animation
+
+menuItems.click(function(e){
+  var href = $(this).attr("href"),
+      offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+  $('html, body').stop().animate({
+      scrollTop: offsetTop
+  }, 300);
+  e.preventDefault();
+});
+
+// Bind to scroll
+$window.scroll(function(){
+   // Get container scroll position
+   var fromTop = $(this).scrollTop()+topMenuHeight;
+
+   // Get id of current scroll item
+   var cur = scrollItems.map(function(){
+     if ($(this).offset().top < fromTop)
+       return this;
+   });
+
+   // Get the id of the current element
+   cur = cur[cur.length-1];
+   var id = cur && cur.length ? cur[0].id : "";
+
+   if (lastId !== id) {
+       lastId = id;
+       // note: this section modified to make it work in a non ul-li-a structure
+       var current_nav_link = 'nav a[href="#'+id+'"]';
+       // clear any active classes on the nav links
+       $(nav_link).removeClass(active_class);
+       // add an active class to the current link corresponding to the section
+       $(current_nav_link).addClass(active_class);
+   }
+});
