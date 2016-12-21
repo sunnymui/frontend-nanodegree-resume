@@ -31,7 +31,7 @@ var bio = {
         "icon" : "location"
       }
     ],
-    "biopic": "https://sunnymui.github.io/one-page-portfolio/img/bw.png",
+    "biopic": "img/sunny.png",
     "welcomeMessage": "Designer and web developer in San Jose, California who's worked several years in startups and freelance doing design, UX, UI, front end development, copywriting, and digital marketing. I've also done brochures, logos, branding, posters, pitch decks, and more. Committed to learning and continuous improvement.",
     "skills": [{
       "Business" : [
@@ -314,7 +314,7 @@ var education = {
         "title": "Become a Web Developer from Scratch",
         "school": "Udemy",
         "logo": "img/webdevscratch.png",
-        "instructor" : "Cameron Pittman & Michael Wales",
+        "instructor" : "Victor Bastos",
         "dates": "2015",
         "description": "A comprehensive web development course covering HTML, CSS, Javascript, PHP, MySQL and popular frameworks/libraries like Bootstrap and jQuery. Projects include creating a website, a basic Javascript application, and a CRUD webapp using PHP and MySQL for the back end.",
         "url": "https://www.udemy.com/how-to-become-a-web-developer-from-scratch/"

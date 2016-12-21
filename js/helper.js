@@ -46,9 +46,9 @@ var HTMLcontact = '<li>'+
 // qualifications
 
 var HTMLqualification = '<li class="col md-halves lg-thirds flex gutters">'+
-                          '<div class="tile-item animated">'+
-                            '<h4 class="big-5-text no-margin">%symbol%</h4>'+
-                            '<h4 class="uppercase unbold no-margin spaced-text">%name%</h4>'+
+                          '<div class="tile-item">'+
+                            '<h4 class="big-5-text no-margin animated">%symbol%</h4>'+
+                            '<h4 class="uppercase unbold no-margin spaced-text animated">%name%</h4>'+
                             '<p>%description%</p>'+
                           '</div>'+
                         '</li>';

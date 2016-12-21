@@ -1,18 +1,4 @@
 ///////////////
-// CONSTANTS //
-///////////////
-
-// DOM selectors
-var main = 'main';
-var nav = 'nav';
-var contact = '.contact';
-var footer_section = 'footer';
-var read_more_btn = '.read-more';
-var description = '.description';
-var truncate = 'truncate lighter-gray';
-var $window = $(window);
-
-///////////////
 // FUNCTIONS //
 ///////////////
 
@@ -157,19 +143,21 @@ function default_for(argument, value) {
    return typeof argument !== 'undefined' ? argument : value;
 }
 
-function features() {
+function features(target) {
 /*
 
 Features functions enable additional functionality of some sort.
-Encapsulates features functions.
+Wrapper function for encapsulation of features functions.
+
+Args: target (string or jquery dom selector) - target element for a specific feature function
 
 */
 
   if (!(this instanceof features)) {
-  return new features();
+  return new features(target);
   }
 
-  this.read_more = function(button, element, truncator_class) {
+  this.read_more = function(truncated_element, truncator_class) {
     /*
     Enables show/hide function in conjunction with a css class that shows/hides content.
     Searches for buttons that trigger show/hide behavior, then finds the content
@@ -180,7 +168,8 @@ Encapsulates features functions.
         becomes:
         <div class="description">Some content</div>
         <a class="read-more" href="#">+ Less</a>
-    Args: the selector for the see more button that will trigger show/hide on click (string),
+    Args: target (passed in outer features() scope) - the selector for
+    the see more button that will trigger show/hide on click (),
     selector for the element that is currently being truncated by a css class (string),
     the class name to remove or add when the button is clicked, without the '.' (string)
     Returns: none
@@ -191,19 +180,22 @@ Encapsulates features functions.
     var less_text = '- Less';
 
     // when the button is clicked find the content, toggle class, and change button text
-    $(button).click(function(e) {
+    $(target).click(function(e) {
+
+      // cache the current button triggering the event
+      var $this = $(this);
       // get the content element that's specifically related to the button pressed
-      var current_content = $(this).siblings(element);
+      var current_content = $this.siblings(truncated_element);
       // toggle the truncation class
       $(current_content).toggleClass(truncator_class);
 
       // trim spaces to ensure consistent matches for the button text
-      var button_text = $(this).text().trim();
+      var button_text = $this.text().trim();
       // if button text says more, change to 'less', else change it to 'more'
       if (button_text == more_text) {
-        $(this).text(less_text);
+        $this.text(less_text);
       } else {
-        $(this).text(more_text);
+        $this.text(more_text);
       }
 
       // prevent default <a> behavior of jumping to top of page when clicking # links
@@ -211,53 +203,71 @@ Encapsulates features functions.
     });
   };
 
-  this.sticky_nav = function() {
-    /*
-    */
-
-    // sticky nav
-
-    var fixed_class = 'fixed-wrapper no-margin';
-    // cache the nav selector
-    var $nav = $(nav);
-    // get's the distance of the nav from the top of the window
-    var nav_distance_from_top = $nav.offset().top;
-
-    // every scroll event check if current distance to top of the page is
-    // greater than or equal to distance of the nav to the top
-    $window.scroll(function() {
-        if ( $window.scrollTop() >= nav_distance_from_top ) {
-            // if distance is greater then we're below the nav position and if
-            // equal the nav is right at the top of the page and should be stickied
-            // so add the fixed class
-            $nav.addClass(fixed_class);
-        } else {
-            // remove the stickying if we're scrolled above the nav's position
-            $nav.removeClass(fixed_class);
-        }
-    });
-
-  };
-
   this.to_top = function() {
     /*
+    Filters anchor elements by links pointing to #top then scrolls the window to
+    the top of the document when an anchor is clicked with a smooth animation.
+    Needs a jquery selector for the page (html, body) to scroll.
+    Args: target (passed in outer features() scope) - the selector for the button
+    that will trigger the jump to the top of the page
+    Return: none
     */
 
     // animate scroll when to top button is clicked
 
-    // filter and select anchors in document to the ones linking to the top anchor
-    var $top_btn = $('a[href="#top"]');
-    // cross browser compatible scrolltop selector to animate the movement
-    // since some browsers apply scroll to <html> element and some to <body> element
-    var page = 'html,body';
-
     // when a to-top button is clicked,
-    $top_btn.click(function(e){
+    $(target).click(function(e){
         // scroll the page to the top and animate the movement
-        $('html,body').animate({ scrollTop: 0 }, 'medium');
-        // prevent default in page link jump behavior
+        $page.animate({ scrollTop: 0 }, 'medium');
+        // prevent default of clicking a link jumping to that location
         e.preventDefault();
     });
+  };
+
+  this.sticky_nav = function(fixed_class, nav_distance_from_top) {
+    /*
+    Makes header nav sticky when top of the window scrolls to the nav element's position.
+    Requires a jquery cached selector for window.
+    Args: target (passed in to outer features() scope) - the nav element to stickify,
+    fixed_class (string) - the css class to apply to make the nav fixed position,
+    nav_distance_from_top (numebr)- the pixel distance of the nav from the top of the page
+    Return: none
+    */
+
+    // every scroll event check if current distance to top of the page is
+    // greater than or equal to distance of the nav to the top
+    if ( $window.scrollTop() >= nav_distance_from_top ) {
+        // if distance is greater then we're below the nav position and if
+        // equal the nav is right at the top of the page and should be stickied
+        // so add the fixed class
+        $(target).addClass(fixed_class);
+    } else {
+        // remove the stickying if we're scrolled above the nav's position
+        $(target).removeClass(fixed_class);
+    }
+
+  };
+
+  this.animate_visible = function(animation_class) {
+    /*
+    Animates items with the animated element class when visible in the window.
+    Depends on the .visible jquery function mini plugin.
+    Args: target (passed into outer features() scope) - the selected element(s) to load animations on
+    animation_class - the css class applied to create the css animation
+    Return: none
+    */
+
+    // loop through animated elements checking if theyre visible
+    $(target).each(function(i, el) {
+      // current elements
+      var element = $(el);
+      // check if they are visible
+      if (element.visible(true)) {
+        // add animation class if they are visible
+        element.addClass(animation_class);
+      }
+    });
+
   };
 
 
@@ -295,6 +305,85 @@ Encapsulates features functions.
   };
 
 })(jQuery);
+
+function animate_nav_jump(nav_link, nav_height) {
+  // Bind click handler to menu items
+  // so we can get a fancy scroll animation
+
+  $(nav_link).click(function(e){
+    var href = $(this).attr("href");
+    // set offset equal to href then check if its a '#', if so set offset to 0
+    // otherwise set it equal to the offset amount of the clicked anchor - nav height
+    var offsetTop = href === "#" ? 0 : $(href).offset().top-nav_height+1;
+    $page.stop().animate({
+        scrollTop: offsetTop
+    }, 300);
+    e.preventDefault();
+  });
+}
+
+function scrollspy() {
+
+  // Minimal Scrollspy plugin
+  // https://jsfiddle.net/mekwall/up4nu/
+  // with modified add/hide active class behavior making it work with my dom
+
+  // button in the nav to highlight when scrolling in the corresponding section
+  var nav_link = 'nav a';
+  // class to add when a nav link is highlighted
+  var active_class = 'active';
+
+  // Cache selectors
+  var lastId,
+      topMenu = $nav,
+      topMenuHeight = topMenu.outerHeight()+15,
+      // All anchor items in nav
+      menuItems = topMenu.find("a"),
+      // Anchors corresponding to menu items
+      scrollItems = menuItems.map(function() {
+        var item = $($(this).attr("href"));
+        if (item.length) { return item; }
+      });
+
+  // Bind click handler to menu items
+  // so we can get a fancy scroll animation
+
+  menuItems.click(function(e){
+    var href = $(this).attr("href"),
+        offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
+    $('html, body').stop().animate({
+        scrollTop: offsetTop
+    }, 300);
+    e.preventDefault();
+  });
+
+  // Bind to scroll
+  $window.scroll(function(){
+     // Get container scroll position
+     var fromTop = $(this).scrollTop()+topMenuHeight;
+
+     // Get id of current scroll item
+     var cur = scrollItems.map(function(){
+       if ($(this).offset().top < fromTop)
+         return this;
+     });
+
+     // Get the id of the current element
+     cur = cur[cur.length-1];
+     var id = cur && cur.length ? cur[0].id : "";
+
+     if (lastId !== id) {
+         lastId = id;
+         // note: this section modified to make it work in a non ul-li-a structure
+         var current_nav_link = 'nav a[href="#'+id+'"]';
+         // clear any active classes on the nav links
+         $(nav_link).removeClass(active_class);
+         // add an active class to the current link corresponding to the section
+         $(current_nav_link).addClass(active_class);
+     }
+  });
+
+}
 
 // Display functions for json data
 
@@ -334,7 +423,7 @@ bio.display = function() {
     // ADD HERO HTML TO PAGE
 
     // prepend because we want it at the beginning
-    $(main).prepend(formatted_hero);
+    $main.prepend(formatted_hero);
 
     //
     // SUMMARY SECTION
@@ -453,9 +542,14 @@ bio.display = function() {
     // APPEND SUMMARY HTML TO PAGE
 
     // add summary section html to the page
-    $(main).append(formatted_summary);
-    // add a contacts section to footer so that contacts will be added to both dom locations
-    $(footer_section).append(HTMLcontacts);
+    $main.append(formatted_summary);
+
+    // APPEND CONTACTS HTML
+
+    // add a contacts section to footer for displayContact function to append contacts to
+    $footer_section.append(HTMLcontacts);
+    // class of contacts section(s) to append formatted contact html to
+    var contact = '.contact';
     // add contacts html to the page
     displayContact(contact);
 
@@ -554,7 +648,7 @@ work.display = function() {
 
   // APPEND WORK HTML TO THE PAGE
 
-  $(main).append(formatted_work);
+  $main.append(formatted_work);
 
 };
 
@@ -638,7 +732,7 @@ projects.display = function() {
 
     // APPEND PROJECT HTML TO PAGE
 
-    $(main).append(formatted_projects);
+    $main.append(formatted_projects);
 
 };
 
@@ -736,7 +830,7 @@ education.display = function() {
 
       // APPEND EDUCATION HTML TO THE PAGE
 
-      $(main).append(formatted_education);
+      $main.append(formatted_education);
 
 };
 
@@ -744,7 +838,9 @@ education.display = function() {
 // map
 
 maps.display = function() {
-  /* Formats the html for the footer map. Actual map created in the helper functions js.
+  /*
+  Formats the html for the location section and appends it.
+  Actual map created in the helper functions js and appended to this section.
   */
 
   // create the map section
@@ -753,20 +849,31 @@ maps.display = function() {
                      .html;
 
   // append map section to the page
-  $(main).append(formatted_map);
+  $main.append(formatted_map);
 
 };
 
 // footer
 
 footer.display = function() {
-  /* Formats the html for the footer map. Actual map created in the helper functions js.
+  /*
+  Formats the html for the footer and appends it to the footer.
   */
 
   // append footer section to the page
-  $(footer_section).append(HTMLfooter);
+  $footer_section.append(HTMLfooter);
 
 };
+
+///////////////
+//  RUN CODE //
+///////////////
+
+// Pre Build DOM selectors
+// needed to build the page with display functions
+var $main = $('main');
+var $footer_section = $('footer');
+var $window = $(window);
 
 // Add all the formatted html to the page;
 
@@ -777,84 +884,42 @@ education.display();
 maps.display();
 footer.display();
 
-// interactive read more button functionality
-features().read_more(read_more_btn, description, truncate);
-features().sticky_nav();
-features().to_top();
+// CSS Classes
+var truncate_class = 'truncate lighter-gray';
+var fixed_class = 'fixed-wrapper no-margin';
+// class to add when element is visible
+var fade_animate_class = 'fadeInDown';
 
+// DOM Selectors
+var $nav = $('nav');
+var description = '.description';
+var $read_more_btn = $('.read-more');
+// filter anchors in document linking to the top anchor
+var $top_btn = $('a[href="#top"]');
+// get element(s) with this class for animating
+var $animated_element = $('.animated');
+var $page = $('html, body'); 
 
-// animate element appearance when visible in window
+// Run the JS dependent features for the page
 
-var animated_element = '.animated';
-var fade_class = 'fadeInDown';
+// read more button allowing show/hide functionality for truncated elements
+features($read_more_btn).read_more(description, truncate_class);
+// smooth animated to top button jumping to top of the page
+features($top_btn).to_top();
 
-$window.scroll(function(event) {
+// get the distance of the nav from the top of the window for sticky nav function
+var nav_distance_from_top = $nav.offset().top;
 
-  $(animated_element).each(function(i, el) {
-    var el = $(el);
-    if (el.visible(true)) {
-      el.addClass(fade_class);
-    }
-  });
-
+// correct the nav distance to top of page if window is resized
+$window.resize(function() {
+  nav_distance_from_top = $nav.offset().top;
 });
 
-// Minimal Scrollspy plugin
-// https://jsfiddle.net/mekwall/up4nu/
-
-// with modified add/hide active class behavior to make it work my dom structure
-
-// the button in the nav to highlight when scrolling in the corresponding section
-var nav_link = 'nav a';
-// class to add when a nav link is highlighted
-var active_class = 'active';
-
-// Cache selectors
-var lastId,
-    topMenu = $(nav),
-    topMenuHeight = topMenu.outerHeight()+15,
-    // All list items
-    menuItems = topMenu.find("a"),
-    // Anchors corresponding to menu items
-    scrollItems = menuItems.map(function(){
-      var item = $($(this).attr("href"));
-      if (item.length) { return item; }
-    });
-
-// Bind click handler to menu items
-// so we can get a fancy scroll animation
-
-menuItems.click(function(e){
-  var href = $(this).attr("href"),
-      offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
-  $('html, body').stop().animate({
-      scrollTop: offsetTop
-  }, 300);
-  e.preventDefault();
+// check for scroll events
+$window.scroll(function() {
+  features($nav).sticky_nav(fixed_class, nav_distance_from_top);
+  features($animated_element).animate_visible(fade_animate_class);
 });
 
-// Bind to scroll
-$window.scroll(function(){
-   // Get container scroll position
-   var fromTop = $(this).scrollTop()+topMenuHeight;
-
-   // Get id of current scroll item
-   var cur = scrollItems.map(function(){
-     if ($(this).offset().top < fromTop)
-       return this;
-   });
-
-   // Get the id of the current element
-   cur = cur[cur.length-1];
-   var id = cur && cur.length ? cur[0].id : "";
-
-   if (lastId !== id) {
-       lastId = id;
-       // note: this section modified to make it work in a non ul-li-a structure
-       var current_nav_link = 'nav a[href="#'+id+'"]';
-       // clear any active classes on the nav links
-       $(nav_link).removeClass(active_class);
-       // add an active class to the current link corresponding to the section
-       $(current_nav_link).addClass(active_class);
-   }
-});
+// scrollspy Plugin
+scrollspy();
