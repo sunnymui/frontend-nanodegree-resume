@@ -270,9 +270,32 @@ Args: target (string or jquery dom selector) - target element for a specific fea
 
   };
 
+  this.animate_nav_jump = function(nav_height) {
+    /*
+    Bind click handler to menu items so we can get a fancy scroll animation.
+    Requires a cached jquery selector for the page.
+
+    Args: target(passed in as arg via outer features() scope) - the nav link elements,
+    nav_height(number) - pixel height of nav bar area to account for when scrolling to section
+    Return: none
+    */
+
+    $(target).click(function(e){
+      // get the anchor link href
+      var href = $(this).attr("href");
+      // set offset equal to href then check if its a '#', if so set offset to 0
+      // otherwise set it equal to the offset amount of the clicked anchor - nav height
+      var offsetTop = href === "#" ? 0 : $(href).offset().top-nav_height+1;
+      // animate the scroll jump to the anchor location
+      $page.stop().animate({
+          scrollTop: offsetTop
+      }, 300);
+      // stop default behavior link jump
+      e.preventDefault();
+    });
+  };
 
 }
-
 
 // Plugin Functions
 
@@ -306,84 +329,79 @@ Args: target (string or jquery dom selector) - target element for a specific fea
 
 })(jQuery);
 
-function animate_nav_jump(nav_link, nav_height) {
-  // Bind click handler to menu items
-  // so we can get a fancy scroll animation
+function scrollspy(nav_link) {
+  /*
+  Minimal Scrollspy plugin
+  https://jsfiddle.net/mekwall/up4nu/
+  Modified and broken up into multiple encapsulated functions to make it so
+  I can use one scroll listener for all my functions.
+  Modified add/hide class behavior due to dom structure.
+  */
 
-  $(nav_link).click(function(e){
-    var href = $(this).attr("href");
-    // set offset equal to href then check if its a '#', if so set offset to 0
-    // otherwise set it equal to the offset amount of the clicked anchor - nav height
-    var offsetTop = href === "#" ? 0 : $(href).offset().top-nav_height+1;
-    $page.stop().animate({
-        scrollTop: offsetTop
-    }, 300);
-    e.preventDefault();
-  });
-}
+  // return an instance of the object without needing the new keyword syntax
+  if (!(this instanceof scrollspy)) {
+  return new scrollspy(nav_link);
+  }
 
-function scrollspy() {
+  this.nav_item_map = function() {
+    /*
+    Creates an array of each nav anchor element using the map function.
+    Used for the scrollspy highlighting function.
+    Args: target(passed in via outer scroll spy function) - the nav anchor elements
+    to create the mapped array with
+    Return: a mapped array of each nav anchor element in the nav menu
+    */
 
-  // Minimal Scrollspy plugin
-  // https://jsfiddle.net/mekwall/up4nu/
-  // with modified add/hide active class behavior making it work with my dom
+    return $(nav_link).map(function() {
+              // gets the href for each nav link
+              var item = $($(this).attr("href"));
+              // return an item if it has an href
+              if (item.length) { return item; }
+            });
+  };
 
-  // button in the nav to highlight when scrolling in the corresponding section
-  var nav_link = 'nav a';
-  // class to add when a nav link is highlighted
-  var active_class = 'active';
+  this.highlight = function(active_class, nav_item_map, nav_height) {
+    /*
+    Add active class to the nav item in the menu linked to the respective onpage
+    anchor when the user has scrolled past or in it's respective section.
+    Requires a cached jquery window selector.
+    Args: target(passed in via outer scrollspy() scope) - the nav menu link elements
+    nav_item_map(array) - the mapped array for the nav menu items,
+    active_class(string) - css class to apply to nav menu items when active,
+    nav_height(number) - height of the nav menu,
+    */
 
-  // Cache selectors
-  var lastId,
-      topMenu = $nav,
-      topMenuHeight = topMenu.outerHeight()+15,
-      // All anchor items in nav
-      menuItems = topMenu.find("a"),
-      // Anchors corresponding to menu items
-      scrollItems = menuItems.map(function() {
-        var item = $($(this).attr("href"));
-        if (item.length) { return item; }
-      });
+    // initialize var for id storage
+    var lastId;
+    // Get container scroll position
+    var fromTop = $window.scrollTop()+nav_height;
 
-  // Bind click handler to menu items
-  // so we can get a fancy scroll animation
+    // Get id of current scroll item
+    var cur = nav_item_map.map(function(){
+     // if the vertical position of the current item is less than the scrollbar position
+     // return this item as the current
+     if ($(this).offset().top < fromTop)
+       return this;
+    });
 
-  menuItems.click(function(e){
-    var href = $(this).attr("href"),
-        offsetTop = href === "#" ? 0 : $(href).offset().top-topMenuHeight+1;
-    $('html, body').stop().animate({
-        scrollTop: offsetTop
-    }, 300);
-    e.preventDefault();
-  });
+    // Get the id of the current element
+    cur = cur[cur.length-1];
+    var id = cur && cur.length ? cur[0].id : "";
 
-  // Bind to scroll
-  $window.scroll(function(){
-     // Get container scroll position
-     var fromTop = $(this).scrollTop()+topMenuHeight;
+    if (lastId !== id) {
+       lastId = id;
+       // note: this section modified to make it work in a non ul-li-a structure
+       var current_nav_link = 'nav a[href="#'+id+'"]';
+       // clear any active classes on the nav links
+       $(nav_link).removeClass(active_class);
+       // add an active class to the current link corresponding to the section
+       $(current_nav_link).addClass(active_class);
+    }
 
-     // Get id of current scroll item
-     var cur = scrollItems.map(function(){
-       if ($(this).offset().top < fromTop)
-         return this;
-     });
-
-     // Get the id of the current element
-     cur = cur[cur.length-1];
-     var id = cur && cur.length ? cur[0].id : "";
-
-     if (lastId !== id) {
-         lastId = id;
-         // note: this section modified to make it work in a non ul-li-a structure
-         var current_nav_link = 'nav a[href="#'+id+'"]';
-         // clear any active classes on the nav links
-         $(nav_link).removeClass(active_class);
-         // add an active class to the current link corresponding to the section
-         $(current_nav_link).addClass(active_class);
-     }
-  });
+  };
 
 }
+
 
 // Display functions for json data
 
@@ -889,16 +907,18 @@ var truncate_class = 'truncate lighter-gray';
 var fixed_class = 'fixed-wrapper no-margin';
 // class to add when element is visible
 var fade_animate_class = 'fadeInDown';
+var active_nav_class = 'active';
 
 // DOM Selectors
 var $nav = $('nav');
+var $nav_link = $('nav a');
 var description = '.description';
 var $read_more_btn = $('.read-more');
 // filter anchors in document linking to the top anchor
 var $top_btn = $('a[href="#top"]');
 // get element(s) with this class for animating
 var $animated_element = $('.animated');
-var $page = $('html, body'); 
+var $page = $('html, body');
 
 // Run the JS dependent features for the page
 
@@ -906,20 +926,28 @@ var $page = $('html, body');
 features($read_more_btn).read_more(description, truncate_class);
 // smooth animated to top button jumping to top of the page
 features($top_btn).to_top();
+// calculate height of the nav element
+var nav_height = $nav.outerHeight()+15;
+// smooth animated nav link on page jumps
+features($nav_link).animate_nav_jump(nav_height);
+
+// Scroll Function Vars
 
 // get the distance of the nav from the top of the window for sticky nav function
 var nav_distance_from_top = $nav.offset().top;
-
 // correct the nav distance to top of page if window is resized
 $window.resize(function() {
   nav_distance_from_top = $nav.offset().top;
 });
+// mapped array of nav menu anchors for scrollspy plugin use
+var nav_map = scrollspy($nav_link).nav_item_map();
 
-// check for scroll events
+// Run scroll event dependent features
 $window.scroll(function() {
+  // sticky nav menu when scrolling past it's initial page location
   features($nav).sticky_nav(fixed_class, nav_distance_from_top);
+  // play css animation when an element is visible in the window
   features($animated_element).animate_visible(fade_animate_class);
+  // Scrollspy Plugin to highlight nav menu items when you're in that section
+  scrollspy($nav_link).highlight(active_nav_class, nav_map, nav_height);
 });
-
-// scrollspy Plugin
-scrollspy();
