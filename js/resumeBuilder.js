@@ -736,12 +736,14 @@ projects.display = function() {
 
         // insert data into the project entry template then put all the entries together
         formatted_project_entries += html(HTMLprojectEntry).format(current_project.link, '%link%')
-                                                    .format(current_project.dates, '%date%')
-                                                    .format(project_img, '%image%')
-                                                    .format(current_project.alt, '%alttext%')
-                                                    .format(current_project.title, '%title%')
-                                                    .format(formatted_description, '%description%')
-                                                    .html;
+                                                           .format(current_project.dates, '%date%')
+                                                           .format(project_img, '%image%')
+                                                           .format(current_project.srcset, '%srcset%')
+                                                           .format(current_project.sizes, '%sizes%')
+                                                           .format(current_project.alt, '%alttext%')
+                                                           .format(current_project.title, '%title%')
+                                                           .format(formatted_description, '%description%')
+                                                           .html;
 
     }
 

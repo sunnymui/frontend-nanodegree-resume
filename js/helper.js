@@ -129,7 +129,7 @@ var HTMLprojectEntry = '<div class="col md-halves lg-min-width-25 lg-max-width-5
                             '<a class="no-link" href="%link%">'+
                               '<div class="relative no-overflow">'+
                                 '<h4 class="project-heading absolute no-margin unbold white small-text">%date%</h4>'+
-                                '<img class="width-100 zoom" src="%image%" alt="%alttext%" />'+
+                                '<img class="width-100 zoom" src="%image%" srcset="%srcset%" sizes="%sizes%" alt="%alttext%" />'+
                                 '<h3 class="project-heading absolute unbold no-margin white">%title%</h3>'+
                               '</div>'+
                             '</a>'+

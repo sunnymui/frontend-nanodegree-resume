@@ -38,8 +38,8 @@ module.exports = function(grunt) {
             },
             files: [{
                 expand: true, // Enable dynamic expansion
-                cwd: 'img/', // Src matches are relative to this path
-                src: ['**/*.{png,jpg,gif}'], // Actual patterns to match, case SENSITIVE
+                cwd: 'src/', // Src matches are relative to this path
+                src: ['*.{png,jpg,gif}'], // Actual patterns to match, case SENSITIVE
                 dest: 'img/' // Destination path prefix
             }]
         },
@@ -66,8 +66,8 @@ module.exports = function(grunt) {
         files: [{
             expand: true,
             src: ['**/*.{jpg,gif,png}'], // double asterisk matches subdirectories in addition to current
-            cwd: 'src/img',
-            dest: 'img/'
+            cwd: 'src/srcset',
+            dest: 'src/'
         }]
       }
     },
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
       }
     },
 
-    // postcss - podyprocess your css using the autoprefixer plugin
+    // postcss - postprocess your css using the autoprefixer plugin
     postcss: {
       options: {
         map: true,

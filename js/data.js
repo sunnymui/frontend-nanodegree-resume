@@ -211,6 +211,8 @@ var projects = {
           "This project is built on top of HTML5 Boilerplate so it's almost completely customized. I implemented my own lightweight flexbox grid system and responsive features like srcset and a mobile first direction."
         ],
         "images": ["img/portfolio.jpg"],
+        "srcset": "img/portfolio-large.jpg 992w, img/portfolio-medium.jpg 640w, img/portfolio-small.jpg 320w",
+        "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
         "alt" : "Screenshots of portfolio page demonstrating mobile and desktop responsive views",
         "link" : "https://sunnymui.github.io/one-page-portfolio/"
     }, {
@@ -221,6 +223,8 @@ var projects = {
           "This project features judicious use of srcset and picture elements for art direction and resolution appropriate image loading. Placeholder content and images used as examples for the page."
         ],
         "images": ["img/responsive-blog.jpg"],
+        "srcset": "img/responsive-blog-large.jpg 992w, img/responsive-blog-medium.jpg 640w, img/responsive-blog-small.jpg 320w",
+        "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
         "alt" : "Screenshots of one page simple site demonstrating mobile and desktop responsive views",
         "link" : "https://sunnymui.github.io/Responsive-One-Page-Static-Site/"
     }, {
@@ -231,6 +235,8 @@ var projects = {
           "I developed the content and design to convince potential customers to upgrade to premium memberships. I helped gather testimonials and implementing copy/information to overcome some of their common sales objections."
         ],
         "images": ["img/globial-sales.jpg"],
+        "srcset": "img/globial-sales-large.jpg 992w, img/globial-sales-medium.jpg 640w, img/globial-sales-small.jpg 320w",
+        "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
         "alt" : "Screenshot of the Globial Business Pro longform sales page on mobile and desktop",
         "link" : "https://creativeaudacity.com/portfolio/globial/business-pro.html"
     }, {
@@ -241,6 +247,8 @@ var projects = {
           "All of the written content, image previews, and mockups of their app had to be created for this project as well. I worked closely with their team to develop the marketing copy, site design, and content."
         ],
         "images": ["img/knotsuite.jpg"],
+        "srcset": "img/knotsuite-large.jpg 992w, img/knotsuite-medium.jpg 640w, img/knotsuite-small.jpg 320w",
+        "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
         "alt" : "Screenshot of KnotSuite homepage on mobile and desktop views",
         "link" : "https://creativeaudacity.com/portfolio/knotsuite/KnotSuiteWeb/index.html"
     }, {
@@ -251,6 +259,8 @@ var projects = {
           "This page is one of the sub-landing pages under the KnotSuite umbrella. The written content and mockups were developed specifically for this project. The design had to be customized to client specifications."
         ],
         "images": ["img/knotsilicon.jpg"],
+        "srcset": "img/knotsilicon-large.jpg 992w, img/knotsilicon-medium.jpg 640w, img/knotsilicon-small.jpg 320w",
+        "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
         "alt" : "Screenshot of KnotSilicon homepage on mobile and desktop views",
         "link" : "https://creativeaudacity.com/portfolio/knotsuite/LandingApps/knotsilicon-index.html"
     }]
