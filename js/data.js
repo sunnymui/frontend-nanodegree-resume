@@ -125,7 +125,15 @@ var work = {
           "Developed 3 hi-fidelity webapp homepage prototypes for a stealth B2B SaaS startup while working closely with the executive team.",
           "Vectorized and refined a logo design based on low fidelity paper mockups for a local medicinal herb provider"
         ],
-        "testimonials": []
+        "testimonials": [
+          {
+            "text": "It was a pleasure to work side by side with Sunny. He is a prompt individual who is always on task and can complete even the most rigorous task. <br><br>Sunny is a great addition to any team. He personally designed my company logo. I asked him to design something for me a logo that represents my company without saying to much and his designs where right on the target. <br><br>I know that I can personally come to Sunny when I need a graphic design or a web design and he will listing to what I'm looking for and deliver an amazing product that focuses on the point in trying to make or the issue I'm trying to show.",
+            "name": "Procopio Vera",
+            "role": "VP of Operations, Five Gold Stars Maintenance",
+            "pic":"img/procopio.jpg",
+            "link": "https://www.linkedin.com/in/procopio-vera-b8a5022b"
+          }
+        ]
       }, {
         "employer": "Globial",
         "logo": "img/globial-logo.png",
