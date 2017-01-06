@@ -8,9 +8,9 @@ module.exports = function(grunt) {
   2. responsive images - create multiple size images for responsive use
   3. responsive images extender - scan html files for img tags and add srcset if the responsive images are there
   4. postcss: autoprefixer - postcss allows processing of css, autoprefixer is a plugin for it that adds prefixes for legacy browser support
-  . watch - watch and run grunt when changes made
-  . newer - lets designated plugins only run on updated files
-  . uglify - minify and concat js
+  5. uglify - minify and concat js
+  6. cssmin - minify and concat css
+  7. newer - lets designated plugins run only on updated files when running newer:pluginname
 
   ============
   TASK TARGETS
@@ -43,6 +43,20 @@ module.exports = function(grunt) {
                 dest: 'img/' // Destination path prefix
             }]
         },
+        img_folder: { // for optimizing stuff already in the img folder
+          options: {
+              optimizationLevel: 7, // max optimize pngs
+              progressive: true, // progressive jpgs
+              interlaced: true, // progressive gifs
+              use: [mozjpeg({quality:80})] // use the mozjpeg optimizer plugin for imagemin because it's better for web
+          },
+          files: [{
+              expand: true, // Enable dynamic expansion
+              cwd: 'img/', // Src matches are relative to this path
+              src: ['*.{png,jpg,gif}'], // Actual patterns to match, case SENSITIVE
+              dest: 'img/' // Destination path prefix
+          }]
+        },
         // for optimizing just favicons
         icons: {
           options: {
@@ -72,21 +86,6 @@ module.exports = function(grunt) {
       }
     },
 
-    // responsive image extender - scans html file for img tags and automatically adds srcset
-    responsive_images_extender: {
-      ignoring: {
-        options: {
-          ignore: ['.headshot'] // ignore images with these css identifiers
-        },
-        files: [{
-          expand: true,
-          src: ['**/*.{html,htm,php}'],
-          cwd: 'src/',
-          dest: 'build/'
-        }]
-      }
-    },
-
     // postcss - postprocess your css using the autoprefixer plugin
     postcss: {
       options: {
@@ -103,25 +102,37 @@ module.exports = function(grunt) {
         dest: 'build/css/style.css'
       }
     },
-
-    // concatenation plugin - combines files into one
-    /*concat: {
-      options: {
-      },
-      dist: {
-        src: '',
-        dest: ''
-      }
-    }, */
     // uglify plugin - minifies files
-    /*uglify: {
-      options: {
+    uglify: {
+      js: {
+        files: {
+          // output : [input(s)]
+          'js/scripts.min.js' : [
+            'js/data.js',
+            'js/helper.js',
+            'js/resumeBuilder.js',
+            'js/plugins.js'
+          ]
+        }
       },
-      dist: {
-        src: '',
-        dest: ''
-      }
     },
+    cssmin: {
+      options: {
+        // merges longhand properties into a single shorthand one, might be dangerous
+        shorthandCompacting: false,
+      },
+      all_css: {
+        files: {
+          // output : [input(s)]
+          'css/style.min.css': [
+            'css/normalize.css',
+            'css/main.css',
+            'css/style.css'
+          ]
+        }
+      }
+    }
+    /*
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -138,6 +149,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-postcss');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-newer');
 
   // Default task.
   grunt.registerTask('default', [
@@ -146,7 +159,12 @@ module.exports = function(grunt) {
     'postcss',
   ]);
 
-  // Build task for production eg minified and prefixed everything
-  // grunt.registerTask('build', ['imagemin']);
+  // Optimize task - default optimization tasks I'd want anytime I update or
+  // do some deve work stuff in the source files
+  grunt.registerTask('optimize', [
+    'newer:imagemin:img_folder',
+    'uglify:js',
+    'cssmin'
+  ]);
 
 };

@@ -56,8 +56,9 @@ hr {
 }
 
 section {
-  border-top: 1px dashed #ddd;
+    border-top: 1px dashed #ddd;
 }
+
 
 /* Flex Grid*/
 
@@ -102,27 +103,29 @@ section {
     /* creates max space in between each of the flex items until items fill container */
 }
 
+
 /* Positioning */
 
 .relative {
-  position: relative;
+    position: relative;
 }
 
 .absolute {
-  position: absolute;
+    position: absolute;
 }
 
 .block {
-  display: block;
+    display: block;
 }
 
 .inline {
-  display: inline-block;
+    display: inline-block;
 }
 
 .none {
-  display: none;
+    display: none;
 }
+
 
 /* Alignment & Spacing */
 
@@ -131,7 +134,7 @@ section {
 }
 
 .padding-05 {
-  padding: 0.5em;
+    padding: 0.5em;
 }
 
 .no-margin {
@@ -139,7 +142,7 @@ section {
 }
 
 .no-margin-top {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .margin-05 {
@@ -164,35 +167,39 @@ section {
     vertical-align: top;
 }
 
+
 /* Sizing */
 
 .width-100 {
-  width: 100%;
+    width: 100%;
 }
 
 .max-width-5 {
-  max-width: 5em;
+    max-width: 5em;
 }
+
 
 /* Overflows */
 
 .no-overflow {
-  overflow: hidden;
+    overflow: hidden;
 }
+
 
 /* Borders */
 
 .round {
-  border-radius: 99%;
+    border-radius: 99%;
 }
 
 .border {
-  border: 1px solid #fff;
+    border: 1px solid #fff;
 }
 
 .border-light-gray {
-  border: 1px solid #ddd;
+    border: 1px solid #ddd;
 }
+
 
 /* Buttons/Links */
 
@@ -206,8 +213,7 @@ section {
     opacity: 0.8;
 }
 
-.no-link,
-.no-link:hover {
+.no-link, .no-link:hover {
     text-decoration: none;
 }
 
@@ -234,11 +240,13 @@ section {
     box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.6);
 }
 
+
 /* Transition */
 
 .transition {
-  transition: 0.3s all;
+    transition: 0.3s all;
 }
+
 
 /* Lists */
 
@@ -248,15 +256,17 @@ section {
     list-style: none;
 }
 
-.list-inline-block li{
-  display: inline-block;
+.list-inline-block li {
+    display: inline-block;
 }
+
 
 /* Sizing */
 
 .inherit-height {
     height: inherit;
 }
+
 
 /*=======================
 2. Typography & Headings
@@ -268,6 +278,7 @@ section {
 h1 {
     font-size: 3em;
 }
+
 
 /* Text Layout */
 
@@ -283,6 +294,7 @@ h1 {
     text-align: right;
 }
 
+
 /* Text Styling */
 
 .unbold {
@@ -290,20 +302,19 @@ h1 {
 }
 
 .bold {
-  font-weight: 800;
+    font-weight: 800;
 }
 
 .italic {
-  font-style: italic;
+    font-style: italic;
 }
 
-.all-caps,
-.uppercase {
+.all-caps, .uppercase {
     text-transform: uppercase;
 }
 
 .capitalize {
-  text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .small-text {
@@ -315,12 +326,13 @@ h1 {
 }
 
 .big-5-text {
-  font-size: 5em;
+    font-size: 5em;
 }
 
 .spaced-text {
-  letter-spacing: 0.2em;
+    letter-spacing: 0.2em;
 }
+
 
 /* Text Colors */
 
@@ -329,15 +341,15 @@ h1 {
 }
 
 .lighter-gray {
-  color: #999;
+    color: #999;
 }
 
 .light-gray {
-  color: #888;
+    color: #888;
 }
 
 .mid-gray {
-  color: #555;
+    color: #555;
 }
 
 .dark-gray {
@@ -352,6 +364,7 @@ h1 {
     color: #000;
 }
 
+
 /* Effects */
 
 .ghost-shadow {
@@ -361,22 +374,23 @@ h1 {
 }
 
 .deep-shadow {
-  letter-spacing: .15em;
-  text-shadow: 0 -1px 0 #ffffff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
+    letter-spacing: .15em;
+    text-shadow: 0 -1px 0 #ffffff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0, 0, 0, 0.9);
 }
+
 
 /* Divider effect creates a dividing line below the element with the class */
 
 .divider {
-  display: inline-block;
+    display: inline-block;
 }
 
 .divider:after {
-  content: '';
-  display: block;
-  width: 80%;
-  margin: 0.5em auto 0 auto;
-  border-top: 3px solid #82b8b5;
+    content: '';
+    display: block;
+    width: 80%;
+    margin: 0.5em auto 0 auto;
+    border-top: 3px solid #82b8b5;
 }
 
 
@@ -385,7 +399,7 @@ h1 {
 ========================*/
 
 header {
-  padding: 1em;
+    padding: 1em;
 }
 
 .fixed-wrapper {
@@ -415,6 +429,7 @@ header {
     opacity: 0.7;
 }
 
+
 /*=======================
 4. Nav
 ========================*/
@@ -436,42 +451,44 @@ nav a {
     transition: 0.5s;
 }
 
-nav a:hover,
-.active {
-  background: transparent;
-  opacity: 1;
+nav a:hover, .active {
+    background: transparent;
+    opacity: 1;
 }
+
 
 /* Slide in border animated transition for links/btns*/
 
-.slide{
-  /* so the border pseudoelements are positioned within this element */
-  position: relative;
+.slide {
+    /* so the border pseudoelements are positioned within this element */
+    position: relative;
 }
-.slide:before,
-.slide:after {
-  content: '';
-  /* allows direction of sliding to be adjusted,
+
+.slide:before, .slide:after {
+    content: '';
+    /* allows direction of sliding to be adjusted,
   also lets borders conform to element's shape, including padding */
-  position: absolute;
-  display: block;
-  border-top: 2px solid #fff;
-  width: 0;
-  transition: width .5s ease;
+    position: absolute;
+    display: block;
+    border-top: 2px solid #fff;
+    width: 0;
+    transition: width .5s ease;
 }
+
 .slide:before {
-  /*slides in pseudoelement from the left*/
-  top: 0;
-  left: 0;
+    /*slides in pseudoelement from the left*/
+    top: 0;
+    left: 0;
 }
+
 .slide:after {
-  /*slides in pseudoelement from the right*/
-  right: 0;
-  bottom: 0;
+    /*slides in pseudoelement from the right*/
+    right: 0;
+    bottom: 0;
 }
-.slide:hover:before,
-.slide:hover:after {
-  width: 100%;
+
+.slide:hover:before, .slide:hover:after {
+    width: 100%;
 }
 
 
@@ -484,47 +501,51 @@ section {
 }
 
 .container {
-  max-width: 50em;
-  margin: auto;
+    max-width: 50em;
+    margin: auto;
 }
 
 blockquote {
-  background: #f9f9f9;
-  font-weight: 300;
-  border-width: 0 0 0 1px;
-  padding: 1em;
+    background: #f9f9f9;
+    font-weight: 300;
+    border-width: 0 0 0 1px;
+    padding: 1em;
 }
+
 
 /* Make the quotation mark accent */
 
 blockquote:before {
-  color: #ccc;
-  content: "“";
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
+    color: #ccc;
+    content: "“";
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
 }
+
 
 /* Style the testimonial source */
 
 blockquote p {
-  padding: 0.5em;
-  /* center the source text for small screens */
-  text-align: center;
-  color: #888;
-  font-size: 0.8em;
-  font-style: italic;
-  border-top: 1px solid #eee;
-  margin: 1em 0 0 0;
+    padding: 0.5em;
+    /* center the source text for small screens */
+    text-align: center;
+    color: #888;
+    font-size: 0.8em;
+    font-style: italic;
+    border-top: 1px solid #eee;
+    margin: 1em 0 0 0;
 }
+
 blockquote img {
-  /* Smaller screens the the source pic will be above the text */
-  display: block;
-  margin: 0.5em auto;
-  border-radius: 99%;
-  max-width: 3em;
+    /* Smaller screens the the source pic will be above the text */
+    display: block;
+    margin: 0.5em auto;
+    border-radius: 99%;
+    max-width: 3em;
 }
+
 
 /* Hero Text/Image*/
 
@@ -544,68 +565,75 @@ blockquote img {
 }
 
 .hero img {
-  width: 9em;
+    width: 9em;
 }
+
 
 /* Creates a sort of moving background effect */
 
 @keyframes AnimatedBG {
-  0% {background-position: 0 47%;}
-  50% {background-position: 100% 60%;}
-  100% {background-position: 0 47%;}
+    0% {
+        background-position: 0 47%;
+    }
+    50% {
+        background-position: 100% 60%;
+    }
+    100% {
+        background-position: 0 47%;
+    }
 }
+
 
 /* Summary */
 
-section:first-child,
-section:nth-child(2) {
-  /* so summary + hero section doesnt have a border on top */
-  border-top: none;
+section:first-child, section:nth-child(2) {
+    /* so summary + hero section doesnt have a border on top */
+    border-top: none;
 }
 
 .intro {
-  display: block;
-  margin: 1em auto;
-  padding: 0 0.5em;
-  font-size: 1.1em;
-  font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
-  border: 3px solid #800000;
-  border-width: 0 3px;
+    display: block;
+    margin: 1em auto;
+    padding: 0 0.5em;
+    font-size: 1.1em;
+    font-family: TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif;
+    border: 3px solid #800000;
+    border-width: 0 3px;
 }
 
 .tile-item {
-  padding: 1em;
-  transition: all 0.3s;
-  background: #333;
+    padding: 1em;
+    transition: all 0.3s;
+    background: #333;
 }
 
 .tile-item:hover {
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.46);
-  transform: scale(1.1);
+    box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.46);
+    transform: scale(1.1);
 }
+
 
 /* Color BG of each Tile Item differently */
 
-li:nth-child(1n)
-  .tile-item {
+li:nth-child(1n) .tile-item {
     background: #707f94;
-  }
-li:nth-child(2n)
-  .tile-item {
+}
+
+li:nth-child(2n) .tile-item {
     background: #ac6d6d;
-  }
-li:nth-child(3n)
-  .tile-item {
+}
+
+li:nth-child(3n) .tile-item {
     background: #73a16a;
-  }
-li:nth-child(4n)
-  .tile-item {
+}
+
+li:nth-child(4n) .tile-item {
     background: #b9965a;
-  }
-li:nth-child(5n)
-  .tile-item {
+}
+
+li:nth-child(5n) .tile-item {
     background: #a18999;
-  }
+}
 
 .tag {
     padding: 0.3em 1em;
@@ -617,188 +645,190 @@ li:nth-child(5n)
     transform: skewX(-15deg);
 }
 
+
 /* Color each group of tags differently */
-.col:nth-child(1n)
-  .tag {
+
+.col:nth-child(1n) .tag {
     border-left: 3px solid #707f94;
-  }
-.col:nth-child(2n)
-  .tag {
+}
+
+.col:nth-child(2n) .tag {
     border-left: 3px solid #ac6d6d;
-  }
-.col:nth-child(3n)
-  .tag {
+}
+
+.col:nth-child(3n) .tag {
     border-left: 3px solid #73a16a;
-  }
+}
+
 
 /* Work */
 
 .entry blockquote {
-  /* Remove the extra margin for blockquotes in entries*/
-  margin: 0.5em 0;
+    /* Remove the extra margin for blockquotes in entries*/
+    margin: 0.5em 0;
 }
+
 
 /* Make a timeline looking like a inline hr */
 
 .linker {
-  width: 25%;
-  border-bottom: 1px solid #ccc;
-  margin: 0 0.5em;
-  /* Allow the dot pseduoelements to be positioned absolutely in relation to the linker */
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
+    width: 25%;
+    border-bottom: 1px solid #ccc;
+    margin: 0 0.5em;
+    /* Allow the dot pseduoelements to be positioned absolutely in relation to the linker */
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
 }
+
 
 /* Create the dots at each end of the linker*/
 
-  .linker::before,
-  .linker::after {
-      content: '';
-      /* Allows positioning the dots on the hr */
-      position: absolute;
-      /* Center the dots vertically by moving them up by half their height */
-      top: -0.35em;
-      width: 0.7em;
-      height: 0.7em;
-      background: #ccc;
-      border-radius: 99%;
-  }
+.linker::before, .linker::after {
+    content: '';
+    /* Allows positioning the dots on the hr */
+    position: absolute;
+    /* Center the dots vertically by moving them up by half their height */
+    top: -0.35em;
+    width: 0.7em;
+    height: 0.7em;
+    background: #ccc;
+    border-radius: 99%;
+}
+
 
 /* Position each dot at opposite ends */
 
-  .linker::before {
-      left: 0;
-  }
+.linker::before {
+    left: 0;
+}
 
-  .linker::after {
-      right: 0;
-  }
+.linker::after {
+    right: 0;
+}
 
 
 /* Projects */
 
-article:hover
-    .btn {
+article:hover .btn {
     /* style the button when pointer enters the article */
     background: #c3944e;
     outline: 0;
     color: #fff;
 }
 
-article:hover
-    .btn:hover {
+article:hover .btn:hover {
     /* set a hover bg since the specificity of the bg overrides the default button hover effect */
     background: #FF9800;
 }
 
 .project-heading {
-  /* fallback */
-  padding: 0.35em;
-  /* keep headings overlaid above the img when transformed with fx */
-  z-index: 100;
+    /* fallback */
+    padding: 0.35em;
+    /* keep headings overlaid above the img when transformed with fx */
+    z-index: 100;
 }
 
 .project-heading:hover {
-  opacity: 0.8;
+    opacity: 0.8;
 }
+
 
 /* color each project heading background differently */
 
-.col:nth-child(1n)
-    .project-heading{
-        background: rgb(112, 127, 148);
-        background: rgba(42, 54, 70, 0.8);
+.col:nth-child(1n) .project-heading {
+    background: rgb(112, 127, 148);
+    background: rgba(42, 54, 70, 0.8);
 }
 
-.col:nth-child(2n)
-    .project-heading{
-        background: rgb(88, 49, 49);
-        background: rgba(88, 49, 49, 0.8);
+.col:nth-child(2n) .project-heading {
+    background: rgb(88, 49, 49);
+    background: rgba(88, 49, 49, 0.8);
 }
 
-.col:nth-child(3n)
-    .project-heading{
-        background: rgb(49, 85, 42);
-        background: rgba(49, 85, 42, 0.8);
+.col:nth-child(3n) .project-heading {
+    background: rgb(49, 85, 42);
+    background: rgba(49, 85, 42, 0.8);
 }
 
-.col:nth-child(4n)
-    .project-heading{
-        background: rgb(93, 71, 32);
-        background: rgba(93, 71, 32, 0.8);
+.col:nth-child(4n) .project-heading {
+    background: rgb(93, 71, 32);
+    background: rgba(93, 71, 32, 0.8);
 }
 
-.col:nth-child(5n)
-    .project-heading{
-        background: rgb(86, 62, 78);
-        background: rgba(86, 62, 78, 0.8);
+.col:nth-child(5n) .project-heading {
+    background: rgb(86, 62, 78);
+    background: rgba(86, 62, 78, 0.8);
 }
 
 h3.project-heading {
-  /* offset title a bit from the bottom of the img */
-  bottom: 6%;
+    /* offset title a bit from the bottom of the img */
+    bottom: 6%;
 }
+
 
 /* Zoom effect scales up size of element, use with overflow:hidden on parent */
 
 .zoom {
-  transition: 0.3s all;
+    transition: 0.3s all;
 }
 
 .zoom:hover {
-  transform: scale(1.1);
+    transform: scale(1.1);
 }
 
 .description {
-  transition: 0.3s all;
-  /* to allow css animation of height change when read more button is clicked */
-  /* must declare a value so set value bigger than you expect content will ever be */
-  max-height: 100em;
+    transition: 0.3s all;
+    /* to allow css animation of height change when read more button is clicked */
+    /* must declare a value so set value bigger than you expect content will ever be */
+    max-height: 100em;
 }
 
 .description p:first-child {
-  /* Remove extra margin for first paragraph in description so a couple lines show */
-  margin: 0;
+    /* Remove extra margin for first paragraph in description so a couple lines show */
+    margin: 0;
 }
 
 .read-more {
-  /* keep it on a line below the descriptive text */
-  display: block;
-  /*margin-bottom: 1em;*/
+    /* keep it on a line below the descriptive text */
+    display: block;
+    /*margin-bottom: 1em;*/
 }
+
 
 /* Truncation effect applies gradient pseudoelement to fade out after a certain height*/
 
 .truncate {
-  /* neccessary for positioning the gradient over text */
-  position: relative;
-  /* The truncated size of the element */
-  max-height: 4em;
-  /* Hide extra text for truncation */
-  overflow: hidden;
+    /* neccessary for positioning the gradient over text */
+    position: relative;
+    /* The truncated size of the element */
+    max-height: 4em;
+    /* Hide extra text for truncation */
+    overflow: hidden;
 }
 
 .truncate::after {
-  content: '';
-  position: absolute;
-  /* gradient overlay should fade to bg color for fading out text fx */
-  background-image: linear-gradient(to bottom, transparent, #fff 50%, #fff);
-  /* put fade out gradient at the bottom */
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  /* adjust height of gradient for best fade out results */
-  height: 1.8em;
+    content: '';
+    position: absolute;
+    /* gradient overlay should fade to bg color for fading out text fx */
+    background-image: linear-gradient(to bottom, transparent, #fff 50%, #fff);
+    /* put fade out gradient at the bottom */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    /* adjust height of gradient for best fade out results */
+    height: 1.8em;
 }
+
 
 /* Map */
 
 .map {
-  display: block;
-  min-height: 20em;
-  margin: 1em;
+    display: block;
+    min-height: 20em;
+    margin: 1em;
 }
+
 
 /* Contact */
 
@@ -826,10 +856,11 @@ h3.project-heading {
 }
 
 .footer-links {
-  width: 100%;
-  background: #1b242f;;
-  background-image: linear-gradient(232deg, #006e87, #000);
-  margin-top: 1em;
+    width: 100%;
+    background: #1b242f;
+    ;
+    background-image: linear-gradient(232deg, #006e87, #000);
+    margin-top: 1em;
 }
 
 
@@ -886,67 +917,94 @@ h3.project-heading {
 }
 
 .icon-github:before {
-    content: '\e800';/* '' */
+    content: '\e800';
+    /* '' */
 }
 
 .icon-linkedin:before {
-    content: '\e801';/* '' */
+    content: '\e801';
+    /* '' */
 }
 
 .icon-gmail:before {
-    content: '\e802';/* '' */
+    content: '\e802';
+    /* '' */
 }
 
 .icon-upwork:before {
-    content: '\e803';/* '' */
+    content: '\e803';
+    /* '' */
 }
 
-.icon-phone:before { content: '\e804'; } /* '' */
-.icon-mail:before { content: '\e805'; } /* '' */
-.icon-location:before { content: '\e806'; } /* '' */
-.icon-mail-alt:before { content: '\f0e0'; } /* '' */
+.icon-phone:before {
+    content: '\e804';
+}
+
+
+/* '' */
+
+.icon-mail:before {
+    content: '\e805';
+}
+
+
+/* '' */
+
+.icon-location:before {
+    content: '\e806';
+}
+
+
+/* '' */
+
+.icon-mail-alt:before {
+    content: '\f0e0';
+}
+
+
+/* '' */
+
 
 /* Animate.css Plugin */
 
 .animated {
-  -webkit-animation-duration: 1s;
-  animation-duration: 1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
 }
 
 .fadeInDown {
-  -webkit-animation-name: fadeInDown;
-  animation-name: fadeInDown;
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
 }
 
 @-webkit-keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -10%, 0);
-    transform: translate3d(0, -10%, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -10%, 0);
+        transform: translate3d(0, -10%, 0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
 }
 
 @keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -10%, 0);
-    transform: translate3d(0, -10%, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -10%, 0);
+        transform: translate3d(0, -10%, 0);
+    }
+    to {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
 }
+
 
 /*=======================
 8. Media Queries
@@ -959,7 +1017,6 @@ h3.project-heading {
     body {
         font-size: 16px;
     }
-
     header {
         height: 7em;
         /* increase space so the header bar doesnt cover the hero on tiny screens */
@@ -970,9 +1027,7 @@ h3.project-heading {
 /* For tablets */
 
 @media only screen and (min-width: 600px) {
-
     /* Flex Grid */
-
     .grid {
         display: -ms-flexbox;
         display: flex;
@@ -980,64 +1035,49 @@ h3.project-heading {
         flex-wrap: wrap;
         /* so it can break to the next line */
     }
-
     .md-whole {
         min-width: 100%;
     }
-
     .md-halves {
         min-width: 50%;
     }
-
     .md-natural {
         min-width: 0;
     }
-
     /* General & Layout */
-
     .md-75-max-width {
-       max-width: 75%;
+        max-width: 75%;
     }
     .md-margin-1 {
-      margin: 1em;
+        margin: 1em;
     }
-
     /* Animate the breakpoint transitions */
-
     .grid, .md-whole, .md-halves, .lg-thirds {
         transition: 0.3s all;
     }
-
     /* Typography */
-
     .md-text-size-4 {
-      font-size: 4em;
+        font-size: 4em;
     }
-
     .md-text-size-2 {
-      font-size: 2em;
+        font-size: 2em;
     }
-
     .md-left-text {
-      text-align: left;
+        text-align: left;
     }
     .md-center-text {
-      text-align: center;
+        text-align: center;
     }
-
     /* Summary */
-
     .intro {
         padding: 0 1.5em;
         font-size: 1.4em;
         margin: 1em 1.8em;
     }
-
     /* Work/Education */
-
     .entry {
-       border-left: 3px solid #800000;
-       padding-left: 1em;
+        border-left: 3px solid #800000;
+        padding-left: 1em;
     }
 }
 
@@ -1045,94 +1085,70 @@ h3.project-heading {
 /* For Desktop */
 
 @media only screen and (min-width: 1000px) {
-
     /* Flex Grid */
-
     .lg-flex {
         display: -ms-flexbox;
         display: flex;
     }
-
     .lg-halves {
         min-width: 50%;
     }
-
     .lg-thirds {
         min-width: 33.33%;
     }
-
     /* Layout */
-
     .lg-inline-middle {
-      display: inline-block;
-      vertical-align: middle;
+        display: inline-block;
+        vertical-align: middle;
     }
-
     /* Sizing */
-
     .lg-min-width-25 {
-      min-width: 25em;
+        min-width: 25em;
     }
-
     .lg-max-width-30 {
-      max-width: 30em;
+        max-width: 30em;
     }
-
     .lg-max-width-50 {
-      max-width: 50em;
+        max-width: 50em;
     }
-
     /*Typography*/
-
     .lg-white {
         color: #fff;
     }
-
     .lg-outline {
         text-shadow: -1px -1px 0 #222, 1px -1px 0 #222, -1px 1px 0 #222, 1px 1px 0 #222;
         /* 1px shadows on all 4 sides to outline the letters */
     }
-
     .lg-text-size-5 {
-      font-size: 5em;
+        font-size: 5em;
     }
-
     .lg-text-size-3 {
-      font-size: 3em;
+        font-size: 3em;
     }
-
     .lg-right-text {
-      text-align: right;
+        text-align: right;
     }
-
     /* Header/Nav */
-
     .logo-link {
         display: block;
         /* allows margins in ie10 */
         margin: 0 0 0 5%;
         /* keep the logo from getting too close to the edges */
     }
-
     .logo {
         width: 10em;
         max-height: 3em;
         /* bigger screens mean bigger logos :p */
     }
-
     /* Entries */
-
     /* Add margin b/t the pic and name and uncenter it */
     blockquote img {
-      margin: 0.5em;
+        margin: 0.5em;
     }
-
     /* Featured */
-
     .featured {
         margin: -2em auto 1em auto;
     }
-
     .featured .lg-thirds:nth-child(2) {
         margin: -1em 0 0 0;
         /* offset the middle featured item for visual interest */
@@ -1143,35 +1159,28 @@ h3.project-heading {
 /* For Large Desktop Screens */
 
 @media only screen and (min-width: 1200px) {
-
     /* Layout & General */
-
     .xl-max-width-80 {
         max-width: 80em;
     }
-
     .xl-width-80 {
         width: 80em;
     }
-
     /* Typography & Headings */
-
     h1 {
         font-size: 3.2em;
     }
-
     h2 {
         font-size: 1.8em;
     }
 }
 
+
 /* For Gigantic Screens, Like TV Size */
 
 @media only screen and (min-width: 2500px) {
-
-  body {
-    font-size: 30px;
-    /* Scale everything up so it's not so tiny on a huge screen */
-  }
-
+    body {
+        font-size: 30px;
+        /* Scale everything up so it's not so tiny on a huge screen */
+    }
 }
