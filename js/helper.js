@@ -2,7 +2,7 @@
 var HTMLhero = '<header class="hero flex flex-v-center">'+
                   '<div class="center center-text all-caps white">'+
                     '<img src="%pic%" class="round border" alt="Picture of %name%">'+
-                    '<h1 class="no-margin deep-shadow italic md-text-size-4 lg-text-size-5 transition ">%name%</h1>'+
+                    '<h1 class="no-margin deep-shadow md-text-size-4 lg-text-size-5 transition ">%name%</h1>'+
                     '<h2 class="no-margin unbold spaced-text md-text-size-2 lg-text-size-3 transition">%role%</h2>'+
                     '<nav>'+
                       '%nav%'+
