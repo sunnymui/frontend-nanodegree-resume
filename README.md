@@ -2,7 +2,8 @@
 
 View my Resume:
 [https://sunnymui.github.io/frontend-nanodegree-resume/](https://sunnymui.github.io/frontend-nanodegree-resume/)
-or simply at:
+
+or simply by clicking **Resume** at:
 [www.sunnymui.com](www.sunnymui.com)
 
 ## About the Project
@@ -10,10 +11,10 @@ or simply at:
 1. This project stores resume data in four javaScript objects (in a JSON style) according to a structured data schema.
 2. All of the consequential HTML code is stored as templates in **js/helper.js** string variables. The variable names indicate their section.
 3. HTML template strings have placeholders denoting where data will be inserted, for example: **%data%**. I implemented a basic templating system in resumeBuilder.js with a few features like:
-    * An encapsulated, private namespace to contain all templating functions and allow chainability of format methods (html('<html>html template string here</html>').format(data.data_to_access, '%placeholder%'))
-    * Optional data fields that aren't displayed if no data is in the object (%?optional% <== data is formatted into this string if it exists in the object)
-    * Wrapping html insertion (%?wrapper% <div>Something else here</div> %?wrapper%)
-    * Customizable placeholders when calling format functions (html(HTMLtemplateString).format(raw_data, custom_placeholder <== can be whatever you want as long as it matches the html template))
+    * An encapsulated, private namespace to contain all templating functions and allow chainability of format methods (`html('<html>html template string here</html>').format(data.data_to_access, '%placeholder%')`)
+    * Optional data fields that aren't displayed if no data is in the object (` %?optional% ` <== data is formatted into this string if it exists in the object)
+    * Wrapping html insertion (` %?wrapper% <div>Something else here</div> %?wrapper% `)
+    * Customizable placeholders when calling format functions (`html(HTMLtemplateString).format(raw_data, custom_placeholder` <== can be whatever you want as long as it matches the html template))
     * Insertion of data at multiple occurrences of a specific placeholder (e.g. replace all functionality)
 4. The formatted HTML template strings are then put together and displayed on the page via append operations.
 5. CSS3 animation effects used for full page shifting background gradient hero and fade in of certain images/elements
