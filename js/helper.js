@@ -103,7 +103,7 @@ var HTMLworkEntryHighlight = '<li>%data%</li>';
 var HTMLworkLinkWrapper = '<a class="link darker-gray" href="%link%" target="_blank">%data%</a>';
 var HTMLworkImgLinkWrapper = '<a class="inline-top zoom" href="%link%" target="_blank">%data%</a>';
 var HTMLworkTestimonialWrap = '<div class="grid">%data%</div>';
-var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
+var HTMLworkTestimonial = '<div class="col flex md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
                               '<p class="lg-right-text animated">'+
