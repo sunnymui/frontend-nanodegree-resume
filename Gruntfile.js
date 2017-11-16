@@ -131,14 +131,24 @@ module.exports = function(grunt) {
           ]
         }
       }
-    }
-    /*
+    },
     watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
+      scripts: {
+        // watch these files for changes
+        files: ['js/data.js',
+                'js/helper.js',
+                'js/resumeBuilder.js',
+                'js/plugins.js'],
+        // concat and minify js
+        tasks: ['uglify:js']
+      },
+      css: {
+        files: ['css/main.css',
+                'css/style.css'],
+        // concat and minify css files
+        tasks: 'cssmin:all_css'
       }
-    }*/
+    }
   });
 
   // These plugins provide necessary tasks.

@@ -153,7 +153,7 @@ var work = {
           "Built Globial social media presence (10,000+ Twitter followers, 1,000+ Facebook likes)"
         ],
         "testimonials": [{
-          "text": "He has a wonderful personality. His intellectual capacity, curiosity and passion to learn will make him one of the best designers as well as writers in the valley area. <br><br>It is a great pleasure to work with him in the same environment.",
+          "text": "He has a wonderful personality. His intellectual capacity, curiosity and passion to learn will make him one of the best designers as well as writers in the valley area. It is a great pleasure to work with him in the same environment.",
           "name": "Umut Yilidirim",
           "role": "CEO",
           "pic":"img/umut.jpg",
@@ -164,12 +164,6 @@ var work = {
           "role": "Software Engineer",
           "pic":"img/saim.jpg",
           "link": "https://tr.linkedin.com/in/saim-kemaloğlu-57111650/en"
-        } , {
-          "text": "I worked with Sunny closely for years as we helped build a startup from the ground up. He was involved in both marketing work and, later on, in the design and web development side.<br><br>He's an adaptable guy who wore multiple hats as he took charge of the design of the Globial web app, while also building a coherent design voice for the company with different marketing materials. As we grew as a company, Sunny learned, from scratch, how to implement his designs as he became the primary front end web developer for Globial. He contributed in many ways outside of his daily tasks as our lead UI/UX designer.<br><br>I would love to work with Sunny again and recommend him to anyone considering him as an employee.",
-          "name": "Brenden Johnson",
-          "role": "Marketing Manager",
-          "pic":"img/brenden.jpg",
-          "link": "https://www.linkedin.com/in/brenden-johnson-a0602640/"
         }]
       }, {
         "employer": "Gate58",
