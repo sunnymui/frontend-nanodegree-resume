@@ -28,9 +28,12 @@ var ResumeBuilder = (function(data){
   };
 
   // google maps API private submodule
+  // since it's not a function, only one instance of this is allowed
+  // and has to be named gmap
   var gmap = {
     data: {
       map: {},
+      bounds: {},
       locations: [],
       places: [],
       markers: []
@@ -43,6 +46,38 @@ var ResumeBuilder = (function(data){
         gmap.data.places = this.get_all_places(gmap.data.locations);
         // get and add all the marker objects using place data
         gmap.data.markers = this.add_all_markers(gmap.data.places);
+      },
+      get: function(data_type) {
+        /*
+        Grabs the data from the module's data storage object.
+        Args: data_type (string) - type of data to return
+        Return: the data requested (array or obj)
+        */
+        // init var to store the data accessed
+        var fetched_data;
+
+        // check what type of data was requested
+        switch (data_type) {
+          case 'map':
+            // set fetched data equal to the map instance
+            fetched_data = gmap.data.map;
+            break;
+          case 'locations':
+           // grab the locations data generated from school/bio/edu
+            fetched_data = gmap.data.locations;
+            break;
+          case 'places':
+            // grab place data from the google place data API
+            fetched_data = gmap.data.places;
+            break;
+          case 'markers':
+            // grab the markers data created from the place data
+            fetched_data = gmap.data.markers;
+            break;
+        }
+
+        // return the retrieved data
+        return fetched_data;
       },
       // get locations
       get_locations: function() {
@@ -140,14 +175,42 @@ var ResumeBuilder = (function(data){
 
         // return the constructed marker in case other stuff needs it
         return marker;
+      },
+      set_map: function(options) {
+        var map_div = options.target;
+        var display_options = options.display_options;
+        var map_type = options.map_type;
+        var style_id = 'styled_map';
+
+        // create the map object and append it to the map div
+        gmap.data.map = new google.maps.Map(options.target, options.display_options);
+        // set the current map theme as the 'styled map' map type
+        gmap.data.map.mapTypes.set(options.style_id, options.map_type);
+        // set the current map id to as styledmap
+        gmap.data.map.setMapTypeId(options.style_id);
+        // Sets the boundaries of the map based on pin locations
+        gmap.data.mapBounds = new google.maps.LatLngBounds();
+      },
+      add_map_pin: function(latitude, longitude, bounds) {
+        /*
+          Adds a new map pin object to the google map instance and fits the map
+          area to the new pin.
+        */
+        // bounds.extend() takes in a map location object
+        // extends the map's bounds with the given latlng instance
+        bounds.extend(new google.maps.LatLng(lat, lon));
+        // fit the visible map to the new marker
+        gmap.data.map.fitBounds(bounds);
+        // center the map
+        gmap.data.map.setCenter(bounds.getCenter());
       }
     },
     control: {
       init: function() {
-        model.init();
-        view.init();
+        gmap.model.init();
+        gmap.view.init();
 
-        // add event listeners to everything necessary
+        // add event listeners to everything to setup interaction
         this.add_all_event_listeners();
       },
       // attach event listeners
@@ -159,14 +222,11 @@ var ResumeBuilder = (function(data){
           this.add_marker_listener(marker);
         });
 
-        // initialize the google map when the page has loaded
-        window.addEventListener('load', this.init.bind(this));
-
         // Vanilla JS way to listen for resizing of the window
         // and adjust map bounds
         window.addEventListener('resize', function(e) {
           // Make sure the map bounds get updated on page resize
-         gmap.data.map.fitBounds(mapBounds);
+         gmap.data.map.fitBounds(gmap.data.mapBounds);
         });
       },
       add_marker_listener: function(marker) {
@@ -511,9 +571,9 @@ var ResumeBuilder = (function(data){
       },
       init: function() {
         // render the google map element in the dom
-        render_map();
+        this.render_map();
         // add the pins to the google map element w/ the place data
-        render_pins(gmap.data.places);
+        this.render_pins(gmap.model.get('places'));
       },
       render_map: function() {
         /*
@@ -524,14 +584,14 @@ var ResumeBuilder = (function(data){
         // create the styledmaptype map styleto be set
         var styledMapType = new google.maps.StyledMapType(this.map_theme, {name: 'Styled Map'});
 
-        // create the map object and append it to the map div
-        gmap.data.map = new google.maps.Map(map_div, this.map_display_options);
-        // set the current map theme as the 'styled map' map type
-        gmap.data.map.mapTypes.set('styled_map', styledMapType);
-        // set the current map id to as styledmap
-        gmap.data.map.setMapTypeId('styled_map');
-        // Sets the boundaries of the map based on pin locations
-        window.mapBounds = new google.maps.LatLngBounds();
+        gmap.model.set_map({
+          // where in dom to append the map element
+          target: map_div,
+          // map display options
+          display_options: this.map_display_options,
+          // the map style theme to use
+          map_type: styledMapType
+        });
       },
       render_pins: function(places) {
         /*
@@ -553,15 +613,10 @@ var ResumeBuilder = (function(data){
         // The next lines save location data from the place object to local variables
         var lat = placeData.geometry.location.lat();  // latitude from the place service
         var lon = placeData.geometry.location.lng();  // longitude from the place service
-        var bounds = window.mapBounds;            // current boundaries of the map window
+        var bounds = gmap.data.mapBounds;            // current boundaries of the map window
 
         // this is where the pin actually gets added to the map.
-        // bounds.extend() takes in a map location object
-        bounds.extend(new google.maps.LatLng(lat, lon));
-        // fit the map to the new marker
-        gmap.data.map.fitBounds(bounds);
-        // center the map
-        gmap.data.map.setCenter(bounds.getCenter());
+        gmap.model.add_map_pin(lat, lon, bounds);
       }
     }
   };
@@ -579,11 +634,17 @@ var ResumeBuilder = (function(data){
       }
     },
     view: {
+      templates: {
+
+      },
       init: function() {
 
       }
     }
   };
+
+  // initialize the google map submodule when the page has loaded
+  window.addEventListener('load', gmap.control.init);
 
   // provide public methods and data for the resume app
   return {
