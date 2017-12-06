@@ -40,12 +40,16 @@ var ResumeBuilder = (function(data){
     },
     model: {
       init: function() {
+        // grab the map div in the dom
+        var map_div = document.querySelector('.map');
         // grab the location data from the main data constants
         gmap.data.locations = this.get_locations();
         // get place data from the google api and store in gmap.data.places
         gmap.data.places = this.get_all_places(gmap.data.locations);
-        // get and add all the marker objects using place data
+        // get and add all the marker objects to the markers array using place data
         gmap.data.markers = this.add_all_markers(gmap.data.places);
+        // instantiate the actual Map object
+        gmap.data.map = this.init_map(map_div);
       },
       get: function(data_type) {
         /*
@@ -176,20 +180,40 @@ var ResumeBuilder = (function(data){
         // return the constructed marker in case other stuff needs it
         return marker;
       },
-      set_map: function(options) {
-        var map_div = options.target;
-        var display_options = options.display_options;
-        var map_type = options.map_type;
-        var style_id = 'styled_map';
-
+      init_map: function(target) {
+        /*
+        Does initial instantiation of the map object and attaches it to a dom
+        node, then sets the creates a mapbounds object that will allow the map
+        pin locations to determine the map boundaries.
+        Args: target (dom node) - a queried dom node to attach the map to
+        Return: the google map instance (obj)
+        */
+        // stores the map instance
+        var map;
         // create the map object and append it to the map div
-        gmap.data.map = new google.maps.Map(options.target, options.display_options);
-        // set the current map theme as the 'styled map' map type
-        gmap.data.map.mapTypes.set(options.style_id, options.map_type);
-        // set the current map id to as styledmap
-        gmap.data.map.setMapTypeId(options.style_id);
-        // Sets the boundaries of the map based on pin locations
+        map = new google.maps.Map(target);
+        // Used to set the boundaries of the map based on pin locations
         gmap.data.mapBounds = new google.maps.LatLngBounds();
+
+        return map;
+      },
+      set_map: function(options) {
+        /*
+        Sets the map display properties, options, and map type/style to use.
+        Args: options (obj) - a table containing the properties to set in the
+              map. should contain: the style id string to use for the map theme,
+              the map displayOptions object, the styledmaptype object for the theme
+        Return: na
+        */
+        // name of the style id to assign to the styledmaptype that will be applied
+        var style_id = options.style_id;
+
+        // set the map's general mapDisplay options object settings
+        gmap.data.map.setOptions(options.display_options);
+        // associate the 'styled map' map type with the styled_map maptypeid
+        gmap.data.map.mapTypes.set(style_id, options.map_type);
+        // set the current map type id to styledmap to switch the styling
+        gmap.data.map.setMapTypeId(style_id);
       },
       add_map_pin: function(latitude, longitude, bounds) {
         /*
@@ -571,26 +595,25 @@ var ResumeBuilder = (function(data){
       },
       init: function() {
         // render the google map element in the dom
-        this.render_map();
+        this.render_map_style();
         // add the pins to the google map element w/ the place data
         this.render_pins(gmap.model.get('places'));
       },
-      render_map: function() {
+      render_map_style: function() {
         /*
-        renders the actual google map element in the dom
+        Renders the map with certain style, theming, and display options.
         */
-        // grab the map div in the dom
-        var map_div = document.querySelector('.map');
+
         // create the styledmaptype map styleto be set
         var styledMapType = new google.maps.StyledMapType(this.map_theme, {name: 'Styled Map'});
 
         gmap.model.set_map({
-          // where in dom to append the map element
-          target: map_div,
           // map display options
           display_options: this.map_display_options,
           // the map style theme to use
-          map_type: styledMapType
+          map_type: styledMapType,
+          // style id to use for the map_theme
+          style_id: 'styled_map'
         });
       },
       render_pins: function(places) {
