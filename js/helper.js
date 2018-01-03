@@ -255,12 +255,10 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        var map_div = document.querySelector('.map');
                        // grab the location data from the main data constants
                        gmap.data.locations = this.get_locations();
-                       // get place data from the google api and store in gmap.data.places
-                       gmap.data.places = this.get_all_places(gmap.data.locations);
-                       // get and add all the marker objects to the markers array using place data
-                       gmap.data.markers = this.add_all_markers(gmap.data.places);
                        // instantiate the actual Map object
                        gmap.data.map = this.init_map(map_div);
+                       // get and add all the marker objects to the markers array using place data
+                       this.add_all_markers(gmap.data.locations);
                      },
                      get: function(data_type) {
                        /*
@@ -299,6 +297,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        /*
                        Returns an array of every location string from the high level data
                        written for bio, education, and work.
+                       Return: array of location strings
                        */
                        // initializes an empty array
                        var locations = [];
@@ -320,86 +319,73 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
 
                        return locations;
                      },
-                     get_all_places: function(locations) {
-                       // array to store all found place data
-                       var places = [];
-                       // init var for current place in loop
-                       var current_place;
-                       // creates a Google place search service object. PlacesService does the work of
-                       // actually searching for location data.
-                       console.log(gmap.data.map);
+                     add_all_markers: function(locations) {
+                       // create a place service object to get api place data from locations
                        var service = new google.maps.places.PlacesService(gmap.data.map);
-
-                       // Iterates through the array of locations, getting place data for each location
-                       locations.forEach(function(location) {
-                         // sets the query for a certain place that will will be requested from api
-                         var request = {
-                           query: location
-                         };
-                         // get place data for the current location from api
-                         current_place = this.get_place(request, service);
-                         // if a place was found returned
-                         if (current_place) {
-                           // push found place to places array
-                           places.push(current_place);
-                         }
-                       // bind value of this to outer this since callback changes context
-                       }.bind(this));
-
-                       return places;
-                     },
-                     get_place: function(request, place_service) {
-
-                       // init var to store map marker location data
-                       var place_data;
-
-                       function callback(results, status) {
-                         console.log(results);
-                       }
-
-                       // function(results, status){
-                       //   console.log('callback ran');
-                       //   // validates that the search returned results for a location.
-                       //   if (status == google.maps.places.PlacesServiceStatus.OK) {
-                       //     // set marker equal to the result data
-                       //     place_data = results[0];
-                       //   }
-                       // }
-
-                       // Actually searches the Google Maps API for location data and validates
-                       // the data is ok for the search
-                       place_service.textSearch(request, callback);
-
-                       return place_data;
-                     },
-                     add_all_markers: function(places) {
                        // loop through the places array
-                       places.forEach(function(place){
+                       locations.forEach(function(location){
                          // create a marker object for each place
-                         this.add_marker(place);
-                       });
+                         this.get_place_add_marker(location, service);
+                       }, this);
                      },
-                     add_marker: function(placeData) {
+                     get_place_add_marker:  function(location, places_service) {
                        /*
                        reads Google Places search results to create map pins.
                        placeData is the object returned from search results containing information
                        about a single location.
+                       Then creates the marker pin objects for each location async.
+                       Args: location (string) - the location string to get placedata for
+                             places_service - the placesService api object to search with
+                       return: na
                        */
-                       // The next lines save location data from the search result object to local variables
-                       var name = placeData.formatted_address;   // name of the place from the place service
+                       // format the location search for the places api request
+                       var request = {
+                         query: location
+                       };
 
-                       // marker is an object with additional data about the pin for a single location
-                       var marker = new google.maps.Marker({
-                         map: gmap.data.map,
-                         position: placeData.geometry.location,
-                         title: name
-                       });
+                       // Actually searches the Google Maps API for location data and validates
+                       // the data is ok for the search
+                       places_service.textSearch(request, this.add_marker.bind(this));
 
-                       // push the current marker into the markers array
-                       gmap.data.markers.push(marker);
+                     },
+                     add_marker: function(results, status){
+                       /*
+                       Adds a marker and marker pin to the map.
+                       Args: results (obj) - the results obj returned from the places
+                                       api search
+                             status (string) - the status of the api request
+                       Return: na
+                       */
+                       // init var to store the marker for pushing to markers array
+                       var marker;
+                       // init var for place data from placesservice api
+                       var place_data;
+                       // init var for formatted marker coordinates
+                       var coordinates;
 
-                       // return the constructed marker in case other stuff needs it
-                       return marker;
+                       // validates that the search returned results for a location.
+                       if (status == google.maps.places.PlacesServiceStatus.OK) {
+                         // set marker equal to the result data
+                         place_data = results[0];
+                         // set coordinates object w/ latitude and longitude from place data
+                         coordinates = {
+                           lat: place_data.geometry.location.lat(),
+                           lng: place_data.geometry.location.lng()
+                         };
+
+                         // marker is an object with additional data about the pin for a single location
+                         marker = new google.maps.Marker({
+                           map: gmap.data.map, // the map object
+                           position: coordinates, // coordinates of place
+                           title: place_data.formatted_address // formatted name of the address
+                         });
+
+                         // add the actual map pin to the map
+                         this.add_map_pin(coordinates.lat, coordinates.lng, gmap.data.bounds);
+
+                         // push the current marker into the markers array
+                         gmap.data.markers.push(marker);
+                       }
                      },
                      init_map: function(target) {
                        /*
@@ -414,7 +400,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // create the map object and append it to the map div
                        map = new google.maps.Map(target);
                        // Used to set the boundaries of the map based on pin locations
-                       gmap.data.mapBounds = new google.maps.LatLngBounds();
+                       gmap.data.bounds = new google.maps.LatLngBounds();
 
                        return map;
                      },
@@ -443,7 +429,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        */
                        // bounds.extend() takes in a map location object
                        // extends the map's bounds with the given latlng instance
-                       bounds.extend(new google.maps.LatLng(lat, lon));
+                       bounds.extend(new google.maps.LatLng(latitude, longitude));
                        // fit the visible map to the new marker
                        gmap.data.map.fitBounds(bounds);
                        // center the map
@@ -453,26 +439,26 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                    control: {
                      init: function() {
                        gmap.model.init();
+
                        gmap.view.init();
 
-                       console.log(gmap.data);
                        // add event listeners to everything to setup interaction
                        this.add_all_event_listeners();
                      },
                      // attach event listeners
                      add_all_event_listeners: function() {
-                       console.log(gmap.data.markers);
-                       // add marker event listeners for all map marker objects
-                       gmap.data.markers.forEach(function(marker){
-                         // add event listener for current marker in the array
-                         this.add_marker_listener(marker);
-                       });
+
+                       // // add marker event listeners for all map marker objects
+                       // gmap.data.markers.forEach(function(marker){
+                       //   // add event listener for current marker in the array
+                       //   this.add_marker_listener(marker);
+                       // }.bind(this));
 
                        // Vanilla JS way to listen for resizing of the window
                        // and adjust map bounds
                        window.addEventListener('resize', function(e) {
                          // Make sure the map bounds get updated on page resize
-                        gmap.data.map.fitBounds(gmap.data.mapBounds);
+                        gmap.data.map.fitBounds(gmap.data.bounds);
                        });
                      },
                      add_marker_listener: function(marker) {
@@ -828,7 +814,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
 
                        // create the styledmaptype map styleto be set
                        var styledMapType = new google.maps.StyledMapType(this.map_theme, {name: 'Styled Map'});
-               
+
                        gmap.model.set_map({
                          // map display options
                          display_options: this.map_display_options,
@@ -847,7 +833,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        places.forEach(function(place) {
                          // render the pin for the current place
                          this.render_pin(place);
-                       });
+                       }.bind(this));
                      },
                      render_pin: function(placeData) {
                        /*
