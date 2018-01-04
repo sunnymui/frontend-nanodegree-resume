@@ -247,7 +247,8 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      bounds: {},
                      locations: [],
                      places: [],
-                     markers: []
+                     markers: [],
+                     info_windows: []
                    },
                    model: {
                      init: function() {
@@ -358,16 +359,18 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        */
                        // init var to store the marker for pushing to markers array
                        var marker;
+                       // init var for the info window for a marker
+                       var info_window;
                        // init var for place data from placesservice api
                        var place_data;
-                       // init var for formatted marker coordinates
+                       // init var for storing the latitude/longitude of the place
                        var coordinates;
 
                        // validates that the search returned results for a location.
                        if (status == google.maps.places.PlacesServiceStatus.OK) {
                          // set marker equal to the result data
                          place_data = results[0];
-                         // set coordinates object w/ latitude and longitude from place data
+                         // coordinates in latitude/longitude from place data search
                          coordinates = {
                            lat: place_data.geometry.location.lat(),
                            lng: place_data.geometry.location.lng()
@@ -375,17 +378,42 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
 
                          // marker is an object with additional data about the pin for a single location
                          marker = new google.maps.Marker({
-                           map: gmap.data.map, // the map object
-                           position: coordinates, // coordinates of place
-                           title: place_data.formatted_address // formatted name of the address
+                           // the map object
+                           map: gmap.data.map,
+                           // coordinates in latitude/longitude from place data
+                           position: coordinates,
+                           // formatted name of the address
+                           title: place_data.formatted_address
                          });
 
-                         // add the actual map pin to the map
-                         this.add_map_pin(coordinates.lat, coordinates.lng, gmap.data.bounds);
+                         // create an info window for a marker
+                         info_window = this.add_info_window(marker);
+                         // add the actual visible map pin to the map
+                         gmap.view.render_map_pin(coordinates.lat, coordinates.lng, gmap.data.bounds);
+                         // listen for clicks on the map pin
+                         gmap.control.add_marker_listener(marker, info_window);
 
                          // push the current marker into the markers array
                          gmap.data.markers.push(marker);
+                         // push the current info window in the info windows array
+                         gmap.data.info_windows.push(info_window);
                        }
+                     },
+                     add_info_window: function(marker) {
+                       /*
+                       Constructs an info window object that shows info about
+                       a marker location when shown with the .open() method.
+                       Args: marker (obj) - a marker object
+                       Return: infoWindow - the info window object instance
+                       */
+                       // infoWindows are the little helper windows that open when you click
+                       // or hover over a pin on a map. They usually contain more information
+                       // about a location.
+                       var infoWindow = new google.maps.InfoWindow({
+                         content: '<h3>'+marker.title+'</h3>'
+                       });
+
+                       return infoWindow;
                      },
                      init_map: function(target) {
                        /*
@@ -422,38 +450,17 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // set the current map type id to styledmap to switch the styling
                        gmap.data.map.setMapTypeId(style_id);
                      },
-                     add_map_pin: function(latitude, longitude, bounds) {
-                       /*
-                         Adds a new map pin object to the google map instance and fits the map
-                         area to the new pin.
-                       */
-                       // bounds.extend() takes in a map location object
-                       // extends the map's bounds with the given latlng instance
-                       bounds.extend(new google.maps.LatLng(latitude, longitude));
-                       // fit the visible map to the new marker
-                       gmap.data.map.fitBounds(bounds);
-                       // center the map
-                       gmap.data.map.setCenter(bounds.getCenter());
-                     }
                    },
                    control: {
                      init: function() {
                        gmap.model.init();
-
                        gmap.view.init();
 
-                       // add event listeners to everything to setup interaction
-                       this.add_all_event_listeners();
+                       // add event listener to listen for window resizing
+                       this.add_window_resize_listener();
                      },
                      // attach event listeners
-                     add_all_event_listeners: function() {
-
-                       // // add marker event listeners for all map marker objects
-                       // gmap.data.markers.forEach(function(marker){
-                       //   // add event listener for current marker in the array
-                       //   this.add_marker_listener(marker);
-                       // }.bind(this));
-
+                     add_window_resize_listener: function() {
                        // Vanilla JS way to listen for resizing of the window
                        // and adjust map bounds
                        window.addEventListener('resize', function(e) {
@@ -461,18 +468,21 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                         gmap.data.map.fitBounds(gmap.data.bounds);
                        });
                      },
-                     add_marker_listener: function(marker) {
-                       // infoWindows are the little helper windows that open when you click
-                       // or hover over a pin on a map. They usually contain more information
-                       // about a location.
-                       var infoWindow = new google.maps.InfoWindow({
-                         content: '<h3>'+marker.title+'</h3>'
-                       });
+                     add_marker_listener: function(marker, info_window) {
 
                        // listen for clicks on the current google map marker
                        google.maps.event.addListener(marker, 'click', function() {
+                         // close any already open info windows so only one shows
+                         gmap.control.close_all_info_windows();
                          // open the infowindow for clicked marker
-                         infoWindow.open(gmap.data.map, marker);
+                         info_window.open(gmap.data.map, marker);
+                       });
+                     },
+                     close_all_info_windows: function() {
+                       // loop through all info window instances
+                       gmap.data.info_windows.forEach(function(info_window){
+                         // close the current info_window
+                         info_window.close();
                        });
                      }
                    },
@@ -804,8 +814,6 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      init: function() {
                        // render the google map element styling in the dom
                        this.render_map_style();
-                       // add the pins to the google map element w/ the place data
-                       this.render_pins(gmap.model.get('places'));
                      },
                      render_map_style: function() {
                        /*
@@ -824,32 +832,20 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          style_id: 'styled_map'
                        });
                      },
-                     render_pins: function(places) {
+                     render_map_pin: function(latitude, longitude, bounds) {
                        /*
-                       takes in the array of places, puts pins on the map element for each location
+                         Adds a new map pin object to the google map instance and
+                         fits/centers the map area to the new pin.
                        */
-
-                       // Iterates through the array of places, rendering the pin for each place
-                       places.forEach(function(place) {
-                         // render the pin for the current place
-                         this.render_pin(place);
-                       }.bind(this));
-                     },
-                     render_pin: function(placeData) {
-                       /*
-                       reads Google Places search results to create map pins.
-                       placeData is the object returned from search results containing information
-                       about a single location.
-                       */
-                       // The next lines save location data from the place object to local variables
-                       var lat = placeData.geometry.location.lat();  // latitude from the place service
-                       var lon = placeData.geometry.location.lng();  // longitude from the place service
-                       var bounds = gmap.data.mapBounds;            // current boundaries of the map window
-
-                       // this is where the pin actually gets added to the map.
-                       gmap.model.add_map_pin(lat, lon, bounds);
+                       // bounds.extend() takes in a map location object
+                       // extends the map's bounds with the given latlng instance
+                       bounds.extend(new google.maps.LatLng(latitude, longitude));
+                       // fit the visible map to the new marker
+                       gmap.data.map.fitBounds(bounds);
+                       // center the map
+                       gmap.data.map.setCenter(bounds.getCenter());
                      }
-                   }
+                   },
                  };
 
                  // run google map module after dom loads
