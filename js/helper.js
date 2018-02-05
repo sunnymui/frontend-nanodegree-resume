@@ -276,6 +276,10 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                            // set fetched data equal to the map instance
                            fetched_data = gmap.data.map;
                            break;
+                         case 'bounds':
+                           // set fetched data equal to the map instance
+                           fetched_data = gmap.data.bounds;
+                           break;
                          case 'locations':
                           // grab the locations data generated from school/bio/edu
                            fetched_data = gmap.data.locations;
@@ -287,6 +291,10 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          case 'markers':
                            // grab the markers data created from the place data
                            fetched_data = gmap.data.markers;
+                           break;
+                         case 'infos':
+                           // grab the markers data created from the place data
+                           fetched_data = gmap.data.info_windows;
                            break;
                        }
 
@@ -357,27 +365,20 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                              status (string) - the status of the api request
                        Return: na
                        */
-                       // init var to store the marker for pushing to markers array
-                       var marker;
-                       // init var for the info window for a marker
-                       var info_window;
-                       // init var for place data from placesservice api
-                       var place_data;
-                       // init var for storing the latitude/longitude of the place
-                       var coordinates;
-
                        // validates that the search returned results for a location.
                        if (status == google.maps.places.PlacesServiceStatus.OK) {
-                         // set marker equal to the result data
-                         place_data = results[0];
+                         // init var for the info window for a marker
+                         var info_window;
+                         // save place data from api search results
+                         var place_data = results[0];
                          // coordinates in latitude/longitude from place data search
-                         coordinates = {
+                         var coordinates = {
                            lat: place_data.geometry.location.lat(),
                            lng: place_data.geometry.location.lng()
                          };
-
-                         // marker is an object with additional data about the pin for a single location
-                         marker = new google.maps.Marker({
+                         // marker is an object with additional data about a
+                         // pin for a single location
+                         var marker = new google.maps.Marker({
                            // the map object
                            map: gmap.data.map,
                            // coordinates in latitude/longitude from place data
@@ -455,7 +456,6 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      init: function() {
                        gmap.model.init();
                        gmap.view.init();
-
                        // add event listener to listen for window resizing
                        this.add_window_resize_listener();
                      },
@@ -465,11 +465,10 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // and adjust map bounds
                        window.addEventListener('resize', function(e) {
                          // Make sure the map bounds get updated on page resize
-                        gmap.data.map.fitBounds(gmap.data.bounds);
+                        gmap.data.map.fitBounds(gmap.model.get('bounds'));
                        });
                      },
                      add_marker_listener: function(marker, info_window) {
-
                        // listen for clicks on the current google map marker
                        google.maps.event.addListener(marker, 'click', function() {
                          // close any already open info windows so only one shows
@@ -836,6 +835,8 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        /*
                          Adds a new map pin object to the google map instance and
                          fits/centers the map area to the new pin.
+                         Args: latitude (number), longitude (number), bounds (obj)
+                         Return: na
                        */
                        // bounds.extend() takes in a map location object
                        // extends the map's bounds with the given latlng instance

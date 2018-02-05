@@ -43,9 +43,9 @@ var ResumeBuilder = (function(data){
         // grab the map div in the dom
         var map_div = document.querySelector('.map');
         // grab the location data from the main data constants
-        gmap.data.locations = this.get_locations();
+        gmap.data.locations = this.init_locations();
         // get place data from the google api and store in gmap.data.places
-        gmap.data.places = this.get_all_places(gmap.data.locations);
+        gmap.data.places = this.get_all_places_api(gmap.data.locations);
         // get and add all the marker objects to the markers array using place data
         gmap.data.markers = this.add_all_markers(gmap.data.places);
         // instantiate the actual Map object
@@ -84,7 +84,7 @@ var ResumeBuilder = (function(data){
         return fetched_data;
       },
       // get locations
-      get_locations: function() {
+      init_locations: function() {
         /*
         Returns an array of every location string from the high level data
         written for bio, education, and work.
@@ -109,7 +109,7 @@ var ResumeBuilder = (function(data){
 
         return locations;
       },
-      get_all_places: function(locations) {
+      get_all_places_api: function(locations) {
         // array to store all found place data
         var places = [];
         // init var for current place in loop
@@ -217,15 +217,15 @@ var ResumeBuilder = (function(data){
       },
       add_map_pin: function(latitude, longitude, bounds) {
         /*
-          Adds a new map pin object to the google map instance and fits the map
-          area to the new pin.
+          Extends the map bounds and visible area of the map to fits
+          given coordinates, then centers the map based on the current bounds
         */
         // bounds.extend() takes in a map location object
         // extends the map's bounds with the given latlng instance
         bounds.extend(new google.maps.LatLng(lat, lon));
         // fit the visible map to the new marker
         gmap.data.map.fitBounds(bounds);
-        // center the map
+        // center the visible map within the current map bounds
         gmap.data.map.setCenter(bounds.getCenter());
       }
     },
