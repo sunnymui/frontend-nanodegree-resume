@@ -255,7 +255,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // grab the map div in the dom
                        var map_div = document.querySelector('.map');
                        // grab the location data from the main data constants
-                       gmap.data.locations = this.get_locations();
+                       gmap.data.locations = this.init_locations_data();
                        // instantiate the actual Map object
                        gmap.data.map = this.init_map(map_div);
                        // get and add all the marker objects to the markers array using place data
@@ -301,11 +301,11 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // return the retrieved data
                        return fetched_data;
                      },
-                     // get locations
-                     get_locations: function() {
+                     // get locations from raw data
+                     init_locations_data: function() {
                        /*
                        Returns an array of every location string from the high level data
-                       written for bio, education, and work.
+                       written for bio, education, and work in data objects.
                        Return: array of location strings
                        */
                        // initializes an empty array
