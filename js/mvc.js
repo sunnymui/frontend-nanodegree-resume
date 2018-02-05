@@ -45,9 +45,9 @@ var ResumeBuilder = (function(data){
         // grab the location data from the main data constants
         gmap.data.locations = this.init_locations();
         // get place data from the google api and store in gmap.data.places
-        gmap.data.places = this.get_all_places_api(gmap.data.locations);
+        gmap.data.places = this.get_all_places_api(this.get('locations'));
         // get and add all the marker objects to the markers array using place data
-        gmap.data.markers = this.add_all_markers(gmap.data.places);
+        gmap.data.markers = this.add_all_markers(this.get('places'));
         // instantiate the actual Map object
         gmap.data.map = this.init_map(map_div);
       },

@@ -330,6 +330,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      },
                      add_all_markers: function(locations) {
                        // create a place service object to get api place data from locations
+                       // docs: https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests
                        var service = new google.maps.places.PlacesService(gmap.data.map);
                        // loop through the places array
                        locations.forEach(function(location){
@@ -371,6 +372,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          var info_window;
                          // save place data from api search results
                          var place_data = results[0];
+
                          // coordinates in latitude/longitude from place data search
                          var coordinates = {
                            lat: place_data.geometry.location.lat(),
@@ -381,10 +383,14 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          var marker = new google.maps.Marker({
                            // the map object
                            map: gmap.data.map,
-                           // coordinates in latitude/longitude from place data
-                           position: coordinates,
+                           place: {
+                             placeId: place_data.place_id,
+                             location: place_data.geometry.location
+                           },
+                           // // coordinates in latitude/longitude from place data
+                           // position: coordinates,
                            // formatted name of the address
-                           title: place_data.formatted_address
+                           title: place_data.name + ', ' + place_data.formatted_address
                          });
 
                          // create an info window for a marker
