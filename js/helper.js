@@ -373,30 +373,26 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          // save place data from api search results
                          var place_data = results[0];
 
-                         // coordinates in latitude/longitude from place data search
-                         var coordinates = {
-                           lat: place_data.geometry.location.lat(),
-                           lng: place_data.geometry.location.lng()
-                         };
                          // marker is an object with additional data about a
                          // pin for a single location
                          var marker = new google.maps.Marker({
                            // the map object
                            map: gmap.data.map,
+                           // add a marker to the map using the placeId
                            place: {
+                             // the unique identifier of the specific place
                              placeId: place_data.place_id,
+                             // the place's lat/lng coordinates in location prop
                              location: place_data.geometry.location
                            },
-                           // // coordinates in latitude/longitude from place data
-                           // position: coordinates,
                            // formatted name of the address
                            title: place_data.name + ', ' + place_data.formatted_address
                          });
 
                          // create an info window for a marker
                          info_window = this.add_info_window(marker);
-                         // add the actual visible map pin to the map
-                         gmap.view.render_map_pin(coordinates.lat, coordinates.lng, gmap.data.bounds);
+                         // position the map to have the marker be visible
+                         gmap.view.resize_map_bounds(gmap.data.bounds, place_data);
                          // listen for clicks on the map pin
                          gmap.control.add_marker_listener(marker, info_window);
 
@@ -837,16 +833,17 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          style_id: 'styled_map'
                        });
                      },
-                     render_map_pin: function(latitude, longitude, bounds) {
+                     resize_map_bounds: function(bounds, place) {
                        /*
-                         Adds a new map pin object to the google map instance and
+                         Extends the map bounds to the google map pin instance and
                          fits/centers the map area to the new pin.
-                         Args: latitude (number), longitude (number), bounds (obj)
+                         Args: place (obj) - the place data w/ location property,
+                               bounds (obj) - the bounds object of the map
                          Return: na
                        */
                        // bounds.extend() takes in a map location object
-                       // extends the map's bounds with the given latlng instance
-                       bounds.extend(new google.maps.LatLng(latitude, longitude));
+                       // extends the map's bounds with the given place location
+                       bounds.extend(place.geometry.location);
                        // fit the visible map to the new marker
                        gmap.data.map.fitBounds(bounds);
                        // center the map
