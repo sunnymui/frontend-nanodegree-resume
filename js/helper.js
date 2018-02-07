@@ -331,7 +331,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      add_all_markers: function(locations) {
                        // create a place service object to get api place data from locations
                        // docs: https://developers.google.com/maps/documentation/javascript/places#TextSearchRequests
-                       var service = new google.maps.places.PlacesService(gmap.data.map);
+                       var service = new google.maps.places.PlacesService(this.get('map'));
                        // loop through the places array
                        locations.forEach(function(location){
                          // create a marker object for each place
@@ -377,7 +377,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          // pin for a single location
                          var marker = new google.maps.Marker({
                            // the map object
-                           map: gmap.data.map,
+                           map: this.get('map'),
                            // add a marker to the map using the placeId
                            place: {
                              // the unique identifier of the specific place
@@ -392,14 +392,14 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          // create an info window for a marker
                          info_window = this.add_info_window(marker);
                          // position the map to have the marker be visible
-                         gmap.view.resize_map_bounds(gmap.data.bounds, place_data);
+                         gmap.view.resize_map_bounds(this.get('bounds'), place_data);
                          // listen for clicks on the map pin
                          gmap.control.add_marker_listener(marker, info_window);
 
                          // push the current marker into the markers array
-                         gmap.data.markers.push(marker);
+                         this.get('markers').push(marker);
                          // push the current info window in the info windows array
-                         gmap.data.info_windows.push(info_window);
+                         this.get('infos').push(info_window);
                        }
                      },
                      add_info_window: function(marker) {
@@ -447,11 +447,11 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        var style_id = options.style_id;
 
                        // set the map's general mapDisplay options object settings
-                       gmap.data.map.setOptions(options.display_options);
+                       this.get('map').setOptions(options.display_options);
                        // associate the 'styled map' map type with the styled_map maptypeid
-                       gmap.data.map.mapTypes.set(style_id, options.map_type);
+                       this.get('map').mapTypes.set(style_id, options.map_type);
                        // set the current map type id to styledmap to switch the styling
-                       gmap.data.map.setMapTypeId(style_id);
+                       this.get('map').setMapTypeId(style_id);
                      },
                    },
                    control: {
@@ -467,7 +467,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // and adjust map bounds
                        window.addEventListener('resize', function(e) {
                          // Make sure the map bounds get updated on page resize
-                        gmap.data.map.fitBounds(gmap.model.get('bounds'));
+                        gmap.model.get('map').fitBounds(gmap.model.get('bounds'));
                        });
                      },
                      add_marker_listener: function(marker, info_window) {
@@ -476,18 +476,19 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          // close any already open info windows so only one shows
                          gmap.control.close_all_info_windows();
                          // open the infowindow for clicked marker
-                         info_window.open(gmap.data.map, marker);
+                         info_window.open(gmap.model.get('map'), marker);
                        });
                      },
                      close_all_info_windows: function() {
                        // loop through all info window instances
-                       gmap.data.info_windows.forEach(function(info_window){
+                       gmap.model.get('infos').forEach(function(info_window){
                          // close the current info_window
                          info_window.close();
                        });
                      }
                    },
                    view: {
+                     // set visual theming of the map e.g. colors, etc
                      map_theme: [
                        {
                          "elementType": "geometry",
@@ -805,6 +806,7 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                          ]
                        }
                      ],
+                     // settings for options like showing the ui, controls, etc
                      map_display_options: {
                        disableDefaultUI: true,
                        mapTypeControlOptions: {
@@ -845,14 +847,14 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                        // extends the map's bounds with the given place location
                        bounds.extend(place.geometry.location);
                        // fit the visible map to the new marker
-                       gmap.data.map.fitBounds(bounds);
+                       gmap.model.get('map').fitBounds(bounds);
                        // center the map
-                       gmap.data.map.setCenter(bounds.getCenter());
+                       gmap.model.get('map').setCenter(bounds.getCenter());
                      }
                    },
                  };
 
-                 // run google map module after dom loads
+                 // run google map module after dom loads, bind this to control
                  window.addEventListener('load', gmap.control.init.bind(gmap.control));
 
 
