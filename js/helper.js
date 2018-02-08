@@ -254,9 +254,9 @@ var HTMLfooter = '<div class="footer-links padding-05 grid flex-v-center">'+
                      init: function() {
                        // grab the map div in the dom
                        var map_div = document.querySelector('.map');
-                       // grab the location data from the main data constants
+                       // populate locations from locations in work/lived places
                        gmap.data.locations = this.init_locations_data();
-                       // instantiate the actual Map object
+                       // instantiate the actual Map object attached to map div
                        gmap.data.map = this.init_map(map_div);
                        // get and add all the marker objects to the markers array using place data
                        this.add_all_markers(gmap.data.locations);
