@@ -46,7 +46,7 @@ var ResumeBuilder = (function(data, jQuery) {
   var plugins = {
     init: function() {
       // add .visible function to jquery library
-      extend_visible_to_jquery(jQuery);
+      this.extend_visible_to_jquery(jQuery);
     },
     extend_visible_to_jquery: function($) {
       // extends jquery with the .visible function
@@ -61,7 +61,7 @@ var ResumeBuilder = (function(data, jQuery) {
        *     only accounts for vertical position, not horizontal.
        */
 
-      $.fn.visible = function(partial) {
+      window.$.fn.visible = function(partial) {
 
           var $t = $(this),
               $w = $(window),
@@ -86,8 +86,8 @@ var ResumeBuilder = (function(data, jQuery) {
         */
 
         // return an instance of the object without needing the new keyword syntax
-        if (!(this instanceof scrollspy)) {
-            return new scrollspy(nav_link);
+        if (!(this instanceof plugins.scrollspy)) {
+            return new plugins.scrollspy(nav_link);
         }
 
         this.nav_item_map = function() {
@@ -123,7 +123,7 @@ var ResumeBuilder = (function(data, jQuery) {
             // initialize var for id storage
             var lastId;
             // Get container scroll position
-            var fromTop = $window.scrollTop() + nav_height;
+            var fromTop = $(window).scrollTop() + nav_height;
 
             // Get id of current scroll item
             var cur = nav_item_map.map(function() {
@@ -150,275 +150,61 @@ var ResumeBuilder = (function(data, jQuery) {
       }
   };
 
-  // chainable html code generator submodule
-  var html = function(target) {
-      /*
-      Wrapper function object for allowing some chainable functions on passed in html.
-      Args: target of the function, which typically would be an html string
-      Returns: this, which would be the returned modified html in and object from the subfunctions
-      */
-      if (!(this instanceof html)) {
-          return new html(target);
-      }
-
-      // initialize an html key with the value of the passed in target html
-      this.html = target;
-
-      // return itself as an object to allow chaining
-      return this;
-  };
-  // add prototype methods to the html f
-  html.prototype.format = function(raw_data, placeholder, optional) {
-      /*
-      Takes raw data and inserts that data into a preformatted html string,
-       replacing a placeholder with the actual data.
-       Chainable function within the html function made by returning this.
-       Placeholder string that the function looks for is set in the var.
-       ex. <p>%data%</p> => <p>Hello</p>
-       Args: the formatted html (string), the raw data to insert into that html (string/numbers)
-       Return: the formatted html string with placeholder replaced by that data (string)
-      */
-      // default is that this isn't an optional part of the html
-      optional = default_for(optional, false);
-      // the default placeholder string to look for in the html
-      placeholder = default_for(placeholder, '%data%');
-
-      // check if this is an optional block/this key's value in the data is empty
-      // if so then remove relevant html from the string since it's optional
-      if (optional === true) {
-
-          // placeholder text marking an optional block of text
-          var optional_tag = '%?optional%';
-
-          // if there's no data in the specified key run the regex to get the whole block
-          if (raw_data.length === 0) {
-              // regular expression to match anything enclosed in the optional tags
-              // and containing the placeholder for the data we're looking at
-              var optional_regex = new RegExp('%\\?optional%.*' + placeholder + '.*%\\?optional%', 'g');
-              // remove the matched substrings enclosed by optional tags
-              this.html = this.html.replaceAll(optional_regex, '');
-          } else {
-              // if there is data in the specified key, just remove the optional text placeholders
-              this.html = this.html.replaceAll(optional_tag, '');
-          }
-      }
-
-      // check the html for occurences of the placeholder and replace with provided data
-      // set this.html to the result of the function so it can be returned
-      this.html = this.html.replaceAll(placeholder, raw_data);
-
-      // return the results as an object to allow chaining
-      // when using this function, put .html at the end to get the value of the html
-      return this;
-  };
-  html.prototype.wrap = function(data, placeholder, wrapper) {
-      /*
-      Checks the data to see if it has something, if so then it'll add a wrapper
-      to the passed in html template where marked by the placeholders. Useful for links where
-      they something might not have link data, but others items do--like an offline business
-      in a list of work experience.
-      So calling on <div>%?wrap%<p></p>%?wrap%</div>, if the data has something it'll add
-      the wrapping code <div><wrapper><p></p></wrapper></div>
-      otherwise itll just delete the placeholders.
-      Args: data is the data field to check if it contains info(string),
-            placeholder is where the wrapper will be inserted (string),
-            wrapper is the wrapper html which will be split into opening and
-            closing parts at the %data% placeholder
-      Returns: formatted html string with placeholders replaced by wrapper. (string)
-      */
-      // check if data has been entered
-      if (data.length !== 0) {
-          // split html at the wrapper placeholders
-          var split_html = this.html.split(placeholder);
-          // split the wrapper at the %data% placeholder
-          var split_wrapper = wrapper.split('%data%');
-
-          // concatenate back together with the wrapper pieces where the placeholders were
-          this.html = split_html[0] +
-              split_wrapper[0] +
-              split_html[1] +
-              split_wrapper[1] +
-              split_html[2];
-
-      } else {
-          // if no data just remove the placeholder text
-          this.html = this.html.replaceAll(placeholder, '');
-      }
-
-      // to allow chaining return this object
-      return this;
-  };
-
-  //
-  function features(target) {
-      /*
-
-      Features functions enable additional functionality of some sort.
-      Wrapper function for encapsulation of features functions.
-
-      Args: target (string or jquery dom selector) - target element for a specific feature function
-
-      */
-
-      if (!(this instanceof features)) {
-          return new features(target);
-      }
-
-      this.read_more = function(truncated_element, truncator_class) {
-          /*
-          Enables show/hide function in conjunction with a css class that shows/hides content.
-          Searches for buttons that trigger show/hide behavior, then finds the content
-          linked to that button and toggles the truncation class to show/hide content when clicked.
-          Also changes the button text to either more or less to reflect the toggle action.
-          Ex: <div class="description truncate">Some content</div>
-              <a class="read-more" href="#">+ More</a>
-              becomes:
-              <div class="description">Some content</div>
-              <a class="read-more" href="#">+ Less</a>
-          Args: target (passed in outer features() scope) - the selector for
-          the see more button that will trigger show/hide on click (),
-          selector for the element that is currently being truncated by a css class (string),
-          the class name to remove or add when the button is clicked, without the '.' (string)
-          Returns: none
-          */
-
-          // the text for the button to switch between
-          var more_text = '+ More';
-          var less_text = '- Less';
-
-          // when the button is clicked find the content, toggle class, and change button text
-          $(target).click(function(e) {
-
-              // cache the current button triggering the event
-              var $this = $(this);
-              // get the content element that's specifically related to the button pressed
-              var current_content = $this.siblings(truncated_element);
-              // toggle the truncation class
-              $(current_content).toggleClass(truncator_class);
-
-              // trim spaces to ensure consistent matches for the button text
-              var button_text = $this.text().trim();
-              // if button text says more, change to 'less', else change it to 'more'
-              if (button_text == more_text) {
-                  $this.text(less_text);
-              } else {
-                  $this.text(more_text);
-              }
-
-              // prevent default <a> behavior of jumping to top of page when clicking # links
-              e.preventDefault();
-          });
-      };
-
-      this.to_top = function() {
-          /*
-          Filters anchor elements by links pointing to #top then scrolls the window to
-          the top of the document when an anchor is clicked with a smooth animation.
-          Needs a jquery selector for the page (html, body) to scroll.
-          Args: target (passed in outer features() scope) - the selector for the button
-          that will trigger the jump to the top of the page
-          Return: none
-          */
-
-          // animate scroll when to top button is clicked
-
-          // when a to-top button is clicked,
-          $(target).click(function(e) {
-              // scroll the page to the top and animate the movement
-              $page.animate({
-                  scrollTop: 0
-              }, 'medium');
-              // prevent default of clicking a link jumping to that location
-              e.preventDefault();
-          });
-      };
-
-      this.sticky_nav = function(fixed_class, nav_distance_from_top) {
-          /*
-          Makes header nav sticky when top of the window scrolls to the nav element's position.
-          Requires a jquery cached selector for window.
-          Args: target (passed in to outer features() scope) - the nav element to stickify,
-          fixed_class (string) - the css class to apply to make the nav fixed position,
-          nav_distance_from_top (numebr)- the pixel distance of the nav from the top of the page
-          Return: none
-          */
-
-          // every scroll event check if current distance to top of the page is
-          // greater than or equal to distance of the nav to the top
-          if ($window.scrollTop() >= nav_distance_from_top) {
-              // if distance is greater then we're below the nav position and if
-              // equal the nav is right at the top of the page and should be stickied
-              // so add the fixed class
-              $(target).addClass(fixed_class);
-          } else {
-              // remove the stickying if we're scrolled above the nav's position
-              $(target).removeClass(fixed_class);
-          }
-
-      };
-
-      this.animate_visible = function(animation_class) {
-          /*
-          Animates items with the animated element class when visible in the window.
-          Depends on the .visible jquery function mini plugin.
-          Args: target (passed into outer features() scope) - the selected element(s) to load animations on
-          animation_class - the css class applied to create the css animation
-          Return: none
-          */
-
-          // loop through animated elements checking if theyre visible
-          $(target).each(function(i, el) {
-              // current elements
-              var element = $(el);
-              // check if they are visible
-              if (element.visible(true)) {
-                  // add animation class if they are visible
-                  element.addClass(animation_class);
-              }
-          });
-
-      };
-
-      this.animate_nav_jump = function(nav_height) {
-          /*
-          Bind click handler to menu items so we can get a fancy scroll animation.
-          Requires a cached jquery selector for the page.
-
-          Args: target(passed in as arg via outer features() scope) - the nav link elements,
-          nav_height(number) - pixel height of nav bar area to account for when scrolling to section
-          Return: none
-          */
-
-          $(target).click(function(e) {
-              // get the anchor link href
-              var href = $(this).attr("href");
-              // set offset equal to href then check if its a '#', if so set offset to 0
-              // otherwise set it equal to the offset amount of the clicked anchor - nav height
-              var offsetTop = href === "#" ? 0 : $(href).offset().top - nav_height + 1;
-              // animate the scroll jump to the anchor location
-              $page.stop().animate({
-                  scrollTop: offsetTop
-              }, 300);
-              // stop default behavior link jump
-              e.preventDefault();
-          });
-      };
-
-  }
-
   // resume html generator and displayer module
   var resume = {
     model: {
       init: function() {
-
       },
       get: function(data_type) {
+        // return requested data type
         return data[data_type];
       }
     },
     control: {
       // maybe some features can go here since dealing with interaction
       init: function() {
+        resume.model.init();
+        resume.view.init();
+
+        // Enable JS interactive features for the page
+
+        // shortcut reference to the features functions in control
+        var features = resume.control.features;
+        // shortcut to dom selector references
+        var selectors = resume.view.dom.selectors;
+        // shortcut to dom classes
+        var classes = resume.view.dom.class;
+
+        // read more button allowing show/hide functionality for truncated elements
+        features(selectors.$read_more_btn).read_more(classes.description, classes.truncate);
+        // smooth animated to top button jumping to top of the page
+        features(selectors.$top_btn).to_top();
+        // calculate height of the nav element
+        var nav_height = selectors.$nav.outerHeight() + 15;
+        // smooth animated nav link on page jumps
+        features(selectors.$nav_link).animate_nav_jump(nav_height);
+
+        // Scroll Function Vars
+
+        // get the distance of the nav from the top of the window for sticky nav function
+        var nav_distance_from_top = selectors.$nav.offset().top;
+        // correct the nav distance to top of page if window is resized
+        $(window).resize(function() {
+            nav_distance_from_top = selectors.$nav.offset().top;
+        });
+        // mapped array of nav menu anchors for scrollspy plugin use
+        var nav_map = plugins.scrollspy(selectors.$nav_link).nav_item_map();
+
+        // Run scroll event dependent features
+        $(window).scroll(function() {
+            // sticky nav menu when scrolling past it's initial page location
+            features(selectors.$nav).sticky_nav(classes.fixed, nav_distance_from_top);
+            // play css animation when an element is visible in the window
+            features(selectors.$animated_element).animate_visible(classes.fade_animate_class);
+            // Scrollspy Plugin to highlight nav menu items when you're in that section
+            plugins.scrollspy(selectors.$nav_link).highlight(classes.active_nav, nav_map, nav_height);
+        });
+
       },
       features: function(target) {
           /*
@@ -430,11 +216,11 @@ var ResumeBuilder = (function(data, jQuery) {
 
           */
 
-          if (!(this instanceof features)) {
-              return new features(target);
+          if (!(this instanceof resume.control.features)) {
+              return new resume.control.features(target);
           }
 
-          this.read_more = function(truncated_element, truncator_class) {
+          this.read_more = function(truncated_element_class, truncator_class) {
               /*
               Enables show/hide function in conjunction with a css class that shows/hides content.
               Searches for buttons that trigger show/hide behavior, then finds the content
@@ -462,7 +248,7 @@ var ResumeBuilder = (function(data, jQuery) {
                   // cache the current button triggering the event
                   var $this = $(this);
                   // get the content element that's specifically related to the button pressed
-                  var current_content = $this.siblings(truncated_element);
+                  var current_content = $this.siblings(truncated_element_class);
                   // toggle the truncation class
                   $(current_content).toggleClass(truncator_class);
 
@@ -490,6 +276,7 @@ var ResumeBuilder = (function(data, jQuery) {
               Return: none
               */
 
+              var $page = $('html, body');
               // animate scroll when to top button is clicked
 
               // when a to-top button is clicked,
@@ -515,7 +302,7 @@ var ResumeBuilder = (function(data, jQuery) {
 
               // every scroll event check if current distance to top of the page is
               // greater than or equal to distance of the nav to the top
-              if ($window.scrollTop() >= nav_distance_from_top) {
+              if ($(window).scrollTop() >= nav_distance_from_top) {
                   // if distance is greater then we're below the nav position and if
                   // equal the nav is right at the top of the page and should be stickied
                   // so add the fixed class
@@ -538,6 +325,7 @@ var ResumeBuilder = (function(data, jQuery) {
 
               // loop through animated elements checking if theyre visible
               $(target).each(function(i, el) {
+
                   // current elements
                   var element = $(el);
                   // check if they are visible
@@ -558,6 +346,7 @@ var ResumeBuilder = (function(data, jQuery) {
               nav_height(number) - pixel height of nav bar area to account for when scrolling to section
               Return: none
               */
+              var $page = $('html, body');
 
               $(target).click(function(e) {
                   // get the anchor link href
@@ -579,23 +368,67 @@ var ResumeBuilder = (function(data, jQuery) {
     view: {
       dom: {
         class: {
-          truncate: ,
-          fixed: ,
-          fade_animate: ,
-          active_nav
+          truncate: 'truncate lighter-gray',
+          fixed: 'fixed-wrapper no-margin',
+          // class to add when element is visible
+          fade_animate: 'fadeInDown',
+          active_nav: 'active',
+          description: '.description'
         },
         selectors: {
-          $nav: ,
-          $nav_link: ,
-          description: ,
-          $read_more_btn: ,
-          $top_btn: ,
-          $animated_element: ,
-          $page:
+          $nav: $('nav'),
+          $nav_link: $('nav a'),
+          $read_more_btn: $('.read-more'),
+          // filter anchors in document linking to the top anchor
+          $top_btn: $('a[href="#top"]'),
+          // get element(s) with this class for animating
+          $animated_element: $('.animated'),
+          // essential build selectors neccessary for display functions
+          $main: $('main'),
+          $footer: $('footer'),
         }
-      }
+      },
       init: function() {
+        // render each section of the resume
+        this.render.bio();
+        this.render.work();
+        this.render.projects();
+        this.render.education();
+        this.render.maps();
+        this.render.footer();
 
+        // refresh the dom elements in selectors since stuff was rendered
+        this.refresh_all_selectors();
+
+
+      },
+      refresh_all_selectors: function() {
+        /*
+        Refreshes all the selectors in the view.dom.selectors table by looping
+        through them and running refresh_selector on each one.
+        Args: na
+        Return: na
+        */
+        // shortcut reference to the selectors obj
+        var selectors = this.dom.selectors;
+
+        // loop through every selector in selectors
+        for (var selector in selectors) {
+          // refresh the current selector
+          selectors[selector] = this.refresh_selector(selectors[selector]);
+        }
+      },
+      refresh_selector: function(jquery_collection) {
+        /*
+        Refreshes a selector by getting it from the dom again with jquery. Used
+        to update a reference to a dom obj grabbed at execution time when it might
+        not have existed, like in the view.dom.selectors object before display
+        functions have run. Note that newer jquery might not have selector property.
+        Args: $dom_object (obj) - the jquery dom object that was selected
+        Return: the updated dom element jquery collection (obj)
+        */
+        // use the selector property from the jquery collection to fetch again
+        return $(jquery_collection.selector);
       },
       // display the html, html templates?
       templates: {
@@ -843,42 +676,621 @@ var ResumeBuilder = (function(data, jQuery) {
       },
       render: {
         bio: function() {
+          /*
+          Displays the info from the bio data object in the html page.
+          Takes the raw data, formats using helpers containing the html template,
+          then appends that into places in the dom.
+          Args: none as passed parameters, but does get data from the object
+          Returns: no returns, but does append formatted html to the page
+          */
 
-        },
-        contact: function() {
+          //
+          // HERO SECTION
+          //
 
-        },
-        skills: function() {
+          // grab the bio data
+          var bio = resume.model.get('bio');
+          // shortcut reference to the html templates
+          var templates = resume.view.templates;
+          // shortcut ref to the html templating functions
+          var html = resume.view.html;
+          // shortcuts to elements to append built html to
+          var $main = resume.view.dom.selectors.$main;
+          var $footer = resume.view.dom.selectors.$footer;
 
-        },
-        qualifications: function() {
+          // NAV BAR
+          // create nav bar to insert into the hero html tempate
 
+          // initialize var to store nav bar html
+          var formatted_nav = '';
+          // Navigation Sections
+          var nav_links = ['summary', 'work', 'projects', 'education', 'contact'];
+
+          // loop through the nav sections array and format them to add to the hero
+          for (var i = 0; i < nav_links.length; i += 1) {
+              formatted_nav += html(templates.hero.nav).format(nav_links[i]).html;
+          }
+
+          // create the hero area html with the data, format with hero template
+          var formatted_hero = html(templates.hero.header).format(bio.biopic, '%pic%')
+              .format(bio.name, '%name%')
+              .format(bio.role, '%role%')
+              .format(formatted_nav, '%nav%')
+              .html; // returns the html value from the html object
+
+          // ADD HERO HTML TO PAGE
+
+          // prepend because we want it at the beginning
+          $main.prepend(formatted_hero);
+
+          //
+          // SUMMARY SECTION
+          //
+
+          // CONTACTS
+          // Function useful so we don't format the same contact data multiple times.
+          // every time we want to append it somewhere on the page
+
+          function displayContact( /* DOM location(s) as arguments */ ) {
+              /*
+              Displays the contact info from the bio in specified locations on the page.
+              Takes raw data from the bio data object, formats it using the appropriate helper
+              html template, and puts it in dom location(s) passed as arguments.
+              Args: dom locations (string) for each argument
+              Return: none, but does append the contact info to the page
+              */
+
+              // initialize var to store formatted contact html string
+              // cache it so we don't redo the format functions for every dom location
+              var formatted_contacts = '';
+
+              // format and show contacts if the array is not empty
+              if (bio.contacts.length !== 0) {
+
+                  // loop through each contact and format the html with the data for each contact
+                  for (var i = 0; i < bio.contacts.length; i += 1) {
+                      // current contact in the contacts array
+                      var current_contact = bio.contacts[i];
+
+                      // add each contact's data to the formatted html
+                      formatted_contacts += html(templates.contacts.entry).format(current_contact.name, '%name%')
+                          .format(current_contact.link, '%link%')
+                          .format(current_contact.tooltip, '%tooltip%')
+                          .format(current_contact.icon, '%icon%')
+                          .html;
+                  }
+
+                  // append the formatted contact info to the specified location(s)
+                  // loop through arguments object to allow multiple dom locations to be passed
+                  for (i = 0; i < arguments.length; i += 1) {
+                      var dom_location = arguments[i];
+                      $(dom_location).append(formatted_contacts);
+                  }
+
+              }
+
+          }
+
+          // SKILLS
+          // create skills section html for insertion into the summary html template
+
+          // initialize var to store the formatted skills groups html in
+          var formatted_skills_groups = '';
+
+          // add skills if the skills array isn't empty
+          if (bio.skills.length !== 0) {
+
+              // loop through skills array to add each skill group and their respective skills
+              for (i = 0; i < bio.skills.length; i += 1) {
+                  // skills object is essentially a multidimensional array of objects so access is like:
+                  // object[object array index][key for inner object array][key of value in innermost array]
+                  // bio.skills[i]['Business'][j]
+
+                  // the current skills group in the array
+                  var current_group = bio.skills[i];
+                  // get the current key for the current skill group's array of skills
+                  var current_group_key = Object.keys(current_group);
+                  // get the array of skills for the current skill group
+                  var current_skills_array = current_group[current_group_key];
+
+                  // initialize var to store the formatted individual skills in
+                  var formatted_skills = '';
+                  // loop through the current group's skills and format/add each one
+                  for (var j = 0; j < current_skills_array.length; j += 1) {
+                      // format current skill data into html for every skill in the array and put it all together
+                      formatted_skills += html(templates.skills.entry).format(current_skills_array[j]).html;
+                  }
+
+                  // format the current skills group with the title and the respective skills
+                  // put all the groups together in a single string to insert in the template
+                  formatted_skills_groups += html(templates.skills.group).format(current_group_key)
+                      .format(formatted_skills, '%skills%')
+                      .html;
+              }
+
+          }
+
+          // QUALIFICATIONS
+          // create qualifications section html for later insertion into summary html template
+
+          // initialize var to store the formatted qualifications html
+          var formatted_qualifications = '';
+
+          // add qualifications section if it's not empty
+          if (bio.qualifications.length !== 0) {
+
+              // loop through the qualifications array
+              for (i = 0; i < bio.qualifications.length; i += 1) {
+                  var current_qual = bio.qualifications[i];
+                  // add each qualification's data to the html qualifications template
+                  formatted_qualifications += html(templates.qualifications.entry).format(util.first_letters(current_qual.name), '%symbol%')
+                      .format(current_qual.name, '%name%')
+                      .format(current_qual.description, '%description%')
+                      .html;
+              }
+
+          }
+
+          // now that all the html is ready for insertion, add everything to the summary html template
+          var formatted_summary = html(templates.summary.section).format(templates.contacts.list, '%contacts%')
+              .format(bio.welcomeMessage, '%welcomemsg%')
+              .format(formatted_qualifications, '%qualifications%')
+              .format(formatted_skills_groups, '%skillsgroups%')
+              .html;
+
+          // APPEND SUMMARY HTML TO PAGE
+
+          // add summary section html to the page
+          $main.append(formatted_summary);
+
+          // APPEND CONTACTS HTML
+
+          // add a contacts section to footer for displayContact function to append contacts to
+          $footer.append(templates.contacts.list);
+          // class of contacts section(s) to append formatted contact html to
+          var contact = '.contact';
+          // add contacts html to the page
+          displayContact(contact);
         },
         work: function() {
+          /*
+          Displays the info from the work data object in the html page.
+          Takes the raw data, formats using helpers containing the html template,
+          then appends that into places in the dom.
+          Args: none as passed parameters, but does get data from the object
+          Returns: no returns, but does append formatted html to the page
+          */
 
-        },
-        highlights: function() {
+          //
+          // WORK SECTION
+          //
 
+          // grab the work data object
+          var work = resume.model.get('work');
+          // shortcut reference to the html templates
+          var templates = resume.view.templates.work;
+          // shortcut ref to the html templating functions
+          var html = resume.view.html;
+          // shortcuts to elements to append built html to
+          var $main = resume.view.dom.selectors.$main;
+
+          // initialize var to store all the formatted job work entries
+          var formatted_work_entries = '';
+
+          // loop through each job in the work object to format data
+          for (var i = 0; i < work.jobs.length; i += 1) {
+              // the current job's data we're checking out
+              var current_job = work.jobs[i];
+              // initialize an increment counter var here for use in all the loops
+              var j = 0;
+
+              // TESTIMONIALS / RECOMMENDATIONS
+              // create testimonials section formatted html to add the the work html template later
+
+              // string var to store the formatted testimonials html
+              var formatted_testimonials = '';
+
+              // check if there's even any testimonials data
+              if (current_job.testimonials.length !== 0) {
+
+                  // loop through the testimonials data and format each one with the html template
+                  for (j = 0; j < current_job.testimonials.length; j += 1) {
+                      // the current testimonial data we're working with in the object array
+                      var current_testimonial = current_job.testimonials[j];
+
+                      // format the data with the testimonial html template and store in the formatted string
+                      formatted_testimonials += html(templates.testimonial).format(current_testimonial.text, '%testimonial%')
+                          .format(current_testimonial.link, '%link%')
+                          .format(current_testimonial.pic, '%photo%')
+                          .format(current_testimonial.name, '%person%')
+                          .format(current_testimonial.role, '%role%')
+                          .html;
+                  }
+              }
+
+              // HIGHLIGHTS LIST OF JOB DESCRIPTION
+              // create the list summarizing job accomplishments, ready it for insertion in work entry html template
+
+              // initialize var string to store formatted job highlights html
+              var formatted_highlights = '';
+
+              // check if there are any job highlights to list
+              if (current_job.highlights.length !== 0) {
+
+                  // loop through highlights, format, then add to formatted highlights var
+                  // using new var k to increment
+                  for (j = 0; j < current_job.highlights.length; j += 1) {
+                      // the current highlight we're working with in the array
+                      var current_highlight = current_job.highlights[j];
+
+                      // add data to the highlight template, then add it to the formatted highlights var
+                      formatted_highlights += html(templates.entry_highlight).format(current_highlight).html;
+                  }
+              }
+
+              // FORMAT WORK ENTRY HTML
+              // add all formatted work html subsections
+              // to the main work entry template for the current job
+              // then add the work entry html to the rest of the entries
+              formatted_work_entries += html(templates.entry).format(current_job.logo, '%logo%')
+                  .wrap(current_job.link, '%?link%', templates.link_wrap)
+                  .wrap(current_job.link, '%?imglink%', templates.img_link_wrap)
+                  .format(current_job.link, '%link%')
+                  .format(current_job.employer, '%employer%')
+                  .format(current_job.title, '%role%')
+                  .format(current_job.location, '%location%')
+                  .format(current_job.dates.start, '%start%')
+                  .format(current_job.dates.end, '%end%')
+                  .format(current_job.description, '%description%')
+                  .format(formatted_highlights, '%highlights%')
+                  .wrap(formatted_testimonials, '%?testimonial-wrap%', templates.testimonial_wrap)
+                  .format(formatted_testimonials, '%testimonials%')
+                  .html;
+
+          }
+
+          // add the formatted work entries to the work section html template
+          var formatted_work = html(templates.section).format(formatted_work_entries).html;
+
+          // APPEND WORK HTML TO THE PAGE
+
+          $main.append(formatted_work);
         },
         projects: function() {
+          /*
+          Displays the info from the projects data object in the html page.
+          Takes the raw data, formats using helpers containing the html template,
+          then appends that into places in the dom.
+          Args: none as passed parameters, but does get data from the object
+          Returns: no returns, but does append formatted html to the page
+          */
 
+          //
+          // PROJECTS SECTION
+          //
+
+          // grab the projects data
+          var projects = resume.model.get('projects');
+          // shortcut reference to the html templates
+          var templates = resume.view.templates.projects;
+          // shortcut ref to the html templating functions
+          var html = resume.view.html;
+          // shortcuts to elements to append built html to
+          var $main = resume.view.dom.selectors.$main;
+
+          // for storing the complete html for the projects entries to add to project section html later
+          var formatted_project_entries = '';
+
+          // loop through each project in the projects array of objects
+          for (var i = 0; i < projects.projects.length; i += 1) {
+
+              // current project in the array
+              var current_project = projects.projects[i];
+
+              // DESCRIPTION PARAGRAPHS
+              // format paragraphs as the description to be added to the project entry html template
+
+              // var to store the formatted description paragraphs
+              var formatted_description = '';
+
+              // check if there's any description to be formatted
+              if (current_project.description.length !== 0) {
+                  // loop through the description array to format each item as a paragraph
+                  for (var j = 0; j < current_project.description.length; j += 1) {
+                      // format the description paragraph data with the html template
+                      formatted_description += html(templates.description).format(current_project.description[j]).html;
+                  }
+              }
+
+
+              // IMAGES
+
+              // the current project's images array for image urls
+              var img_array = current_project.images;
+
+              // default: use a placeholder image for projects without images
+              var project_img = 'http://lorempixel.com/600/450/abstract/';
+
+              // if there's only one image in the array just use that
+              if (img_array.length !== 0) {
+                  // use the first image in the array
+                  project_img = img_array[0];
+
+                  // randomize the used image if there's more than one image in the array
+                  if (img_array.length > 1) {
+                      // gets a random image from the image array
+                      // math.random generates random number between 1 & 0, multiply that by
+                      // array length to scale it to a key in the array's range, then round
+                      // down to the nearest whole number with math.floor
+                      project_img = img_array[Math.floor(Math.random() * img_array.length)];
+                  }
+              }
+
+              // FORMAT PROJECT ENTRY HTML
+
+              // insert data into the project entry template then put all the entries together
+              formatted_project_entries += html(templates.entry).format(current_project.link, '%link%')
+                  .format(current_project.dates, '%date%')
+                  .format(project_img, '%image%')
+                  .format(current_project.srcset, '%srcset%')
+                  .format(current_project.sizes, '%sizes%')
+                  .format(current_project.alt, '%alttext%')
+                  .format(current_project.title, '%title%')
+                  .format(formatted_description, '%description%')
+                  .html;
+
+          }
+
+          // add all the project entries to the projects section html template
+          var formatted_projects = html(templates.section).format(formatted_project_entries).html;
+
+          // APPEND PROJECT HTML TO PAGE
+
+          $main.append(formatted_projects);
         },
         education: function() {
+          /*
+          Displays the info from the education data object in the html page.
+          Takes the raw data, formats using helpers containing the html template,
+          then appends that into places in the dom.
+          Args: none as passed parameters, but does get data from the object
+          Returns: no returns, but does append formatted html to the page
+          */
+          //
+          // EDUCATION SECTION
+          //
 
-        },
-        courses: function () {
+          // grab the education data
+          var education = resume.model.get('education');
+          // shortcut reference to the html templates
+          var templates = resume.view.templates.education;
+          // shortcut reference to the courses html templates
+          var templates_courses = resume.view.templates.courses;
+          // shortcut ref to the html templating functions
+          var html = resume.view.html;
+          // shortcuts to elements to append built html to
+          var $main = resume.view.dom.selectors.$main;
 
+          // initialize var to store all the formatted school entries
+          var formatted_school_entries = '';
+
+          // loop through each job in the work object to format data
+          for (var i = 0; i < education.schools.length; i += 1) {
+              // the current school in the schools array
+              var current_school = education.schools[i];
+
+              // TESTIMONIALS / RECOMMENDATIONS
+              // create testimonials section formatted html to add the the work html template later
+
+              // string var to store the formatted testimonials html
+              var formatted_testimonials = '';
+
+              // check if there's even any testimonials data
+              if (current_school.testimonials.length !== 0) {
+
+                  // loop through the testimonials data and format each one with the html template
+                  for (var j = 0; j < current_school.testimonials.length; j += 1) {
+                      // the current testimonial data we're working with in the object array
+                      var current_testimonial = current_school.testimonials[j];
+
+                      // format the data with the testimonial html template and store in the formatted string
+                      formatted_testimonials += html(templates.testimonial).format(current_testimonial.text, '%testimonial%')
+                          .format(current_testimonial.link, '%link%')
+                          .format(current_testimonial.pic, '%photo%', true)
+                          .format(current_testimonial.name, '%person%')
+                          .format(current_testimonial.role, '%role%')
+                          .html;
+                  }
+              }
+
+              // FORMAT SCHOOL ENTRY HTML
+              // add all formatted school html subsections
+              // to the main school entry template for the current school
+              // then add the school entry html to the rest of the entries
+              formatted_school_entries += html(templates.entry).format(current_school.logo, '%logo%')
+                  .format(current_school.url, '%link%')
+                  .format(current_school.name, '%school%')
+                  .format(current_school.degree, '%degree%')
+                  .format(current_school.majors[0], '%major%')
+                  .format(current_school.location, '%location%')
+                  .format(current_school.dates.start, '%start%')
+                  .format(current_school.dates.end, '%end%')
+                  .format(current_school.description, '%description%')
+                  .wrap(formatted_testimonials, '%?testimonial-wrap%', templates.testimonial_wrap)
+                  .format(formatted_testimonials, '%testimonials%')
+                  .html;
+
+          }
+
+          // FORMAT PROFESSIONAL COURSEWORK ENTRY HTML
+          // format html with raw data for each course using course entry template
+
+          // initialize var to store all of the formatted course entries
+          var formatted_course_entries = '';
+          // loop through each online course to format all of the data
+          for (i = 0; i < education.onlineCourses.length; i += 1) {
+              // the current online course in the array
+              var current_course = education.onlineCourses[i];
+
+              // format the course entry data with the html template and put them all together
+              formatted_course_entries += html(templates_courses.entry).format(current_course.logo, '%logo%')
+                  .format(current_course.url, '%link%')
+                  .format(current_course.school, '%school%')
+                  .format(current_course.title, '%course%')
+                  .format(current_course.instructor, '%instructor%', true)
+                  .format(current_course.dates, '%dates%')
+                  .format(current_course.description, '%description%')
+                  .html;
+
+          }
+
+
+          // add the formatted education entries to the education section html template
+          var formatted_education = html(templates.section).format(formatted_school_entries, '%schools%')
+              .format(formatted_course_entries, '%courses%')
+              .html;
+
+          // APPEND EDUCATION HTML TO THE PAGE
+
+          $main.append(formatted_education);
         },
         maps: function() {
+          /*
+          Formats the html for the location section and appends it.
+          Actual map created in the helper functions js and appended to this section.
+          */
 
+          // grab the bio data
+          var bio = resume.model.get('bio');
+          // shortcut reference to the html templates
+          var templates = resume.view.templates.location;
+          // shortcut ref to the html templating functions
+          var html = resume.view.html;
+          // shortcuts to elements to append built html to
+          var $main = resume.view.dom.selectors.$main;
+
+          // create the map section
+          var formatted_map = html(templates.section).format(bio.location, '%location%')
+              .format(bio.hometown, '%hometown%')
+              .html;
+
+          // append map section to the page
+          $main.append(formatted_map);
         },
         footer: function() {
+          /*
+          Formats the html for the footer and appends it to the footer.
+          */
+          // shortcut reference to the html templates
+          var templates = resume.view.templates.footer;
+          // shortcuts to elements to append built html to
+          var $footer = resume.view.dom.selectors.$footer;
 
+          // append footer section to the page
+          $footer.append(templates.section);
         }
+      },
+      // chainable html code generator submodule
+      html: function(target) {
+          /*
+          Wrapper function object for allowing some chainable functions on passed in html.
+          Args: target of the function, which typically would be an html string
+          Returns: this, which would be the returned modified html in and object from the subfunctions
+          */
+          if (!(this instanceof resume.view.html)) {
+              return new resume.view.html(target);
+          }
 
+          // initialize an html key with the value of the passed in target html
+          this.html = target;
+
+          // return itself as an object to allow chaining
+          return this;
       }
     }
   };
+  // add prototype methods to the html submodule
+  resume.view.html.prototype.format = function(raw_data, placeholder, optional) {
+      /*
+      Takes raw data and inserts that data into a preformatted html string,
+       replacing a placeholder with the actual data.
+       Chainable function within the html function made by returning this.
+       Placeholder string that the function looks for is set in the var.
+       ex. <p>%data%</p> => <p>Hello</p>
+       Args: the formatted html (string), the raw data to insert into that html (string/numbers)
+       Return: the formatted html string with placeholder replaced by that data (string)
+      */
+      // default is that this isn't an optional part of the html
+      optional = util.default_for(optional, false);
+      // the default placeholder string to look for in the html
+      placeholder = util.default_for(placeholder, '%data%');
+
+      // check if this is an optional block/this key's value in the data is empty
+      // if so then remove relevant html from the string since it's optional
+      if (optional === true) {
+
+          // placeholder text marking an optional block of text
+          var optional_tag = '%?optional%';
+
+          // if there's no data in the specified key run the regex to get the whole block
+          if (raw_data.length === 0) {
+              // regular expression to match anything enclosed in the optional tags
+              // and containing the placeholder for the data we're looking at
+              var optional_regex = new RegExp('%\\?optional%.*' + placeholder + '.*%\\?optional%', 'g');
+              // remove the matched substrings enclosed by optional tags
+              this.html = util.replaceAll(this.html, optional_regex, '');
+          } else {
+              // if there is data in the specified key, just remove the optional text placeholders
+              this.html = util.replaceAll(this.html, optional_tag, '');
+          }
+      }
+
+      // check the html for occurences of the placeholder and replace with provided data
+      // set this.html to the result of the function so it can be returned
+      this.html = util.replaceAll(this.html, placeholder, raw_data);
+
+      // return the results as an object to allow chaining
+      // when using this function, put .html at the end to get the value of the html
+      return this;
+  };
+  resume.view.html.prototype.wrap = function(data, placeholder, wrapper) {
+      /*
+      Checks the data to see if it has something, if so then it'll add a wrapper
+      to the passed in html template where marked by the placeholders. Useful for links where
+      they something might not have link data, but others items do--like an offline business
+      in a list of work experience.
+      So calling on <div>%?wrap%<p></p>%?wrap%</div>, if the data has something it'll add
+      the wrapping code <div><wrapper><p></p></wrapper></div>
+      otherwise itll just delete the placeholders.
+      Args: data is the data field to check if it contains info(string),
+            placeholder is where the wrapper will be inserted (string),
+            wrapper is the wrapper html which will be split into opening and
+            closing parts at the %data% placeholder
+      Returns: formatted html string with placeholders replaced by wrapper. (string)
+      */
+      // check if data has been entered
+      if (data.length !== 0) {
+          // split html at the wrapper placeholders
+          var split_html = this.html.split(placeholder);
+          // split the wrapper at the %data% placeholder
+          var split_wrapper = wrapper.split('%data%');
+
+          // concatenate back together with the wrapper pieces where the placeholders were
+          this.html = split_html[0] +
+              split_wrapper[0] +
+              split_html[1] +
+              split_wrapper[1] +
+              split_html[2];
+
+      } else {
+          // if no data just remove the placeholder text
+          this.html = util.replaceAll(this.html, placeholder, '');
+      }
+
+      // to allow chaining return this object
+      return this;
+  };
+
 
   // google maps API private submodule
   // since it's not a function, only one instance of this is allowed
@@ -1475,10 +1887,14 @@ var ResumeBuilder = (function(data, jQuery) {
   document.getElementById('jquery').addEventListener('load', function(){
     // load plugins
     plugins.init();
+    // init the resume generation module
+    resume.control.init();
   });
 
   // run google map module after dom loads, bind this to control
   window.addEventListener('load', gmap.control.init.bind(gmap.control));
+
+
 
   // provide public access methods and data for the resume app
   return {

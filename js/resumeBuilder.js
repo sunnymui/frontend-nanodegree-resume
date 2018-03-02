@@ -954,6 +954,7 @@ var nav_map = scrollspy($nav_link).nav_item_map();
 
 // Run scroll event dependent features
 $window.scroll(function() {
+  console.log(nav_distance_from_top);
     // sticky nav menu when scrolling past it's initial page location
     features($nav).sticky_nav(fixed_class, nav_distance_from_top);
     // play css animation when an element is visible in the window
