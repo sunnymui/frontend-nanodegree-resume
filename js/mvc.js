@@ -200,7 +200,7 @@ var ResumeBuilder = (function(data, jQuery) {
             // sticky nav menu when scrolling past it's initial page location
             features(selectors.$nav).sticky_nav(classes.fixed, nav_distance_from_top);
             // play css animation when an element is visible in the window
-            features(selectors.$animated_element).animate_visible(classes.fade_animate_class);
+            features(selectors.$animated_element).animate_visible(classes.fade_animate);
             // Scrollspy Plugin to highlight nav menu items when you're in that section
             plugins.scrollspy(selectors.$nav_link).highlight(classes.active_nav, nav_map, nav_height);
         });
@@ -385,7 +385,7 @@ var ResumeBuilder = (function(data, jQuery) {
           $animated_element: $('.animated'),
           // essential build selectors neccessary for display functions
           $main: $('main'),
-          $footer: $('footer'),
+          $footer: $('footer')
         }
       },
       init: function() {
@@ -399,8 +399,6 @@ var ResumeBuilder = (function(data, jQuery) {
 
         // refresh the dom elements in selectors since stuff was rendered
         this.refresh_all_selectors();
-
-
       },
       refresh_all_selectors: function() {
         /*
@@ -1291,7 +1289,6 @@ var ResumeBuilder = (function(data, jQuery) {
       return this;
   };
 
-
   // google maps API private submodule
   // since it's not a function, only one instance of this is allowed
   // and has to be named gmap
@@ -1893,8 +1890,6 @@ var ResumeBuilder = (function(data, jQuery) {
 
   // run google map module after dom loads, bind this to control
   window.addEventListener('load', gmap.control.init.bind(gmap.control));
-
-
 
   // provide public access methods and data for the resume app
   return {
