@@ -109,9 +109,8 @@ module.exports = function(grunt) {
           // output : [input(s)]
           'js/scripts.min.js' : [
             'js/data.js',
-            'js/helper.js',
-            'js/resumeBuilder.js',
-            'js/plugins.js'
+            'js/plugins.js',
+            'js/mvc.js'
           ]
         }
       },
@@ -136,9 +135,8 @@ module.exports = function(grunt) {
       scripts: {
         // watch these files for changes
         files: ['js/data.js',
-                'js/helper.js',
-                'js/resumeBuilder.js',
-                'js/plugins.js'],
+                'js/plugins.js',
+                'js/mvc.js'],
         // concat and minify js
         tasks: ['uglify:js']
       },
