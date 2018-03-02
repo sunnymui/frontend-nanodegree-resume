@@ -301,35 +301,39 @@ function features(target) {
 
 // Plugin Functions
 
-(function($) {
+// check that jquery has been loaded before extending jquery
+document.getElementById('jquery').addEventListener('load', function(){
+  console.log('jquery is loaded');
+  (function($) {
 
-    /**
-     * Copyright 2012, Digital Fusion
-     * Licensed under the MIT license.
-     * http://teamdf.com/jquery-plugins/license/
-     *
-     * @author Sam Sehnert
-     * @desc A small plugin that checks whether elements are within
-     *     the user visible viewport of a web browser.
-     *     only accounts for vertical position, not horizontal.
-     */
+      /**
+       * Copyright 2012, Digital Fusion
+       * Licensed under the MIT license.
+       * http://teamdf.com/jquery-plugins/license/
+       *
+       * @author Sam Sehnert
+       * @desc A small plugin that checks whether elements are within
+       *     the user visible viewport of a web browser.
+       *     only accounts for vertical position, not horizontal.
+       */
 
-    $.fn.visible = function(partial) {
+      $.fn.visible = function(partial) {
 
-        var $t = $(this),
-            $w = $(window),
-            viewTop = $w.scrollTop(),
-            viewBottom = viewTop + $w.height(),
-            _top = $t.offset().top,
-            _bottom = _top + $t.height(),
-            compareTop = partial === true ? _bottom : _top,
-            compareBottom = partial === true ? _top : _bottom;
+          var $t = $(this),
+              $w = $(window),
+              viewTop = $w.scrollTop(),
+              viewBottom = viewTop + $w.height(),
+              _top = $t.offset().top,
+              _bottom = _top + $t.height(),
+              compareTop = partial === true ? _bottom : _top,
+              compareBottom = partial === true ? _top : _bottom;
 
-        return ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+          return ((compareBottom <= viewBottom) && (compareTop >= viewTop));
 
-    };
+      };
 
-})(jQuery);
+  })(jQuery);
+});
 
 function scrollspy(nav_link) {
     /*
@@ -950,6 +954,7 @@ var nav_map = scrollspy($nav_link).nav_item_map();
 
 // Run scroll event dependent features
 $window.scroll(function() {
+  console.log(nav_distance_from_top);
     // sticky nav menu when scrolling past it's initial page location
     features($nav).sticky_nav(fixed_class, nav_distance_from_top);
     // play css animation when an element is visible in the window

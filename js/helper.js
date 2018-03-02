@@ -103,7 +103,7 @@ var HTMLworkEntryHighlight = '<li>%data%</li>';
 var HTMLworkLinkWrapper = '<a class="link darker-gray" href="%link%" target="_blank">%data%</a>';
 var HTMLworkImgLinkWrapper = '<a class="inline-top zoom" href="%link%" target="_blank">%data%</a>';
 var HTMLworkTestimonialWrap = '<div class="grid">%data%</div>';
-var HTMLworkTestimonial = '<div class="col flex md-whole lg-halves gutters">'+
+var HTMLworkTestimonial = '<div class="col md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
                               '<p class="lg-right-text animated">'+
@@ -689,7 +689,7 @@ function initializeMap() {
 
     // Iterates through the array of locations, creates a search object for each location
       locations.forEach(function(place){
-      // the search request object
+      // sets the query for a certain place that will will be requested from api
       var request = {
         query: place
       };
@@ -711,10 +711,6 @@ function initializeMap() {
   pinPoster(locations);
 
 }
-
-/*
-Uncomment the code below when you're ready to implement a Google Map!
-*/
 
 // Calls the initializeMap() function when the page loads
 window.addEventListener('load', initializeMap);
