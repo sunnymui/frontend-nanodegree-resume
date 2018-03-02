@@ -403,7 +403,9 @@ var ResumeBuilder = (function(data, jQuery) {
       refresh_all_selectors: function() {
         /*
         Refreshes all the selectors in the view.dom.selectors table by looping
-        through them and running refresh_selector on each one.
+        through them and running refresh_selector on each one, resetting their
+        value in the selectors table.
+
         Args: na
         Return: na
         */
@@ -422,7 +424,8 @@ var ResumeBuilder = (function(data, jQuery) {
         to update a reference to a dom obj grabbed at execution time when it might
         not have existed, like in the view.dom.selectors object before display
         functions have run. Note that newer jquery might not have selector property.
-        Args: $dom_object (obj) - the jquery dom object that was selected
+
+        Args: jquery_collection (obj) - the jquery dom object that was selected
         Return: the updated dom element jquery collection (obj)
         */
         // use the selector property from the jquery collection to fetch again
@@ -1895,13 +1898,13 @@ var ResumeBuilder = (function(data, jQuery) {
   return {
     resume: resume,
     data: {
-      bio:bio,
-      work:work,
-      projects:projects,
-      education:education,
-      awards:awards,
-      maps:maps,
-      footer:footer
+      bio:data.bio,
+      work:data.work,
+      projects:data.projects,
+      education:data.education,
+      awards:data.awards,
+      maps:data.maps,
+      footer:data.footer
     }
   };
 })(data, jQuery);
