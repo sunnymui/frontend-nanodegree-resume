@@ -40,6 +40,58 @@ or simply by clicking **Resume** at:
 * MVC and modular patterns
 * Uses a [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key) to display a map using the Google Maps API with work/living locations plotted.
 
+## How to Initiate the Module
+
+The ResumeBuilder module is wrapped in an immediately invoked function expression (IIFE), which means the function will execute immediately and the global namespace will be kept clear with access to the module's public methods/data via the `ResumeBuilder` name. 
+
+Since an IIFE is used, all you have to do is include `mvc.js` anda the raw data to start the module. A data object following the structure laid out in `data.js` should be passed to the `ResumeBuilder` function as the first argument. `jQuery` should be passed as the second argument. 
+
+In practice, this means you'll have something like this in your html file:
+
+```
+<!-- Load jQuery, give id of jquery because the module checks that the jquery id element has loaded -->
+<script async src="https://code.jquery.com/jquery-1.12.0.min.js" id="jquery"></script>
+<!-- Load the data to use -->
+<script src="js/data.js"></script>
+<!-- Run the ResumeBuilder module -->
+<script src="js/mvc.js"></script>
+```
+However, in my build, I concatenated `data.js` together with `mvc.js` so that only a single `scripts.min.js` file is loaded.
+
+### Asynchronous Loading
+
+Notice that you can load jQuery asynchronously as shown by the `async` property added to the script tag that loads jQuery. Asynchronous loading means it can download all the script files in parallel, at the same time, instead of waiting for one to finish downloading before it starts downbloading the next file. 
+
+The `ResumeBuilder` module will wait for jQuery to be loaded if jQuery hasn't loaded before the `ResumeBuilder` module has loaded.
+
+### Manually Starting the ResumeBuilder Module
+
+If you want to manually start the `ResumeBuilder` function, you can edit `ResumeBuilder` to only define then function, without executing it immediately. Then you simply invoke the function manually when you want `ResumeBuilder` to run.
+
+That means instead of how it's currently written:
+
+```
+var ResumeBuilder = (function(data, jQuery) {
+
+// all the module code
+...
+})(data, jQuery);
+```
+
+You remove the 2 sets of extra parantheses wrapping the function and after the last curly brace:
+
+```
+var ResumeBuilder = function(data, jQuery) {
+
+// all the module code
+...
+};
+
+// run the resumebuilder module function
+ResumeBuilder(data, jQuery);
+```
+Make sure your data object and jQuery are loaded/available before executing the `ResumeBuilder` module function. Since those 2 things are passed as arguments to the `ResumeBuilder` module, it depends on them to run properly.
+
 ## Dependencies
 
 Project uses jQuery 1.12, mainly just for ease of DOM manipulation, though some interactive features use jQuery functions.
