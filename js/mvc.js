@@ -399,6 +399,9 @@ var ResumeBuilder = (function(data, jQuery) {
 
         // refresh the dom elements in selectors since stuff was rendered
         this.refresh_all_selectors();
+
+        // run google map module after dom loads, bind this to control
+        window.addEventListener('load', gmap.control.init.bind(gmap.control));
       },
       refresh_all_selectors: function() {
         /*
@@ -1890,9 +1893,6 @@ var ResumeBuilder = (function(data, jQuery) {
     // init the resume generation module
     resume.control.init();
   });
-
-  // run google map module after dom loads, bind this to control
-  window.addEventListener('load', gmap.control.init.bind(gmap.control));
 
   // provide public access methods and data for the resume app
   return {
