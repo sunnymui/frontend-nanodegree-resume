@@ -1887,12 +1887,12 @@ var ResumeBuilder = (function(data, jQuery) {
 
   // check jquery loaded first before plugins extend jquery library
   // id of jquery was assigned to script element loading jquery
-  document.getElementById('jquery').addEventListener('load', function(){
+  //document.getElementById('jquery').addEventListener('load', function(){
     // load plugins
     plugins.init();
     // init the resume generation module
     resume.control.init();
-  });
+  //});
 
   // provide public access methods and data for the resume app
   return {
