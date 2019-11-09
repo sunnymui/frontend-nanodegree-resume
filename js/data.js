@@ -33,15 +33,18 @@ var data = {
         }
       ],
       "biopic": "img/sunny.png",
-      "welcomeMessage": "Designer and web developer in San Jose, California who's worked several years in startups and freelance doing design, UX, UI, front end development, copywriting, and digital marketing. I've also done brochures, logos, branding, posters, pitch decks, and more. Committed to learning and continuous improvement.",
+      "welcomeMessage": "Web Developer and Designer in San Jose, California who's worked with startups, small companies, and nonprofits doing front end web development, design, UX, UI, copywriting, and digital marketing. Creator of web apps/websites, logos, branding, articles, posters, apparel, pitch decks, and more. Handy with Photoshop, HTML/CSS/JS, Wordpress, and marketing analytics. Committed to learning and continuous improvement.",
       "skills": [{
         "Business" : [
           "Digital Marketing",
           "Social Media Marketing",
           "Content Marketing",
           "Email Marketing",
+          "Blog Marketing",
+          "Ecommerce",
           "Writing",
           "Presentations",
+          "Mailchimp",
           "Infusionsoft",
           "Optimizely",
           "Crazyegg",
@@ -64,11 +67,14 @@ var data = {
           "UX",
           "Branding Materials",
           "Brochures",
-          "Websites",
+          "Website Design",
           "Responsive Design",
           "User Interface",
           "Photography",
-          "Prototyping/Mockups"
+          "Prototyping/Mockups",
+          "Posters",
+          "Advertising",
+          "Web Animation"
         ]
       }, {
         "Code" : [
@@ -76,17 +82,23 @@ var data = {
           "CSS",
           "jQuery",
           "Javascript",
+          "React",
           "PHP",
           "Python",
           "MySQL",
           "Grunt",
+          "Open Street Maps",
           "Wordpress",
+          "Woocommerce",
+          "Boostrap",
           "HTML5 Boilerplate",
           "Atom",
           "Notepad++",
           "Web Development",
+          "Web Performance",
           "Front End Development",
           "Git/GitHub",
+          "cPanel",
           "FTP"
         ]
       }],
@@ -109,6 +121,53 @@ var data = {
   },
   work: {
       "jobs": [{
+          "employer": "Code for San Jose",
+          "logo": "img/c4sj-logo.png",
+          "title": "Frontend Web Developer",
+          "location": "San Jose, CA",
+          "link" : "https://www.codeforsanjose.com/",
+          "dates": {
+            "start": "2019",
+            "end": "Present"
+          },
+          "description": "Collaborate with project teams to develop and deliver web applications that support the local community.",
+          "highlights": [
+            "Catalyze SV Project Tracker Map: A web app built in collaboration with the nonprofit Catalyze SV, using a dataset of development projects in the Silicon Valley area plotted on an interactive map providing information on each project. Built on Mapbox GL JS.",
+            "Disaster Response San Jose React Web App: A webapp to contribute to disaster response for use by city employees and citizens to distribute and receive up-to-date information on local disasters. Uses React and MongoDB. Wrote & implemented geocoding module using LocationIQ API and Leaflet.js OSM library, added Jest unit tests, refactor general styling and several components, improve form validations, expand documentation.",
+            "Razing the Bar Website: Collaborate with team to build and launch website for local nonprofit Razing the Bar using Wordpress as CMS. Create custom template pages, integrate custom functions, add online donation capablity, write responsive styles, match Zeplin spec, integrate Timeline component, advise on Wordpress best practices.",
+            "Support the City of San Jose's Office of Civic Innovation & Digital Strategy team's usability testing session process. Recruit test participants with in-person intercepts. Support user test sessions."
+          ],
+          "testimonials": [
+            {
+              "text": "We launched our non profit, Razing the Bar, almost 3 years ago on a self funded budget, with a mission to change the way that under-resourced youth populations are afforded public services. As we had our successes, and the word started to get out about our alternative approach to working with disadvantaged youth, we needed a way to share the information with the public - a website!<br><br> The manager of the non profit where we'd been 'renting' office space connected us to Code for San Jose. I attended a meeting, shared a bit about what we were doing, and a few people volunteered. Within a few days, we had a four person crew working on our site - of which Sunny was one. <br><br>During the course of the site being developed, the team was extremely helpful, worked diligently to get the site done in a timely manner and often made suggestions on how we could improve our site. Our site was built using Wordpress as the CMS. Sunny integrated online donation capabilities, a dynamic contact form, an animated timeline, and implemented custom page templates to achieve the look we wanted. He wrote custom functions, styled pages to look great with CSS, and made sure everything was responsive for visitors using any device. Sunny was a true pleasure to work with, and his knowledge around site development is amazing. <br><br>I highly recommend Sunny for both his individual and collaborative efforts.",
+              "name": "Ty Thompson",
+              "role": "Cofounder, Razing the Bar",
+              "pic":"img/ty.jpg",
+              "link": "https://www.linkedin.com/in/ty-thompson-22b2b1b/"
+            }
+          ]
+        }, {
+          "employer": "Destroy the Comics",
+          "logo": "img/dtc-logo.jpg",
+          "title": "Editor & Web Developer",
+          "location": "San Jose, CA",
+          "link" : "https://www.destroythecomics.com/",
+          "dates": {
+            "start": "2017",
+            "end": "Present"
+          },
+          "description": "Build and lead an online magazine/blog focused on pop culture with associated ecommerce shop supporting artists.",
+          "highlights": [
+            "Develop monetization initiatives, including affiliate partnerships and the Destroy the Comics Shop, the eCommerce arm selling local artist designs on premium 100% Triblend apparel and collectible grade vinyl stickers",
+            "Built a responsive, mobile-friendly site using Wordpress/WooCommerce CMS with a customized child theme and optimized continuously for performance. The site is hosted on SiteGround for the backend (Wordpress specialized host that's fast). I've decreased initial page load times around 70% (~8 seconds), with a Page Speed score increase around +50 points.",
+            "Integrated optimizations like: lazy loading, inline loading critical path CSS, concatenation + minification of HTML/JS/CSS, async script loading, automated lossless compression on images uploaded, inline script aggregation , enabling HTTPS for HTTP2, updating PHP to 7+, enabling server level dynamic/mem/object caching, browser caching with expires headers, Gzip compression, switching WP-Cron to a real server cron job, and periodic database audit/cleaning, indexes on some db tables",
+            "Hardened security via permissioning critical files, auditing access to directories, implementing standard Wordpress security plugins, integrating 6G firewall into .htaccess, adding brute force protection, and enforcing stronger password length/username requirements.",
+            "Write articles, edit other writers' content and manage marketing/branding/social media communication.",
+            "Ensuring compliance/drafting the privacy policy, cookie policy, and consent functions in line with US and GDPR regulations.",
+            "Market, promote, track, and analyze using tools like SEMrush, Google Analytics, Moz Open Site Explorer, Twin Word, Yoast, Hootsuite, Google Keyword Planner, Google Search Console, Google Page Speed, Pingdom, GTMetrix, etc."
+          ],
+          "testimonials": []
+        }, {
           "employer": "Sunny Mui Design",
           "logo": "img/logo-square.png",
           "title": "Designer & Web Developer",
@@ -118,8 +177,11 @@ var data = {
             "start": "2015",
             "end": "Present"
           },
-          "description": "I focus on delivering creative and professional design to help local small businesses.",
+          "description": "I focus on delivering creative and professional design to help local small businesses and nonprofits.",
           "highlights": [
+            "Designed vector B/W & color logos/logomarks for Disaster Response SJ, a San Jose civic tech initiative to improve disaster response and awareness.",
+            "Designed HR compliance internal marketing materials, reusable, customizable outside recruiting flyer templates, and specialized full page photographic flyers for Goodwill Silicon Valley",
+            "Designed brand identity materials/logo and conducted identity positioning research for a stealthed automotive industry startup",
             "Designed vector b/w and color logos for SunStar Sanitary Supply, a local industrial sanitary supplier",
             "Designed vector b/w, grayscale, and color logos for Five Gold Stars Maintenance, a 200+ employee facilities service company serving corporate clients.",
             "Developed 3 hi-fidelity webapp homepage prototypes for a stealth B2B SaaS startup while working closely with the executive team.",
@@ -323,7 +385,7 @@ var data = {
          "school": "Udacity",
          "logo": "img/udacity.png",
          "instructor" : "Cameron Pittman & Michael Wales",
-         "dates": "2016 - In Progress",
+         "dates": "2019",
          "description": "Multimonth program teaching skills required for modern front end web development and responsive websites performant for mobile and desktop. The curriculum is co-created by AT&T, Google, GitHub, and Hack Reactor--and is project based: HTML and the Bootstrap CSS framework to create a portfolio, jQuery’s DOM manipulation to dynamically populate a rsume, an arcade game in JavaScript, complex mapping applications using the Knockout framework, and the Jasmine testing framework to develop and maintain applications.",
          "url": "http://www.udacity.com"
      }, {
