@@ -540,14 +540,14 @@ var ResumeBuilder = (function(data, jQuery) {
                     '</div>'+
                   '</li>',
             entry_highlight: '<li>%data%</li>',
-            link_wrap: '<a class="link darker-gray" href="%link%" target="_blank">%data%</a>',
-            img_link_wrap: '<a class="inline-top zoom" href="%link%" target="_blank">%data%</a>',
+            link_wrap: '<a class="link darker-gray" href="%link%" target="_blank" rel="noopener noreferrer">%data%</a>',
+            img_link_wrap: '<a class="inline-top zoom" href="%link%" target="_blank" rel="noopener noreferrer">%data%</a>',
             testimonial_wrap: '<div class="grid">%data%</div>',
             testimonial: '<div class="col md-whole lg-halves gutters">'+
                             '<blockquote>'+
                               '%testimonial%'+
                               '<p class="lg-right-text animated">'+
-                                '<a class="link" href="%link%" target="_blank">'+
+                                '<a class="link" href="%link%" target="_blank" rel="noopener noreferrer">'+
                                 '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
                                 '<span class="lg-inline-middle left-text">%person%<br>%role%</span>'+
                                 '</a>'+
@@ -566,7 +566,7 @@ var ResumeBuilder = (function(data, jQuery) {
                       '</section>',
           entry: '<div class="col md-halves lg-min-width-25 lg-max-width-50 gutters">'+
                     '<article class="left-text animated">'+
-                      '<a class="no-link" href="%link%">'+
+                      '<a class="no-link" href="%link%" target="_blank" rel="noopener noreferrer">'+
                         '<div class="relative no-overflow">'+
                           '<h4 class="project-heading absolute no-margin unbold white small-text">%date%</h4>'+
                           '<img class="width-100 zoom" src="%image%" srcset="%srcset%" sizes="%sizes%" alt="%alttext%" />'+
@@ -596,12 +596,12 @@ var ResumeBuilder = (function(data, jQuery) {
                        '</div>'+
                     '</section>',
           entry: '<li class="v-margin-1">'+
-                    '<a class="inline-top zoom" href="%link%" target="_blank">'+
+                    '<a class="inline-top zoom" href="%link%" target="_blank" rel="noopener noreferrer">'+
                       '<img class="inline-top round border-light-gray max-width-5 animated" src="%logo%" alt="%school% Logo" />'+
                     '</a>'+
                     '<div class="entry md-75-max-width inline-middle md-margin-1 center-text md-left-text">'+
                       '<h3 class="unbold no-margin">%degree% in %major%</h3>'+
-                      '<a class="link darker-gray" href="%link%" target="_blank">'+
+                      '<a class="link darker-gray" href="%link%" target="_blank" rel="noopener noreferrer">'+
                         '<h4 class="no-margin">%school% <span class="mid-gray italic small-text unbold">◉ %location%</span></h4>'+
                       '</a>'+
                       '<h5 class="unbold v-margin-1 mid-gray">'+
@@ -622,7 +622,7 @@ var ResumeBuilder = (function(data, jQuery) {
                             '<blockquote>'+
                               '%testimonial%'+
                               '<p class="lg-right-text animated">'+
-                                '<a class="link" href="%link%" target="_blank">'+
+                                '<a class="link" href="%link%" target="_blank" rel="noopener noreferrer">'+
                                 '%?optional%'+
                                 '<img class="lg-inline-middle" src="%photo%" alt="Pic and profile of %person%" />'+
                                 '%?optional%'+
@@ -634,12 +634,12 @@ var ResumeBuilder = (function(data, jQuery) {
         },
         courses: {
           entry: '<li class="v-margin-1">'+
-                    '<a class="inline-top zoom" href="%link%" target="_blank">'+
+                    '<a class="inline-top zoom" href="%link%" target="_blank" rel="noopener noreferrer">'+
                       '<img class="inline-top round border-light-gray max-width-5 animated" src="%logo%" alt="%title% Course Logo" />'+
                     '</a>'+
                     '<div class="entry md-75-max-width inline-middle margin-1 center-text md-left-text">'+
                       '<h3 class="unbold no-margin">%course%</h3>'+
-                      '<a class="link darker-gray" href="%link%" target="_blank">'+
+                      '<a class="link darker-gray" href="%link%" target="_blank" rel="noopener noreferrer">'+
                         '<h4 class="no-margin">%school% '+
                           '%?optional%'+
                           '<span class="mid-gray italic small-text unbold">Instructor - %instructor%</span>'+

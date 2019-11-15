@@ -19,10 +19,15 @@
 
     <link rel="stylesheet" href="css/style.min.css">
     <!-- <script src="js/vendor/modernizr-2.8.3.min.js"></script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAVzDYk_XvDrBkB6GM8xLwA09AF_SHi1x4"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAVzDYk_XvDrBkB6GM8xLwA09AF_SHi1x4"></script> -->
 
     <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,800" rel="stylesheet">
+
+    <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous" as="script">
+    <link rel="preload" href="js/scripts.min.js" as="script">
 </head>
 
 <body class="fade-in">
@@ -46,11 +51,14 @@
     </footer>
 
     <!--Nonblocking Scripts Footer-->
-    <script src="https://code.jquery.com/jquery-1.12.0.min.js" id="jquery"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous" ></script>
     <script>
-        window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js" id="jquery"><\/script>')
+    window.onload = () => {
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.12.0.min.js"><\/script>')
+    }
     </script>
     <script src="js/scripts.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAVzDYk_XvDrBkB6GM8xLwA09AF_SHi1x4"></script>
 
 </body>
 

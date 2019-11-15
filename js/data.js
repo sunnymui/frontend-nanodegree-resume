@@ -273,11 +273,119 @@ var data = {
   },
   projects: {
       "projects": [{
+          "title": "Catalyze SV City Development Project Map",
+          "dates": "2019",
+          "description": [
+            "Interactive map web app of Santa Clara County development projects built in collaboration with the nonprofit Catalyze SV to deploy on their existing website. Showcases their project scorecards, evaluations, and other info for stakeholders.",
+            "Built with Open Street Maps and Mapbox GL JS to render open source canvas rendered maps. Structured to be usable in an iframe to meet client integration & non-technical maintainability requirements on a Wix Corvid enabled site. Loads libraries and externals assets via CDN for complete independence from host page. Has multiple view types, map functions, animations/transitions, and state management."
+          ],
+          "images": ["img/catalyzesv-large.jpg"],
+          "srcset": "img/catalyzesv-large.jpg 992w, img/catalyzesv-medium.jpg 640w, img/catalyzesv-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Responsive screenshots of Catalyze SV project tracker map on laptop and mobile",
+          "link" : "https://sunnymui.github.io/Map-of-Silicon-Valley-development-projects/html/index.html"
+      }, {
+          "title": "Destroy the Comics Shop",
+          "dates": "2019",
+          "description": [
+            "Responsive, verified by McAfee Secure, content focused, conversion optimized, and completely Destroy the Comics branded e-commerce store selling premium graphic art apparel and vinyl stickers featuring art from local SF Bay Area artists.",
+            "WooCommerce based subsite install integrated on the main Destroy the Comics domain with numerous web performance, SEO, conversion, and security optimizations. Custom functions written for features like conditional display of artist information, custom size charts, free shipping counter, etc. Includes Mailchimp, FB Pixel, Square, PayPal, Amazon Payments, and other integrations."
+          ],
+          "images": ["img/dtc-shop-large.jpg"],
+          "srcset": "img/dtc-shop-large.jpg 992w, img/dtc-shop-medium.jpg 640w, img/dtc-shop-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshots of the Destroy the Comics Shop on mobile and laptop screens",
+          "link" : "https://www.destroythecomics.com/shop/"
+      }, {
+          "title": "Disaster Response SJ",
+          "dates": "2019",
+          "description": [
+            "React based web application to notify people of active disasters in San Jose. Includes active disaster notifications, disaster planning resources, plus an administrative interface for disaster response managers to create/maintain updates.",
+            "Collaborated with the Disaster Response team at Code for San Jose to refactor and add new components to this React app. Wrote and implemented a LocationIQ based geocoding module for admin interface use, enhanced form validation functions, added a logo component, extensively enhanced CSS for better UI design, massively expanded documentation, added 2 disaster planning content components, and various project management tasks like issue reporting & troubleshooting."
+          ],
+          "images": ["img/disaster-response-large.jpg"],
+          "srcset": "img/disaster-response-large.jpg 992w, img/disaster-response-medium.jpg 640w, img/disaster-response-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshot of the Disaster Response SJ web app",
+          "link" : "https://github.com/codeforsanjose/disaster-response-sj/tree/develop"
+      }, {
+          "title": "Razing the Bar",
+          "dates": "2019",
+          "description": [
+            "Website built for the foster youth focused nonprofit Razing the Bar. Showcases their methods, research, success stories, organizational timeline, ways to get involved, and allows donors to directly contribute online.",
+            "Collaborated with Code for San Jose RTB team and Razing the Bar staff to build and style site according to Sketch/Zeplin spec. Built using Wordpress as a CMS to allow non-technical client staff to maintain and update content. Integrates donation handling via Charitable and payment processing via PayPal. Fully responsive for viewing on any screen size."
+          ],
+          "images": ["img/razingthebar-large.jpg"],
+          "srcset": "img/razingthebar-large.jpg 992w, img/razingthebar-medium.jpg 640w, img/razingthebar-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshots of the Razing the Bar website on mobile and laptop screens",
+          "link" : "https://razingthebar.org/"
+      }, {
+          "title": "SJ Taco Map",
+          "dates": "2018",
+          "description": [
+            "An interactive and filterable map of Taquerias in San Jose where you can get live info pulled from Google Places, FourSquare, and Google Maps. Read essential basic information, browse reviews, see ratings, and compare social stats for each taco shop.",
+            "Integrates 3rd party APIs and an MVVM front end web framework for a single page web app. Built on Boostrap for rapid development and standards compliant web design. Implements instant search through efficient array filtering. Mobile friendly with responsive design. Built with modular, object oriented design and attention paid to object caching for performance. Robust error handling for network and API errors."
+          ],
+          "images": ["img/sjtacomap-large.jpg"],
+          "srcset": "img/sjtacomap-large.jpg 992w, img/sjtacomap-medium.jpg 640w, img/sjtacomap-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshots on laptop and mobile for SJ Taco Map Web App",
+          "link" : "https://sunnymui.github.io/neighborhood-map/"
+      }, {
+          "title": "Star Milo",
+          "dates": "2018",
+          "description": [
+            "Click Milo the cat to make MiloBucks, use your $ to buy upgrades, and spend all of your time clicking on a cat floating in space.",
+            "A simple webapp showcasing conditional game logic, scoring probability systems factoring in upgradeable player stats, object oriented methods, prototypal classing, and CSS animations. Plain Javascript wrapped in an anonymous IIFE to keep the global namespace clear."
+          ],
+          "images": ["img/milo-clicker-large.png"],
+          "srcset": "img/milo-clicker-large.png 992w, img/milo-clicker-medium.png 640w, img/milo-clicker-small.png 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Cover photo of the Star Milo cat clicker game",
+          "link" : "https://sunnymui.github.io/milo-clicker/"
+      }, {
+          "title": "Destroy the Comics",
+          "dates": "2017",
+          "description": [
+            "A news-magazine style blog built and deployed rapidly for immediate use by an editorial team. Uses a Wordpress CMS for easy content creation/maintenace and a customized child theme.",
+            "Built for convenience of the writing team, with features to manage onsite SEO, automatic image optimization, social media marketing, 3rd party MailChimp integration, AdWords integration, AMP (Accelerated Mobile Pages) compatibility, analytics, enhanced Wordpress security, caching/Gzip compression, inlined critical CSS, minification/concatenation, and asynchronous script loads for page speed."
+          ],
+          "images": ["img/destroycomics-large.jpg"],
+          "srcset": "img/destroycomics-large.jpg 992w, img/destroycomics-medium.jpg 640w, img/destroycomics-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshot of the Destroy the Comics Blog Homepage",
+          "link" : "https://destroythecomics.com/"
+      }, {
+          "title": "Swim Free or Die Hard",
+          "dates": "2017",
+          "description": [
+            "HTML5 Canvas/Javascript frogger-style game with enemy types, difficulty selection, item pickups, sound effects, animation, and more.",
+            "Features superclass/subclass inheritance, sprite map animations, requestAnimationFrame game loop, hitbox collision detection, spatial partitioning, mobile touch controls, item rarity, randomly generated enemies, and more."
+          ],
+          "images": ["img/swimfree-large.jpg"],
+          "srcset": "img/swimfree-large.jpg 992w, img/swimfree-medium.jpg 640w, img/swimfree-small.jpg 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshot of my HTML5/JS based frogger-style game Swim Free or Die Hard",
+          "link" : "https://sunnymui.github.io/frontend-nanodegree-arcade-game/"
+      }, {
+          "title": "Web Performance and Speed Optimized Website",
+          "dates": "2018",
+          "description": [
+            "A website with known poor page loading and running web performance was optimized to improve speed and efficiency, achieving ~97 in Google Page Speed for the index page and a visually intensive page achieving 60 fps.",
+            "Optimizations include async scripts, inlining critical css, image optimization, caching/Gzipping, minification/concatenation, async web font loader, layout thrashing fixes, variable caching, event debouncing, minimization of DOM appends, modifying compositor only properties for animations, dynamically setting number of animated elements to minimum needed to achieve effect, and more."
+          ],
+          "images": ["img/web-performance-large.png"],
+          "srcset": "img/web-performance-large.png 992w, img/web-performance-medium.png 640w, img/web-performance-small.png 320w",
+          "sizes": "(max-width: 559px) 90vw, (min-width: 600px) 40vw, (min-width: 1400px) 30vw",
+          "alt" : "Screenshot of Performance profiles and page speed scores",
+          "link" : "https://github.com/sunnymui/frontend-nanodegree-mobile-portfolio/"
+      },{
           "title": "One Page Responsive Personal Portfolio",
           "dates": "2016",
           "description": [
             "Responsive single page web portfolio created for use as my personal project showcase.",
-            "This project is built on top of HTML5 Boilerplate so it's almost completely customized. I implemented my own lightweight flexbox grid system and responsive features like srcset and a mobile first direction."
+            "This project is built on top of HTML5 Boilerplate so it's almost completely customized. I implemented my own lightweight flexbox grid system and responsive features like srcset and a mobile first direction. Static site optimized for speed."
           ],
           "images": ["img/portfolio.jpg"],
           "srcset": "img/portfolio-large.jpg 992w, img/portfolio-medium.jpg 640w, img/portfolio-small.jpg 320w",
